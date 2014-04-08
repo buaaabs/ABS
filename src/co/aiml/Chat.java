@@ -17,7 +17,7 @@ import bitoflife.chatterbean.AliceBot;
 
 public class Chat 
 {
-	public static final String END = "bye";
+	public static final String END = "ты╪Ш";
 	
 	public static String input()
 	{
@@ -38,7 +38,7 @@ public class Chat
 	private static ADictionary dic;
 	private static ASegment seg;
 	
-	private static void init() {
+	public static void init() {
 		config = new JcsegTaskConfig();
 	    dic = DictionaryFactory
 	    		.createDefaultDictionary(config);

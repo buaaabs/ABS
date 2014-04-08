@@ -6,4 +6,10 @@ public class Data {
 	public String topic;
 	public String content;
 	public String focus;
+	public String operation;
+	public String category;
+	public String name;
+	public String channel;
+	public String code;
+	public String singer;
 }

@@ -105,7 +105,8 @@ public class Sentence
 
     String value = original.substring(mappings[beginIndex], mappings[endIndex] + 1);
     
-    value = value.replaceAll("^[^A-Za-z0-9]+|[^A-Za-z0-9]+$", " ");
+    ///终于找到了坑爹的正则表达式，就是他让我们的机器人不支持中文的！！！
+    value = value.replaceAll("^[^A-Za-z0-9\u4E00-\u9FA5]+|[^A-Za-z0-9\u4E00-\u9FA5]+$", " ");
     return value;
   }
 

@@ -7,7 +7,5 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="alice-src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
-	<classpathentry kind="lib" path="libs/jcseg/jcseg-analyzer-1.9.3.jar"/>
-	<classpathentry kind="lib" path="libs/jcseg/jcseg-core-1.9.3.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

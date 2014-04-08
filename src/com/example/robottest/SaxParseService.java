@@ -10,6 +10,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.content.Context;
+
 public class SaxParseService extends DefaultHandler{  
     private Data data = null;  
     private String preTag = null;//作用是记录解析时的上一个节点名称  
@@ -77,7 +79,24 @@ public class SaxParseService extends DefaultHandler{
             }else if ("content".equals(preTag))
             {
             	data.content = content;
+            }else if ("name".equals(preTag))
+            {
+            	data.name = content;
+            }else if ("category".equals(preTag))
+            {
+            	data.category = content;
+            }else if ("channel".equals(preTag))
+            {
+            	data.channel = content;
+            }else if ("operation".equals(preTag))
+            {
+            	data.operation = content;
+            }else if ("singer".equals(preTag))
+            {
+            	data.singer = content;
             }
+            
+            
         }  
     }  
       
