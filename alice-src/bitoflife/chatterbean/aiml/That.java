@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import org.xml.sax.Attributes;
+
+import android.util.Log;
 import bitoflife.chatterbean.AliceBot;
 import bitoflife.chatterbean.Context;
 import bitoflife.chatterbean.Match;
@@ -99,6 +101,7 @@ public class That extends TemplateElement
     AliceBot bot = match.getCallback();
     Context context = bot.getContext();
     Response response = context.getResponses(responseIndex - 1);
+  //  Log.e("that process",response.getSentences(sentenceIndex - 1).trimOriginal());
     return response.getSentences(sentenceIndex - 1).trimOriginal();
   }
   

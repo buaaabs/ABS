@@ -21,15 +21,29 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int background=0x7f020000;
+        public static final int bottom=0x7f020001;
+        public static final int changemenubutton=0x7f020002;
+        public static final int header=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int menubutton=0x7f020005;
+        public static final int menubutton1=0x7f020006;
+        public static final int recordbutton=0x7f020007;
+        public static final int recordingbutton=0x7f020008;
+        public static final int recordingbutton1=0x7f020009;
     }
     public static final class id {
-        public static final int action_settings=0x7f090002;
-        public static final int button=0x7f090001;
-        public static final int main_text=0x7f090000;
+        public static final int action_settings=0x7f090005;
+        public static final int button_main=0x7f090000;
+        public static final int button_speak=0x7f090002;
+        public static final int listLinearLayout=0x7f090003;
+        public static final int main_text=0x7f090001;
+        public static final int options=0x7f090004;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
+        public static final int maininterface=0x7f030000;
+        public static final int mainmenulist=0x7f030001;
+        public static final int mainmenulisttext=0x7f030002;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -45,6 +59,7 @@ public final class R {
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
         public static final int hello_world=0x7f060002;
+        public static final int mainmenu=0x7f060003;
     }
     public static final class style {
         /** 
@@ -70,7 +85,6 @@ public final class R {
          */
         public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
     }

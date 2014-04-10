@@ -8,12 +8,13 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 import util.music.Player;
-import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -27,6 +28,7 @@ import bitoflife.chatterbean.AliceBot;
 import bitoflife.chatterbean.parser.AliceBotParser;
 import co.aiml.Chat;
 
+import com.example.robottest.util.SystemUiHider;
 import com.iflytek.speech.ErrorCode;
 import com.iflytek.speech.ISpeechModule;
 import com.iflytek.speech.InitListener;
@@ -41,8 +43,20 @@ public class MainActivity extends Activity {
 
 	private Toast mToast;	
 	private TextView text = null;
+	private SystemUiHider mSystemUiHider;
+	
+	
+	private Button mainButton = null;
 	private Button button = null;
 	private SpeechUnderstander su = null;
+
+	Runnable mHideRunnable = new Runnable() {
+		@Override
+		public void run() {
+			mSystemUiHider.hide();
+		}
+	};
+	
 	
 	private InitListener il = new InitListener(){
 
@@ -122,8 +136,9 @@ public class MainActivity extends Activity {
     	 	player.playUrl(music_url);
 		}
         
-        private void Show(String ansString)
+        private void Show(String userString,String ansString)
         {
+        	text.setText(text.getText()+"\n用户:"+userString+'\n');
         	text.setText(text.getText()+ansString+"\n");
 			audiom.setStreamVolume(AudioManager.STREAM_MUSIC, oldAudio, AudioManager.FLAG_PLAY_SOUND);
 			reader.start(ansString);
@@ -154,7 +169,7 @@ public class MainActivity extends Activity {
 							{
 								playmusic(data);
 								String ansString = bot.respond("OK");
-								Show(ansString);
+								Show(data.rawtext,ansString);
 								return;
 							}
 							
@@ -163,7 +178,7 @@ public class MainActivity extends Activity {
 							}
 							
 							String input = data.parsedtext;
-							text.setText(text.getText()+"\nParsedText:"+input+"\n");
+							text.setText(text.getText()+data.parsedtext+"\n");
 							if(Chat.END.equalsIgnoreCase(input))
 								 return;
 							String ansString = null;
@@ -201,10 +216,10 @@ public class MainActivity extends Activity {
 								}
 								}
 								
-//								if (cannotfind)
-//									ansString = data.content;
+								if (cannotfind)
+									ansString = data.content;
 							
-								Show(ansString);
+								Show(data.rawtext,ansString);
 								cannotfind = false;
 							}
 			            } else {
@@ -263,12 +278,24 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		//setContentView(R.layout.activity_main);
+		setContentView(R.layout.maininterface);
+		mainButton=(Button)findViewById(R.id.button_main);
+		mainButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent(MainActivity.this, MenuList.class);
+				MainActivity.this.startActivity(intent);
+			}
+		});
+		
 		
 		audiom =(AudioManager)getSystemService(Context.AUDIO_SERVICE);  
 		
 		text = (TextView)findViewById(R.id.main_text);
-		button = (Button)findViewById(R.id.button);
+		button=(Button)findViewById(R.id.button_speak);
 		button.setOnTouchListener(new OnTouchListener() {
 			
 			@Override

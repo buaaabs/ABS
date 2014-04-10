@@ -129,7 +129,7 @@ public class Transformations
 
   private final Tokenizer tokenizer;
   private final Pattern fitting = Pattern.compile("[^A-Z0-9\u4E00-\u9FA5]+");
-  private final Pattern wordBreakers = Pattern.compile("([,;:])([A-Za-z]|\\s{2,})");
+  private final Pattern wordBreakers = Pattern.compile("([,;:])([A-Za-z\u4E00-\u9FA5]|\\s{2,})");
 
   // The regular expression which will split entries by sentence splitters.
   private final SentenceSplitter splitter;

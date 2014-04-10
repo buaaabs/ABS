@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+	<category>
+		<pattern>* 健康 检查 *</pattern>
+		<template></template>
+	</category>
+
+	<category>
+		<pattern>* 今日 天气 *</pattern>
+		<template></template>
+	</category>
+
+	<category>
+		<pattern>* 最近 饮食 *</pattern>
+		<template></template>
+	</category>
+
+	<category>
+		<pattern>* 近期 节目 *</pattern>
+		<template></template>
+	</category>
+	<category>
+		<pattern>* 听听 戏曲 *</pattern>
+		<template></template>
+	</category>
+	<category>
+		<pattern>* 最近 新闻 *</pattern>
+		<template></template>
+	</category>
+	<category>
+		<pattern>* 随便 来点 音乐 *</pattern>
+		<template></template>
+	</category>
+	<category>
+		<pattern>* 你 今天 心情 怎么样 *</pattern>
+		<template></template>
+	</category>
+	<category>
+		<pattern>* 随便 来点 音乐 *</pattern>
+		<template></template>
+	</category>
+	<category>
+		<pattern>* 随便 来首 歌 *</pattern>
+		<template></template>
+	</category>
+	<category>
+		<pattern>* 有 啥 好 菜谱 *</pattern>
+		<template></template>
+	</category>
+	
+	<category>
+		<pattern>我 明天 * 早起 *</pattern>
+		<template></template>
+	</category>
+	<category>
+		<pattern>* 你 都会 什么 *</pattern>
+		<template></template>
+	</category>
+	<category>
+		<pattern>* 你 都会 什么 *</pattern>
+		<template></template>
+	</category>
+</aiml>

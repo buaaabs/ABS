@@ -7,6 +7,13 @@
   <splitter value="!" type="sentence"/>
   <splitter value="?" type="sentence"/>
   <splitter value=";" type="sentence"/>
+  <splitter value="。。。" type="sentence"/>
+  <splitter value="。" type="sentence"/>
+  <splitter value="！" type="sentence"/>
+  <splitter value="？" type="sentence"/>
+  <splitter value="；" type="sentence"/>
   <splitter value="," type="word"/>
   <splitter value=":" type="word"/>
+  <splitter value="，" type="word"/>
+  <splitter value="：" type="word"/>
 </splitters>
