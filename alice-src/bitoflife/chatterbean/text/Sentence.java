@@ -43,6 +43,7 @@ public class Sentence
     setNormalized(normalized);
   }
 
+  
   /**
   Constructs a Sentence out of a non-normalized input string.
   */

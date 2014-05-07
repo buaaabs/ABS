@@ -58,6 +58,7 @@ public class Set extends TemplateElement
   public String process(Match match)
   {
     String output = super.process(match);
+    
     if (match == null)
       output = "<set name=\"" + name + "\">" + output + "</set>";
     else
@@ -66,7 +67,7 @@ public class Set extends TemplateElement
       Context context = (bot != null ? bot.getContext() : null);
       if (context != null) context.property("predicate." + name, output);
     }
-    
+    //java.lang.System.out.println("Set:"+output);
     return output;
   }
 }

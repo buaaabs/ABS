@@ -85,7 +85,7 @@ public class GraphmasterTest extends TestCase
   {
     Sentence input = new Sentence(" Do you like it? ", new Integer[] {0, 3, 12, 16}, " DO YOU LIKE IT ");
     Sentence that = new Sentence(" CHEESE ", new Integer[] {0, 7}, " CHEESE ");
-    Match match = new Match(null, input, that, ASTERISK);
+    Match match = new Match(null, input, that, ASTERISK, ASTERISK);
 
     Category expected = new Category(new Pattern("DO YOU LIKE IT"), new That("CHEESE"), new Template("Yes."));
     root.append(expected);

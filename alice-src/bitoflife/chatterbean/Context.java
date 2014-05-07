@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import android.annotation.SuppressLint;
 import bitoflife.chatterbean.script.BeanshellInterpreter;
 import bitoflife.chatterbean.text.Request;
 import bitoflife.chatterbean.text.Response;
@@ -39,6 +40,7 @@ import static bitoflife.chatterbean.text.Sentence.ASTERISK;
 /**
 A conversational context. This class stores information such as the history of a conversation and predicate values, which the Alice Bot can refer to while responding user requests.
 */
+@SuppressLint("NewApi")
 public class Context
 {
   /*
@@ -58,9 +60,10 @@ public class Context
   private long seed = 0;
 
   private OutputStream output;
-
   private Sentence that;
   private Sentence topic;
+  private Sentence input;
+  
 
   /** Set of normalizing transformations applied to unstructured text. */
   private Transformations transformations;
@@ -124,6 +127,9 @@ public class Context
   public void appendRequest(Request request)
   {
     requests.add(0, request);
+    
+    input = request.lastSentence(0);
+    transformations.normalization(input);
   }
 
   public void appendResponse(Response response)
@@ -152,6 +158,7 @@ public class Context
   
   public void property(String name, Object value)
   {
+//	System.out.println(name+"  value = "+value.toString());
     ContextPropertyChangeListener listener = listeners.get(name);
     if (listener != null)
     {
@@ -229,16 +236,33 @@ public class Context
   {
     if (topic == null)
       this.topic = ASTERISK;
-    this.topic = topic;
+    else
+      this.topic = topic;
   }
+  
+  public Sentence getInput() {
+    if (this.input == null)
+	  this.input = ASTERISK;
+	return this.input;
+  }
+	
+  public void setInput(Sentence input) {
+	if (input == null)
+		this.input = ASTERISK;
+	else
+		this.input = input;
+  }
+
 
   public Request getRequests(int index)
   {
+	if (requests.size()==0) return null;
     return requests.get(index);
   }
 
   public Response getResponses(int index)
   {
+	if (responses.size()==0) return null;
     return responses.get(index);
   }
   

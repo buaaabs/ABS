@@ -17,7 +17,6 @@ package bitoflife.chatterbean.aiml;
 import java.io.InputStream;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-
 import bitoflife.chatterbean.Graphmaster;
 import bitoflife.chatterbean.util.Searcher;
 
@@ -57,8 +56,14 @@ public class AIMLParser
     {
       for (InputStream aiml : sources)
         parser.parse(aiml, handler);
-
-      graphmaster.append(handler.unload());
+      java.util.List<Category> cList = handler.unload();
+     
+      for (Category category : cList) {
+  		category.setCallback(graphmaster);
+  		category.forkCategory();
+  	  }
+   // graphmaster.append(cList);
+      
     }
     catch (Exception e)
     {

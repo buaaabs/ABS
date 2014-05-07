@@ -70,6 +70,7 @@ public class Star extends TemplateElement
   public String process(Match match)
   {
     String wildcard = match.wildcard(PATTERN, index);
+  //  java.lang.System.out.println("Star:"+wildcard);
     return (wildcard != null ? wildcard.trim() : "");
   }
 }

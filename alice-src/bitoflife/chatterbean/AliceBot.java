@@ -16,6 +16,7 @@ package bitoflife.chatterbean;
 
 import java.util.List;
 import bitoflife.chatterbean.aiml.Category;
+import bitoflife.chatterbean.aiml.Input;
 import bitoflife.chatterbean.text.Request;
 import bitoflife.chatterbean.text.Response;
 import bitoflife.chatterbean.text.Sentence;
@@ -71,11 +72,11 @@ public class AliceBot
   Method Section
   */
   
-  private void respond(Sentence sentence, Sentence that, Sentence topic, Response response)
+  private void respond(Sentence sentence, Sentence that, Sentence input, Sentence topic, Response response)
   {
     if (sentence.length() > 0)
     {
-      Match match = new Match(this, sentence, that, topic);
+      Match match = new Match(this, sentence, that, input, topic);
       Category category = graphmaster.match(match);
       response.append(category.process(match));
     }
@@ -96,12 +97,13 @@ public class AliceBot
     
     Sentence that = context.getThat();
     Sentence topic = context.getTopic();
+    Sentence input = context.getInput();
     transformations().normalization(request);
     context.appendRequest(request);
 
     Response response = new Response();
     for(Sentence sentence : request.getSentences())
-      respond(sentence, that, topic, response);
+      respond(sentence, that,input, topic, response);
     context.appendResponse(response);
 
     return response;

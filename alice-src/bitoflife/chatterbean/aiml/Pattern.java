@@ -14,10 +14,14 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean.aiml;
 
+import hha.aiml.Chat;
+
 import java.lang.System;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.xml.sax.Attributes;
+
 
 import bitoflife.chatterbean.AliceBot;
 import bitoflife.chatterbean.text.Sentence;
@@ -28,13 +32,14 @@ public class Pattern implements AIMLElement
   Attribute Section
   */
 
-  private String[] pattern;
+  String[] pattern;
 
   private int hashCode;
   
   /*
   Constructor Section
   */
+  private boolean isToUseChineseTranslate = true;
   
   public Pattern()
   {
@@ -42,8 +47,15 @@ public class Pattern implements AIMLElement
   
   public Pattern(String pattern)
   {
-    this.pattern = pattern.trim().split(" ");
-    hashCode = Arrays.hashCode(this.pattern);
+	 String p = pattern.trim();
+	 if(isToUseChineseTranslate) {    
+		 p = Chat.chineseTranslate(p);
+		 p.toUpperCase();
+		 System.out.println(p);
+	 }
+	 this.pattern = p.split(" ");
+    
+	 hashCode = Arrays.hashCode(this.pattern);
   }
   
   public Pattern(Attributes attributes)
@@ -57,6 +69,12 @@ public class Pattern implements AIMLElement
   public void appendChild(AIMLElement child)
   {
     String text = child.toString();
+   // System.out.println(text);
+    if(isToUseChineseTranslate) {    
+		 text = Chat.chineseTranslate(text);
+		 text = text.toUpperCase();
+	//	 System.out.println(text);
+	 }
     if (pattern == null)
       pattern = new String[] {text};
     else
@@ -69,6 +87,8 @@ public class Pattern implements AIMLElement
     }
   }
   
+ 
+  
   public void appendChildren(List<AIMLElement> children)
   {
     StringBuilder builder = new StringBuilder();
@@ -76,6 +96,12 @@ public class Pattern implements AIMLElement
       builder.append(child);
     
     String text = builder.toString().trim();
+//    System.out.println(text);
+    if(isToUseChineseTranslate) {    
+		 text = Chat.chineseTranslate(text);
+		 text = text.toUpperCase();
+	//	 System.out.println(text);
+	 }
     pattern = text.split(" ");
     hashCode = Arrays.hashCode(pattern);
   }

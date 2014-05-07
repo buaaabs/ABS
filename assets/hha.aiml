@@ -2,7 +2,53 @@
 <aiml>
 	<category>
 		<pattern>* 健康 检查 *</pattern>
-		<template></template>
+		<template>
+			<random>
+				<li>好的，那我就给您做次检查吧！</li>
+				<li>恩，那我们现在就开始吧</li>
+				<li>那好</li>
+			</random>
+		</template>
+	</category>
+
+	<category>
+		<pattern>健康 检查</pattern>
+		<template>
+			<random>
+				<li>好像好久您都没做健康检查了，要我帮您做次吗？</li>
+				<li>您要不要做次健康检查呢?</li>
+				<li>您现在有时间吗？我看您好像好久没做健康检查了，您要做次吗？</li>
+			</random>
+		</template>
+	</category>
+
+	<category>
+		<pattern>好的</pattern>
+		<input>健康 检查</input>
+		<template><srai>健康 检查</srai></template>
+		
+	</category>
+
+	<category>
+		<pattern>不用了</pattern>
+		<input>健康 检查</input>
+		<template>
+			<random>
+				<li>恩，那好吧，不过还是建议您多留心您的身体啊^_^</li>
+				<li>好的，我知道了</li>
+			</random>
+		</template>
+	</category>
+
+	<category>
+		<pattern>算了</pattern>
+		<input>健康 检查</input>
+		<template>
+			<random>
+				<li>恩，那好吧，不过还是建议您多留心您的身体啊^_^</li>
+				<li>好的，我知道了</li>
+			</random>
+		</template>
 	</category>
 
 	<category>
@@ -57,7 +103,7 @@
 		<template></template>
 	</category>
 	<category>
-		<pattern>* 你 都会 什么 *</pattern>
+		<pattern>* 你 都会 做 什么 *</pattern>
 		<template></template>
 	</category>
 </aiml>

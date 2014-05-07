@@ -44,7 +44,7 @@ public class Sentence extends TemplateElement
     if (result == null || "".equals(result.trim())) return "";
 
     /* See the description of java.util.regex.Matcher.appendReplacement() in the Javadocs to understand this code. */    
-    Pattern p = Pattern.compile("(^\\s*[a-z\u4E00-\u9FA5]|[\\.\\?!]+\\s*[a-z\u4E00-\u9FA5])");
+    Pattern p = Pattern.compile("(^\\s*[a-z]|[\\.\\?!]+\\s*[a-z])");
     Matcher m = p.matcher(result);
     StringBuffer buffer = new StringBuffer();
     while (m.find())

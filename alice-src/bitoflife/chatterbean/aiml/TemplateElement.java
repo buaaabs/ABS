@@ -83,7 +83,7 @@ public class TemplateElement implements AIMLElement
     StringBuilder value = new StringBuilder();
     for (TemplateElement i : children)
       value.append(i.process(match));
-    
+ //   java.lang.System.out.println("base:"+value.toString());
     return value.toString();
   }
 

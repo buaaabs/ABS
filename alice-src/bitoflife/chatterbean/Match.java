@@ -34,7 +34,7 @@ public class Match implements Serializable
   Inner Classes
   */
   
-  public enum Section {PATTERN, THAT, TOPIC;}
+  public enum Section {PATTERN, THAT, TOPIC,INPUT;}
   
   /*
   Attributes
@@ -47,6 +47,8 @@ public class Match implements Serializable
   
   private AliceBot callback;
 
+  private Sentence uinput;
+  
   private Sentence input;
 
   private Sentence that;
@@ -59,6 +61,7 @@ public class Match implements Serializable
     sections.put(Section.PATTERN, new ArrayList<String>(2)); // Pattern wildcards
     sections.put(Section.THAT, new ArrayList<String>(2)); // That wildcards
     sections.put(Section.TOPIC, new ArrayList<String>(2)); // Topic wildcards
+    sections.put(Section.INPUT, new ArrayList<String>(2));
   }
   
   /*
@@ -69,18 +72,19 @@ public class Match implements Serializable
   {
   }
 
-  public Match(AliceBot callback, Sentence input, Sentence that, Sentence topic)
+  public Match(AliceBot callback, Sentence User_input, Sentence that,Sentence input, Sentence topic)
   {
     this.callback = callback;
+    this.uinput = User_input;
     this.input = input;
     this.that = that;
     this.topic = topic;
-    setUpMatchPath(input.normalized(), that.normalized(), topic.normalized());
+    setUpMatchPath(User_input.normalized(), that.normalized(),input.normalized(), topic.normalized());
   }
 
   public Match(Sentence input)
   {
-    this(null, input, ASTERISK, ASTERISK);
+    this(null, input, ASTERISK,ASTERISK, ASTERISK);
   }
 
   /*
@@ -103,29 +107,31 @@ public class Match implements Serializable
     }
   }
 
-  private void setUpMatchPath(String[] pattern, String[] that, String[] topic)
+  private void setUpMatchPath(String[] pattern, String[] that, String[] input, String[] topic)
   {
-    int m = pattern.length, n = that.length, o = topic.length;
-    matchPath = new String[m + 1 + n + 1 + o];
+    int m = pattern.length, n = that.length, o = topic.length, p = input.length;
+    matchPath = new String[m + 1 + n + 1 + o + 1 + p];
     matchPath[m] = "<THAT>";
     matchPath[m + 1 + n] = "<TOPIC>";
+    matchPath[m + 1 + n + 1 + o] = "<INPUT>";
 
     System.arraycopy(pattern, 0, matchPath, 0, m);
     System.arraycopy(that, 0, matchPath, m + 1, n);
     System.arraycopy(topic, 0, matchPath, m + 1 + n + 1, o);
+    System.arraycopy(input, 0, matchPath, m + 1 + n + 1 + o + 1, p);
   }
   
   public void appendWildcard(int beginIndex, int endIndex)
   {
-    int inputLength = input.length();
-    if (beginIndex <= inputLength)
+    int uinputLength = uinput.length();
+    if (beginIndex <= uinputLength)
     {
-      appendWildcard(sections.get(Section.PATTERN), input, beginIndex, endIndex);
+      appendWildcard(sections.get(Section.PATTERN), uinput, beginIndex, endIndex);
       return;
     }
     
-    beginIndex = beginIndex - (inputLength + 1);
-    endIndex   = endIndex   - (inputLength + 1);
+    beginIndex = beginIndex - (uinputLength + 1);
+    endIndex   = endIndex   - (uinputLength + 1);
 
     int thatLength = that.length();    
     if (beginIndex <= thatLength)
@@ -138,8 +144,15 @@ public class Match implements Serializable
     endIndex   = endIndex   - (thatLength + 1);
 
     int topicLength = topic.length();    
-    if (beginIndex < topicLength)
+    if (beginIndex <= topicLength)
       appendWildcard(sections.get(Section.TOPIC), topic, beginIndex, endIndex);
+    
+    beginIndex = beginIndex - (topicLength + 1);
+    endIndex = endIndex - (topicLength + 1);
+    
+    int inputLength = input.length();
+    if (beginIndex < inputLength)
+      appendWildcard(sections.get(Section.INPUT), input, beginIndex, endIndex);
   }
   
   /**

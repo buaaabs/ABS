@@ -52,7 +52,7 @@ public class Date extends TemplateElement
 
   public String process(Match match)
   {	  
-	  java.lang.System.out.println("format:" + this.formatStr);
+	//  java.lang.System.out.println("format:" + this.formatStr);
     try
     {
     	format.applyPattern(formatStr);

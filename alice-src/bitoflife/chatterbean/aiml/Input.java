@@ -14,6 +14,10 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean.aiml;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.xml.sax.Attributes;
 import bitoflife.chatterbean.text.Request;
 import bitoflife.chatterbean.Match;
@@ -24,6 +28,7 @@ public class Input extends TemplateElement
   Attributes
   */
 
+  private static final String[] STRING_ARRAY = {};
   private int requestIndex = 1, sentenceIndex = 1;
 
   /*
@@ -46,9 +51,28 @@ public class Input extends TemplateElement
     this.sentenceIndex = sentenceIndex;
   }
   
+  public Input(Object... children)
+  {
+    super(children);
+  }
+  
   /*
   Methods
   */
+  
+  public String[] elements()
+  {
+    TemplateElement[] children = getChildren();
+    List<String> elements = new LinkedList<String>();
+    for (int i = 0, n = children.length; i < n; i++)
+    {
+      String text = children[i].toString();
+      text = text.trim();
+      elements.addAll(Arrays.asList(text.split(" ")));
+    }
+
+    return elements.toArray(STRING_ARRAY);
+  }
   
   public boolean equals(Object obj)
   {
@@ -58,10 +82,24 @@ public class Input extends TemplateElement
     return (requestIndex == compared.requestIndex &&
             sentenceIndex == compared.sentenceIndex);
   }
+  public int hashCode()
+  {
+    return requestIndex + sentenceIndex;
+  }
   
   public String toString()
   {
-    return "<input index=\"" + requestIndex + ", " + sentenceIndex + "\"/>";
+	if (children().size() == 0)
+		return "<input index=\"" + requestIndex + ", " + sentenceIndex + "\"/>";
+	else
+	{
+	    StringBuilder builder = new StringBuilder("<input>");
+		for (TemplateElement element : children())
+			builder.append(element);
+		builder.append("</input>");
+	
+	    return builder.toString();
+	}
   }
   
   public String process(Match match)

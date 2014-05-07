@@ -63,6 +63,7 @@ public class Get extends TemplateElement
     try
     {
       String value = (String) match.getCallback().getContext().property("predicate." + name);
+      //java.lang.System.out.println("get:"+value.toString());
       return (value != null ? value : "");
     }
     catch (NullPointerException e)

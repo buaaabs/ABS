@@ -17,6 +17,8 @@ package bitoflife.chatterbean.text;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.UNICODE_CASE;
 
+import hha.aiml.Chat;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ import org.lionsoul.jcseg.core.IWord;
 import org.lionsoul.jcseg.core.JcsegException;
 import org.lionsoul.jcseg.core.JcsegTaskConfig;
 import org.lionsoul.jcseg.core.SegmentFactory;
+
 
 /**
 Provides operations for normalizing a request, before submiting it to the matching operation.
@@ -129,7 +132,7 @@ public class Transformations
 
   private final Tokenizer tokenizer;
   private final Pattern fitting = Pattern.compile("[^A-Z0-9\u4E00-\u9FA5]+");
-  private final Pattern wordBreakers = Pattern.compile("([,;:])([A-Za-z\u4E00-\u9FA5]|\\s{2,})");
+  private final Pattern wordBreakers = Pattern.compile("([,;:])([A-Za-z]|\\s{2,})");
 
   // The regular expression which will split entries by sentence splitters.
   private final SentenceSplitter splitter;
@@ -292,8 +295,8 @@ public class Transformations
 
   public void normalization(Request request)
   {
-	String string = new String();
 	String original = request.getOriginal();
+	original = Chat.chineseTranslate(original);
     original = ' ' + original + ' ';
     original = original.replaceAll("\\s{2,}", " ");
     String input[] = splitter.split(original);
@@ -339,7 +342,7 @@ public void normalization(Sentence sentence)
     Mapper mapper = new Mapper(input);
     input = substitute(input, mapper);
     input = fit(input, mapper);
-
+    
     sentence.setMappings(mapper.toArray());
     sentence.setNormalized(input);
   }

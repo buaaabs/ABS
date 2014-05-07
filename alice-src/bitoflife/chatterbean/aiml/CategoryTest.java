@@ -34,6 +34,7 @@ public class CategoryTest extends TestCase
     Category category = new Category(
       new Pattern(" YES "),
       new That(" DO YOU LIKE CHEESE "),
+      new Input(""),
       new Topic(" LIKE "),
       new Template("Good for you.", new Think(new Set("topic", "*")))
     );

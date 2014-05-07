@@ -14,6 +14,8 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean.aiml;
 
+import hha.aiml.Chat;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -23,6 +25,9 @@ import java.lang.reflect.Constructor;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+
+import bitoflife.chatterbean.ChatterBeanException;
 
 public class AIMLHandler extends DefaultHandler
 {
@@ -34,7 +39,8 @@ public class AIMLHandler extends DefaultHandler
   final StringBuilder text = new StringBuilder();
   
   private boolean ignoreWhitespace = true;
-
+  private boolean isToUseChineseTranslate = false;
+  
   /** The stack of AIML objects is used to build the Categories as AIML documents are parsed. The scope is defined as package for testing purposes. */
   final AIMLStack stack = new AIMLStack();
 
@@ -61,12 +67,23 @@ public class AIMLHandler extends DefaultHandler
   private void pushTextNode()
   {
     String pushed = text.toString();
+   // java.lang.System.out.println(pushed);
+    if(isToUseChineseTranslate) {    
+    	pushed = Chat.chineseTranslate(pushed); 
+    //	pushed= pushed.toUpperCase(); 
+        java.lang.System.out.println(pushed);
+     }
+    
+    
     text.delete(0, text.length());
     if (ignoreWhitespace)
       pushed = pushed.replaceAll("^[\\s\n]+|[\\s\n]{2,}|\n", " ");
 
     if(!"".equals(pushed.trim()))
-      stack.push(new Text(pushed));
+    {
+    	stack.push(new Text(pushed));
+    }
+   //   
   }
   
   private void updateIgnoreWhitespace(Attributes attributes)
@@ -88,6 +105,8 @@ public class AIMLHandler extends DefaultHandler
     while ((poped = stack.pop()) != null)
       if (poped instanceof Aiml)
         result.addAll(((Aiml) poped).children());
+    
+   
     
     return result;
   }
