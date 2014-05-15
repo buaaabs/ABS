@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@bol.com.br
 ICQ: 2490863
 
@@ -14,7 +14,7 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean.aiml;
 
-import hha.aiml.Chat;
+import hha.aiml.Jcseg;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -69,7 +69,7 @@ public class AIMLHandler extends DefaultHandler
     String pushed = text.toString();
    // java.lang.System.out.println(pushed);
     if(isToUseChineseTranslate) {    
-    	pushed = Chat.chineseTranslate(pushed); 
+    	pushed = Jcseg.chineseTranslate(pushed); 
     //	pushed= pushed.toUpperCase(); 
         java.lang.System.out.println(pushed);
      }

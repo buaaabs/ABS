@@ -1,9 +1,10 @@
 package hha.main;
 
+import hha.robot.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.example.robottest.R;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -25,11 +26,11 @@ public class MenuList extends ListActivity{
 		HashMap<String, String>map3=new HashMap<String, String>();
 		HashMap<String, String>map4=new HashMap<String, String>();
 		HashMap<String, String>map5=new HashMap<String, String>();
-		map1.put("options", "第一项");
-		map2.put("options", "第二项");
-		map3.put("options", "第三项");
-		map4.put("options", "第四项");
-		map5.put("options", "第五项");
+		map1.put("options", "锟斤拷一锟斤拷");
+		map2.put("options", "锟节讹拷锟斤拷");
+		map3.put("options", "锟斤拷锟斤拷锟斤拷");
+		map4.put("options", "锟斤拷锟斤拷锟斤拷");
+		map5.put("options", "锟斤拷锟斤拷锟斤拷");
 		list.add(map1);
 		list.add(map2);
 		list.add(map3);

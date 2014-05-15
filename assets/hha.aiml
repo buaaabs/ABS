@@ -3,6 +3,7 @@
 	<category>
 		<pattern>* 健康 检查 *</pattern>
 		<template>
+			<set>10 -10 0 9 </set>
 			<random>
 				<li>好的，那我就给您做次检查吧！</li>
 				<li>恩，那我们现在就开始吧</li>

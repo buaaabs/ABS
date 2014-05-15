@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -14,7 +14,7 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean.aiml;
 
-import hha.aiml.Chat;
+import hha.aiml.Jcseg;
 
 import java.lang.System;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class Pattern implements AIMLElement
   {
 	 String p = pattern.trim();
 	 if(isToUseChineseTranslate) {    
-		 p = Chat.chineseTranslate(p);
+		 p = Jcseg.chineseTranslate(p);
 		 p.toUpperCase();
 		 System.out.println(p);
 	 }
@@ -71,7 +71,7 @@ public class Pattern implements AIMLElement
     String text = child.toString();
    // System.out.println(text);
     if(isToUseChineseTranslate) {    
-		 text = Chat.chineseTranslate(text);
+		 text = Jcseg.chineseTranslate(text);
 		 text = text.toUpperCase();
 	//	 System.out.println(text);
 	 }
@@ -98,7 +98,7 @@ public class Pattern implements AIMLElement
     String text = builder.toString().trim();
 //    System.out.println(text);
     if(isToUseChineseTranslate) {    
-		 text = Chat.chineseTranslate(text);
+		 text = Jcseg.chineseTranslate(text);
 		 text = text.toUpperCase();
 	//	 System.out.println(text);
 	 }

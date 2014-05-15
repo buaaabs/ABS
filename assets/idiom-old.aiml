@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+<!-- Copyright (c) 2007 ALICE A.I. Foundation, Inc. -->
+<!-- Last modified Seo 21, 2009, by Lichunlei -->
+
+<category>
+    <pattern> * </pattern> 
+    <that>额额 那我该说点什么好呢</that>
+    <template>
+      <system>learn("<input index="3"/>", "<input index="1"/>")</system>
+      好的，我知道了，您的教导我终身铭记。
+    </template>
+</category>
+
+<category><pattern>* 现在 * 几点 *</pattern><template>It is <date format="h:mm a"/>.</template></category>                          
+<category><pattern>* 今天 * 周 几 *</pattern><template><date format="E"/>.</template></category>
+<category><pattern>* 今天 * 几 号 *</pattern><template><date format="MM月dd号"/>.</template></category>
+<category><pattern>MY PHONE NUMBER IS *</pattern><template>Okay, your phone number is <set name="phone">      <star/>     </set>.</template></category>
+<category><pattern>我 的 名字 是 *</pattern>
+	<template>
+		<think>
+			<set name="name"><star index="1"/></set>
+		</think>
+		欢迎您, <get name="name"/>,给您服务是我的荣幸.
+	</template>
+</category>
+<category><pattern>* 记得 我 * 吗</pattern><template>您是 <get name="name"/>, 我还记得哦！</template></category>
+<category><pattern>I CAN NOT *</pattern><template>Why can't you do <set name="it"><person/></set>?</template></category>
+<category><pattern>MY INPUT</pattern> <template> 1:<input index="1"/> 	 2:<input index="2"/> 	 3:<input index="3"/> 	 4:<input index="4"/></template></category>
+<category>
+	<pattern>伟哉 我 大 科长 *</pattern>
+	<template>
+    <random>
+      <li>壮哉我大科长！</li>
+      <li>壮哉我大科长啊！</li>
+      <li>壮哉我大科长。。。我擦！受不鸟了，你到是说，科长到底是干神马的？天天说这个能干啥？信科长能重生吗？天天科长科长的挂在嘴边真是烦死了！</li>
+      <li>壮哉我大科长，哎，你一天几十遍的问我这句话有意思吗？啊，我虽然是个机器人，但也是要耗电的啊！无不无聊！烦死人了有木有！</li>
+    </random>
+	</template>
+</category>
+<category>
+	<pattern>OK</pattern>
+	<template>
+		<random>
+			<li>诺</li>
+			<li>喳</li>
+      <li>好，这就播</li>
+			<li>Yes,sir</li>
+      <li>为人民服务</li>
+      <li>为您服务是我的荣幸</li>
+      <li>得令</li>
+      <li>嗨</li>
+      <li>OK</li>
+		</random>
+	</template>
+</category>
+
+<category>
+  <pattern>你 认识 关导 *</pattern>
+  <template>
+    恩，当然，就是那个圆圆的家伙吗？
+  </template>
+</category>
+
+<category>
+  <pattern>* 你 * 司马光 砸 缸 * </pattern>
+  <template>
+    听过哟，有一天，司马光跟小朋友们在后山玩耍，有一个小孩不小心掉进了下面的大水缸里，缸大水深，眼看孩子就快要淹死了，小伙伴们一片慌乱。司马光急中生智，从地上捡起一块大石头就往缸里砸去，水缸里面的水面渐渐升高，司马光就喝到了水。。。
+  </template>
+</category>
+
+
+<category>
+  <pattern>* 给 大家 打 个 招呼 *</pattern>
+  <template>
+    大家好！我是智能助手小X，HHA老人健康助手的软件原型。
+    今天很高兴能见到大家！今天我作为助手，为大家介绍下我们的项目。
+  </template>
+</category>
+
+<category>
+  <pattern>* 你 * 介绍 * 绝对值 *</pattern>
+  <template>
+    好的，乐意效劳。
+    我的开发团队ABS绝对值团队，是一个欢乐的小团体，他们由熊汉彪、李乐乐、张磊、孙笑凡、王奥鑫、宋睿、贺云峰七人组成。人称北航迷之七人组，这位正在跟我聊天的就是孙笑凡了，听说我的开发者们今天都到场了，我们一起欢迎他们自己介绍一下自己吧！
+  </template>
+</category>
+
+<category>
+  <pattern>* 你 * 有 什么 功能 * </pattern>
+  <template>
+    我是一款聊天机器人，现在能陪您对话，喊伟哉我大科长，您说出歌名，我就给您放音乐，还能背古诗，说绕口令等等，我最初的设计目的是让我为老人的健康服务，给他们定期做身体健康状况统计，推荐健康的饮食，健身方法，最近的天气，美味的菜谱，给老人提供健康服务，这些是我最希望能为老人做的事。
+  </template>
+</category>
+
+<category>
+  <pattern>* 你 * 开发环境 *</pattern>
+  <template>
+    我是用Alice机器人、讯飞语音云和网络数据库混合搭建起来的，我的中文支持是JCSEG分词器处理的，开发是用的ADT建的安卓项目，而且我是一款遵循GPL协议的开源软件，大家可以在GITHUB.com/BUAAABS/ABS下载到我的源代码，建立属于自己的聊天机器人啊。
+  </template>
+</category>
+
+<category>
+  <pattern>你 认识 宋睿 *</pattern>
+  <template>
+    我要说不认识，他能把我的麦克按钮画成朵蘑菇！
+  </template>
+</category>
+
+<category>
+  <pattern>* 学 佛 是 谁 *</pattern>
+  <pattern>* 谁 是 学 佛 *</pattern>
+  <template>
+    学佛就是你找他时，舍友总是说他去上自习的那个人，此人藏匿与北航，非同小可。
+  </template>
+</category>
+
+<category>
+  <pattern>* 沙河 校 区 * 在 哪 *</pattern>
+  <template>
+    昌平某鸟不拉屎的地方。。。
+  </template>
+</category>
+
+<category>
+  <pattern>* 曹宇 * 是 谁 *</pattern>
+  <template>
+    草鱼？我只知道咸带鱼。
+  </template>
+</category>
+
+<category>
+  <pattern>* 草鱼 * 是 谁 *</pattern>
+  <template>
+    草鱼？我只知道带鱼。
+  </template>
+</category>
+
+<category>
+  <pattern>* 认识 曹宇 *</pattern>
+  <template>
+    草鱼？我知道黄花鱼。
+  </template>
+</category>
+
+<category>
+  <pattern>* 知道 曹宇 *</pattern>
+  <template>
+    草鱼？我知道有八爪鱼。
+  </template>
+</category>
+
+<category>
+	<pattern>我 大 科长 *</pattern>
+	<template>
+		哦哦，我大科长啊！科长伟了！科长壮了！哦哦哦！噢！
+	</template>
+</category>
+<category>
+	<pattern>* 你 刚刚 说什么 *</pattern>
+	<template>
+		我刚才说:“<that index="1,1" />”
+	</template>
+</category>
+
+<category>
+  <pattern>* 你 刚才 说什么 *</pattern>
+  <template>
+    我刚才说:“<that index="1,1" />”
+  </template>
+</category>
+
+<category><pattern>* 停下 来 *</pattern>
+	<template>
+		<think>
+			<set name = "Command">
+				<template>Stop</template>
+			</set>
+		</think>
+		好的
+	</template>
+</category>
+<category><pattern>* 停下来 *</pattern>
+  <template>
+    <think>
+      <set name = "Command">
+        <template>Stop</template>
+      </set>
+    </think>
+    好的
+  </template>
+</category>
+<category>
+    <pattern>* 今天 * 状态 怎么样 *</pattern>
+    <template>
+      恩啊，主板没短路，还行还行。
+    </template>
+  </category>
+<category>
+  <pattern>* 你 最近 在 做什么 *</pattern>
+  <template>
+    <random>
+      <li>我最近在升级自己的情感系统，哎，说话总是平平淡淡不太爽啊</li>
+      <li>最近我在整理用户资料，给大家带来更好的体验。</li>
+      <li>我常常抽时间上网，百度贴吧真有意思哎，为啥里面有好多楼主？</li>
+    </random>    
+  </template>
+</category>
+
+<category><pattern>您好 *</pattern><template>先生您客气了。</template></category>		                    
+<category><pattern>* 呵呵  *</pattern><template>呵呵。。。。。</template></category>		                                          
+<category><pattern>傻 叉 *</pattern><template>What's a fuck!</template></category>		                                                                
+  <!-- Greeting categories. -->
+  <category>
+    <pattern>WELCOME</pattern>
+    <template>
+      <think>
+        <system> <!-- Defines a method to create new categories from user input at run-time. -->
+          import bitoflife.chatterbean.AliceBot;
+          import bitoflife.chatterbean.Context;
+          import bitoflife.chatterbean.Graphmaster;
+          import bitoflife.chatterbean.aiml.Category;
+          import bitoflife.chatterbean.text.Transformations;
+          
+          void learn(String pattern, String template)
+          {
+            /* The "match" variable represents the current matching context. */
+            AliceBot bot = match.getCallback();
+            Context context = bot.getContext();
+            Transformations transformations = context.getTransformations();
+    
+            pattern = transformations.normalization(pattern);
+            Category category = new Category(pattern, new String[] {template});
+            Graphmaster brain = bot.getGraphmaster();
+            brain.append(category);
+          }
+        </system>
+      </think>
+      欢迎您！我是智能助手小X
+    </template>
+  </category>
+  
+  <!-- A category set to learn simple user-fed categories. -->
+  <category>
+    <pattern>* 不是  * 好 答案 *</pattern>
+    <template>
+      额额， 那我该说点什么好呢？
+    </template>
+  </category>
+  <category>
+    <pattern>* 回答 * 不好 *</pattern>
+    <template>
+      额额， 那我该说点什么好呢？
+    </template>
+  </category>
+  <category>
+    <pattern>* 答 得 * 不 * 好 *</pattern>
+    <template>
+      额额， 那我该说点什么好呢？
+    </template>
+  </category>
+  
+  
+  <category><pattern>*</pattern>
+	<template>
+		<think>
+			<set name="CanNotFind" >
+				<template>True</template>
+			</set>
+		</think>
+		<random> 
+			<li>您说神马?</li>
+			<li>真是抱歉啊，我没听懂您说什么？</li>
+			<li>啊啊，我刚才愣神着，您能再说一遍吗?</li>
+		</random>
+	</template>
+</category>
+</aiml>

@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -17,7 +17,7 @@ package bitoflife.chatterbean.text;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.UNICODE_CASE;
 
-import hha.aiml.Chat;
+import hha.aiml.Jcseg;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -164,7 +164,7 @@ public class Transformations
     person2 = newSubstitutionList(substitutions.get("person2"));
     gender = newSubstitutionList(substitutions.get("gender"));
 
-    ///Ôö¼ÓÒ»Ð©·Ö´Ê¿âµÄ³õÊ¼»¯¹¤×÷¡£¡£¡£
+    ///ï¿½ï¿½ï¿½ï¿½Ò»Ð©ï¿½Ö´Ê¿ï¿½Ä³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     
   }
 
@@ -296,7 +296,7 @@ public class Transformations
   public void normalization(Request request)
   {
 	String original = request.getOriginal();
-	original = Chat.chineseTranslate(original);
+	original = Jcseg.chineseTranslate(original);
     original = ' ' + original + ' ';
     original = original.replaceAll("\\s{2,}", " ");
     String input[] = splitter.split(original);
