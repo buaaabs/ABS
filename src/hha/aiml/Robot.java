@@ -1,5 +1,7 @@
 package hha.aiml;
 
+import hha.main.MainActivity;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,16 +18,20 @@ public class Robot implements Runnable {
 	AssetManager am = null;
 	boolean canfind = false;
 	String command = null;
+	MainActivity main = null;
 	private ByteArrayOutputStream gossip;
 
-	public Robot(AssetManager am) {
+	public Robot(AssetManager am,MainActivity main) {
 		// TODO Auto-generated constructor stub
 		this.am = am;
+		this.main = main;
 	}
 
 	public void InitRobot() {
 		// /初始化分词系统
 		try {
+			BotEmotion.init();
+			
 			InputStream prop = am.open("jcseg.properties",
 					AssetManager.ACCESS_BUFFER);
 
@@ -44,7 +50,7 @@ public class Robot implements Runnable {
 			}
 			Jcseg.initSeg();
 
-			// /初始化机器人
+			// 初始化机器人
 			gossip = new ByteArrayOutputStream();
 
 			AliceBotParser parser = new AliceBotParser();
@@ -57,15 +63,20 @@ public class Robot implements Runnable {
 
 			bitoflife.chatterbean.Context bot_context = bot.getContext();
 			bot_context.outputStream(gossip);
+			main.showTip("Bot Bootup");
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			main.showTip("Bot IOException");
 			e.printStackTrace();
 		} catch (AliceBotParserConfigurationException e) {
 			// TODO Auto-generated catch block
+			main.showTip("Bot AliceBotParserConfigurationException");
 			e.printStackTrace();
 		} catch (AliceBotParserException e) {
+			main.Show("Error", e.getMessage());
 			// TODO Auto-generated catch block
+			main.showTip("Bot AliceBotParserException");
 			e.printStackTrace();
 		}
 	}
@@ -79,25 +90,27 @@ public class Robot implements Runnable {
 	}
 
 	public String Respond(String str) {
-		String output = "";
-
-		bitoflife.chatterbean.Context context = (bot != null ? bot.getContext()
-				: null);
-
-		if (context != null) {
-
-			output = (String) context.property("predicate.CanNotFind");
-			context.property("predicate.CanNotFind", "null");
-			command = (String) context.property("predicate.Command");
-			context.property("predicate.Command", "null");
+		
+		if (!isInitDone())
+		{
+			return "";
 		}
+		
+		String output = "";
+		String ansString = bot.respond(str);
+		bitoflife.chatterbean.Context context = bot.getContext();
+
+		output = (String) context.property("predicate.CanNotFind");
+		context.property("predicate.CanNotFind", "null");
+		command = (String) context.property("predicate.Command");
+		context.property("predicate.Command", "null");
 
 		if ("True".equals(output))
 			canfind = false;
 		else
 			canfind = true;
 
-		return bot.respond(str);
+		return ansString;
 	}
 
 	public boolean CanFindAnswer() {

@@ -9,6 +9,7 @@ import android.os.RemoteException;
 
 import com.iflytek.speech.ISpeechModule;
 import com.iflytek.speech.InitListener;
+import com.iflytek.speech.SpeechConstant;
 import com.iflytek.speech.SpeechSynthesizer;
 import com.iflytek.speech.SynthesizerListener;
 
@@ -22,7 +23,14 @@ public class Reader {
 		@Override
 		public void onInit(ISpeechModule arg0, int arg1) {
 			// TODO Auto-generated method stub
-			
+			// 设置引擎类型
+			mTts.setParameter(SpeechConstant.ENGINE_TYPE, "local");
+			// 设置发音人
+			mTts.setParameter(SpeechSynthesizer.VOICE_NAME, "xiaoyan");
+			// 设置语速
+			mTts.setParameter(SpeechSynthesizer.SPEED, "50");
+			// 设置音调
+			mTts.setParameter(SpeechSynthesizer.PITCH, "50");
 		}	
 	};
 	

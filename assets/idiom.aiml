@@ -3,14 +3,6 @@
 <!-- Copyright (c) 2007 ALICE A.I. Foundation, Inc. -->
 <!-- Last modified Seo 21, 2009, by Lichunlei -->
 
-<category>
-    <pattern> * </pattern> 
-    <that>额额 那我该说点什么好呢</that>
-    <template>
-      <system>learn("<input index="3"/>", "<input index="1"/>")</system>
-      好的，我知道了，您的教导我终身铭记。
-    </template>
-</category>
 
 <category><pattern>* 现在 * 几点 *</pattern>
 <template>It is <date format="h:mm a"/>.</template></category>                          
@@ -33,8 +25,9 @@
 <category><pattern>I CAN NOT *</pattern><template>Why can't you do <set name="it"><person/></set>?</template></category>
 <category><pattern>MY INPUT</pattern> <template> 1:<input index="1"/>    2:<input index="2"/>    3:<input index="3"/>    4:<input index="4"/></template></category>
 <category>
-  <pattern>伟哉我大科长 *</pattern>
+  <pattern>* 伟哉我大科长 *</pattern>
   <template>
+  	<emotion happiness="-100" vitality="10" confidence="20" mighty="-10" />
     <random>
       <li>壮哉我大科长！</li>
       <li>壮哉我大科长啊！</li>
@@ -136,17 +129,17 @@
 </category>
 
 <category>
-  <pattern>* 沙河 校 区 * 在 哪 *</pattern>
+  <pattern>* 沙河校区 * 在哪 *</pattern>
   <template>
     昌平某鸟不拉屎的地方。。。
   </template>
 </category>
 
 <category>
-  <pattern>* 曹宇 * 是 谁 *</pattern>
-  <pattern>* 草鱼 * 是 谁 *</pattern>
-  <pattern>* 认识 曹宇 *</pattern>
-  <pattern>* 知道 曹宇 *</pattern>
+  <pattern>* 曹宇 * 是谁 *</pattern>
+  <pattern>* 草鱼 * 是谁 *</pattern>
+  <pattern>* 认识曹宇 *</pattern>
+  <pattern>* 知道曹宇 *</pattern>
   <template>
     <random>
       <li>草鱼？我只知道咸带鱼。</li>
@@ -158,36 +151,26 @@
 </category>
 
 <category>
-  <pattern>我 大 科长 *</pattern>
+  <pattern>我大科长 *</pattern>
   <template>
     哦哦，我大科长啊！科长伟了！科长壮了！哦哦哦！噢！
   </template>
 </category>
 <category>
-  <pattern>* 你 刚刚 说什么 *</pattern>
+  <pattern>* 你刚刚说什么 *</pattern>
   <template>
     我刚才说:“<that index="1,1" />”
   </template>
 </category>
 
 <category>
-  <pattern>* 你 刚才 说什么 *</pattern>
+  <pattern>* 你刚才说什么 *</pattern>
   <template>
     我刚才说:“<that index="1,1" />”
   </template>
 </category>
 
-<category><pattern>* 停下 来 *</pattern>
-  <template>
-    <think>
-      <set name = "Command">
-        <template>Stop</template>
-      </set>
-    </think>
-    好的
-  </template>
-</category>
-<category><pattern>* 停下来 *</pattern>
+<category><pattern>* #停|停下 *</pattern>
   <template>
     <think>
       <set name = "Command">
@@ -201,15 +184,15 @@
     <pattern>* 今天 * 状态怎么样 *</pattern>
     <pattern>* 今天 * 状态可好 *</pattern>
     <template>
-      <random>
-        <li>恩啊，主板没短路，还行还行。</li>
-        <li>恩呢，还不错</li>
-        <li>额额，不是特别爽啊</li>
-      </random> 
+	      <random>
+	        <li>恩啊，主板没短路，还行还行。</li>
+	        <li>恩呢，还不错</li>
+	        <li>额额，不是特别爽啊</li>
+	      </random> 
     </template>
-  </category>
+</category>
 <category>
-  <pattern>* 你 最近 在 做什么 *</pattern>
+  <pattern>* 你最近在做什么 *</pattern>
   <template>
     <random>
       <li>我最近在升级自己的情感系统，哎，说话总是平平淡淡不太爽啊</li>
@@ -221,7 +204,7 @@
 
 <category><pattern>您好 *</pattern><template>先生您客气了。</template></category>                        
 <category><pattern>* 呵呵  *</pattern><template>呵呵。。。。。</template></category>                                             
-<category><pattern>傻 叉 *</pattern><template>What's a fuck!</template></category>                                                                    
+<category><pattern>傻叉 *</pattern><template>What's a fuck!</template></category>                                                                    
   <!-- Greeting categories. -->
   <category>
     <pattern>WELCOME</pattern>
@@ -254,7 +237,7 @@
   
   <!-- A category set to learn simple user-fed categories. -->
   <category>
-    <pattern>* 不是  * 好 答案 *</pattern>
+    <pattern>* 不是  * 好答案 *</pattern>
     <template>
       额额， 那我该说点什么好呢？
     </template>
@@ -266,7 +249,7 @@
     </template>
   </category>
   <category>
-    <pattern>* 答 得 * 不 * 好 *</pattern>
+    <pattern>* 答得 * 不 * 好 *</pattern>
     <template>
       额额， 那我该说点什么好呢？
     </template>
@@ -287,5 +270,16 @@
     </random>
   </template>
 </category>
+
+<category>
+    <pattern> _ </pattern> 
+    <that>额额 那我该说点什么好呢</that>
+    <template>
+      <system>learn("<input index="3"/>", "<input index="1"/>")</system>
+      好的，我知道了，您的教导我终身铭记。
+    </template>
+</category>
+
 </aiml>
+
 

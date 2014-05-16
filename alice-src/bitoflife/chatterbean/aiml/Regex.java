@@ -8,12 +8,8 @@ import java.util.List;
 
 import org.xml.sax.Attributes;
 
-
-///�Լ�����ӵ�������ʽ��ǩ
-
-
 public class Regex extends Pattern implements AIMLElement {
-
+	
 	public Regex() {
 		// TODO Auto-generated constructor stub
 	}
@@ -29,6 +25,7 @@ public class Regex extends Pattern implements AIMLElement {
 	    
 		 hashCode = Arrays.hashCode(this.pattern);
 	}
+	
 	private String[] pattern;
 
 	private int hashCode;
@@ -58,15 +55,13 @@ public class Regex extends Pattern implements AIMLElement {
 	private boolean isSharp(String name) {
 //		System.out.println(name);
 		return ("#".equals(name.substring(0, 1)));
-	  }
+	}
 	
 	private boolean isToUseChineseTranslate = true;
-	 List<String> patternList;
+	List<String> patternList;
 	  
-	 
-	 
-	  public void appendChild(String str)
-	  {
+	public void appendChild(String str)
+	{
 	    String text = str;
 	   // System.out.println(text);
 	    if (!isSharp(text))
@@ -86,18 +81,17 @@ public class Regex extends Pattern implements AIMLElement {
 	    for (int i = 0; i < pp.length; i++) {
 	    	patternList.add(pp[i]);
 	    }
-	  }
+	}
 
 	@Override
 	public void appendChildren(List<AIMLElement> children) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generaed method stub
 		StringBuilder builder = new StringBuilder();
 	    for (AIMLElement child : children)
 	      builder.append(child);
 	    
 	    String text = builder.toString().trim();
-//	    System.out.println(text);
-	    
+
 	    String[] p = text.split(" ");
 	    patternList = null;
 	    for (String string : p) {
@@ -105,10 +99,7 @@ public class Regex extends Pattern implements AIMLElement {
 		}
 	    pattern = new String[patternList.size()];
 	    patternList.toArray(pattern);
-	    
-//	    java.lang.System.out.println("Regex:"+pattern[0]);
-	    
-//	    pattern = text.split(" ");
+
 	    hashCode = Arrays.hashCode(pattern);
 	}
 

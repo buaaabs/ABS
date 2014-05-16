@@ -51,7 +51,7 @@ public class Pattern implements AIMLElement
 	 if(isToUseChineseTranslate) {    
 		 p = Jcseg.chineseTranslate(p);
 		 p.toUpperCase();
-		 System.out.println(p);
+//		 System.out.println(p);
 	 }
 	 this.pattern = p.split(" ");
     

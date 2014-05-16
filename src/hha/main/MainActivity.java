@@ -1,5 +1,6 @@
 package hha.main;
 
+import hha.aiml.BotEmotion;
 import hha.aiml.Jcseg;
 import hha.aiml.Robot;
 import hha.robot.R;
@@ -69,7 +70,7 @@ public class MainActivity extends Activity {
 
 	public void Welcome()
 	{
-		String ansString = bot.Respond("welcome");
+		String ansString = "欢迎您，我是智能助手小X";
 		text.setText(ansString + "\n");
 		reader.start(ansString);
 	}
@@ -99,13 +100,22 @@ public class MainActivity extends Activity {
 
 		player.playUrl(music_url);
 	}
-
-	public void Show(String userString, String ansString) {
-		text.setText(text.getText() + "\n用户:" + userString + '\n');
-		text.setText(text.getText() + ansString + "\n");
-		audiom.setStreamVolume(AudioManager.STREAM_MUSIC, oldAudio,
-				AudioManager.FLAG_PLAY_SOUND);
-		reader.start(ansString);
+	public void ShowText(String t)
+	{
+		text.setText(text.getText() + t + "\n");
+	}
+	
+	public void Show(final String userString, final String ansString) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				ShowText("\n用户:" + userString);
+				ShowText(ansString);
+				audiom.setStreamVolume(AudioManager.STREAM_MUSIC, oldAudio,
+						AudioManager.FLAG_PLAY_SOUND);
+				reader.start(ansString);
+			}
+		});
 	}
 
 	public void GetReturnData(Data data)
@@ -129,6 +139,7 @@ public class MainActivity extends Activity {
 		
 		String ansString = null;
 		ansString = bot.Respond(input);
+		ShowText("bot answer:"+ansString);
 		if (!bot.CanFindAnswer())
 			ansString = data.content;
 			
@@ -199,6 +210,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		BotEmotion.main = this;
 		
 		pm = getPackageManager();
 		homeInfo = pm.resolveActivity(new Intent(Intent.ACTION_MAIN)
@@ -251,17 +263,25 @@ public class MainActivity extends Activity {
 		});
 
 		this.mToast = Toast.makeText(this, "", Toast.LENGTH_LONG);
-
+		text.setText("欢迎\n");
+		
 		try {
+			//初始化本地机器人
+			bot = new Robot(getAssets(),this);
+			bot.BeginInit();
+			
+			text.setText(text.getText()+"正在启动语音合成引擎\n");
+			//初始化语音合成引擎
 			Context context = getApplicationContext();
 			reader = new Reader(context);
-			bot = new Robot(getAssets());
+			
+			text.setText(text.getText()+"正在启动语音识别引擎\n");
+			//初始化语音识别引擎
 			netbot = new NetRobot(this);
 			netbot.InitXF();
-			
-			bot.InitRobot();
 		
-			// /初始化Player
+			text.setText(text.getText()+"正在初始化音乐播放器\n");
+			// 初始化音乐Player
 			player = new Player(new SeekBar(context));
 
 		} catch (Exception e) {

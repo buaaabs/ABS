@@ -17,7 +17,7 @@ public class Jcseg {
 	private static JcsegTaskConfig config;
 	private static ADictionary dic;
 	private static ASegment seg;
-
+	public static boolean isInitDone = false;
 	public static void init(InputStream prop) {
 		config = new JcsegTaskConfig(prop);
 		dic = DictionaryFactory.createDefaultDictionary(config);
@@ -36,6 +36,7 @@ public class Jcseg {
 		try {
 			seg = (ASegment) SegmentFactory.createJcseg(
 					JcsegTaskConfig.COMPLEX_MODE, new Object[] { config, dic });
+			isInitDone = true;
 		} catch (JcsegException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,6 +44,8 @@ public class Jcseg {
 	}
 
 	public static String chineseTranslate(String str) {
+		if (!isInitDone)
+			return str;
 		try {
 			seg.reset(new StringReader(str));
 		} catch (IOException e) {
@@ -59,7 +62,7 @@ public class Jcseg {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.print("分词:" + newStr + "\n");
+//		System.out.print("分词:" + newStr + "\n");
 		return newStr.toString();
 	}
 
