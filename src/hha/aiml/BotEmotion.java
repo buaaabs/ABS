@@ -41,6 +41,12 @@ public class BotEmotion {
 		mighty_u = (int) (N_rand(15.0, 9.0) + 0.5);
 
 	}
+	
+	public static void UpdateEmotion()
+	{
+		Robot bot = main.getBot();
+		bot.setProperty("Emotion", "");
+	}
 
 	public static int normalization(int value) {
 		if (value < 0)
@@ -118,7 +124,7 @@ public class BotEmotion {
 		return r.nextGaussian() * Math.sqrt(sigma2) + miu;
 	}
 
-	// 泊松分布随机数的产生，代码如下：
+	// 泊松分布随机数的产生，代码如下： （未测试）
 	public static double P_rand(double Lamda) { // 泊松分布
 		double x = 0, b = 1, c = Math.exp(-Lamda), u;
 		do {

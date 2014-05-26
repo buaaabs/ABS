@@ -5,9 +5,16 @@ import hha.main.MainActivity;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import android.content.res.AssetManager;
 import bitoflife.chatterbean.AliceBot;
+import bitoflife.chatterbean.Context;
+import bitoflife.chatterbean.Graphmaster;
+import bitoflife.chatterbean.aiml.AIMLParser;
+import bitoflife.chatterbean.aiml.AIMLParserConfigurationException;
+import bitoflife.chatterbean.aiml.AIMLParserException;
 import bitoflife.chatterbean.parser.AliceBotParser;
 import bitoflife.chatterbean.parser.AliceBotParserConfigurationException;
 import bitoflife.chatterbean.parser.AliceBotParserException;
@@ -15,13 +22,15 @@ import bitoflife.chatterbean.parser.AliceBotParserException;
 public class Robot implements Runnable {
 
 	AliceBot bot = null;
+	Context context = null;
+	Graphmaster graphmaster = null;
 	AssetManager am = null;
 	boolean canfind = false;
 	String command = null;
 	MainActivity main = null;
 	private ByteArrayOutputStream gossip;
 
-	public Robot(AssetManager am,MainActivity main) {
+	public Robot(AssetManager am, MainActivity main) {
 		// TODO Auto-generated constructor stub
 		this.am = am;
 		this.main = main;
@@ -31,7 +40,7 @@ public class Robot implements Runnable {
 		// /初始化分词系统
 		try {
 			BotEmotion.init();
-			
+
 			InputStream prop = am.open("jcseg.properties",
 					AssetManager.ACCESS_BUFFER);
 
@@ -61,8 +70,9 @@ public class Robot implements Runnable {
 					am.open("substitutions.xml", AssetManager.ACCESS_BUFFER),
 					am.open("idiom.aiml", AssetManager.ACCESS_BUFFER));
 
-			bitoflife.chatterbean.Context bot_context = bot.getContext();
-			bot_context.outputStream(gossip);
+			context = bot.getContext();
+			graphmaster = bot.getGraphmaster();
+			context.outputStream(gossip);
 			main.showTip("Bot Bootup");
 
 		} catch (IOException e) {
@@ -80,7 +90,7 @@ public class Robot implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean isInitDone() {
 		return bot != null;
 	}
@@ -90,12 +100,11 @@ public class Robot implements Runnable {
 	}
 
 	public String Respond(String str) {
-		
-		if (!isInitDone())
-		{
+
+		if (!isInitDone()) {
 			return "";
 		}
-		
+
 		String output = "";
 		String ansString = bot.respond(str);
 		bitoflife.chatterbean.Context context = bot.getContext();
@@ -119,6 +128,55 @@ public class Robot implements Runnable {
 
 	public String getCommand() {
 		return command;
+	}
+
+	public String getProperty(String str) {
+		if (!isInitDone()) {
+			return "";
+		}
+		return (String) context.property("predicate." + str);
+	}
+
+	public void setProperty(String str, String data) {
+		if (!isInitDone()) {
+			return;
+		}
+		context.property("predicate." + str, data);
+	}
+
+	public void LearnFromStream(InputStream stream) {
+		try {
+			AIMLParser parser = new AIMLParser();
+			parser.parse(graphmaster, stream);
+		} catch (AIMLParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (AIMLParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void LearnFromUrl(String address) {
+		URL url = null;
+		AIMLParser parser = null;
+		try {
+			url = new URL(address);
+			parser = new AIMLParser();
+			parser.parse(graphmaster, url.openStream());
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (AIMLParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (AIMLParserConfigurationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

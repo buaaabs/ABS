@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -85,7 +85,7 @@ public Category(String pattern, Object... children)
   
   public void appendChild(AIMLElement child)
   {
-	//´Ë´¦½«AIMLÓïÑÔÃ¿¸öCategoryÏÞÖÆÎªÒ»¸öPattern  
+	//ï¿½Ë´ï¿½ï¿½ï¿½AIMLï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½Categoryï¿½ï¿½ï¿½ï¿½ÎªÒ»ï¿½ï¿½Pattern  
   
     if (child instanceof Pattern)
     {
@@ -105,11 +105,12 @@ public Category(String pattern, Object... children)
 		// TODO Auto-generated method stub
 		for (Pattern pattern : patterns) {
 			Category category = new Category(pattern,that, input,  topic, template);
-			
 			category.pattern = pattern;
 			callback.append(category);
 		}	
 	}
+  
+ 
   
   public void appendChildren(List<AIMLElement> children)
   {

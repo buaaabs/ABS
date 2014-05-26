@@ -56,6 +56,22 @@ public class MainActivity extends Activity {
 	private Toast mToast;
 	private TextView text = null;
 
+	public Robot getBot() {
+		return bot;
+	}
+
+	public NetRobot getNetbot() {
+		return netbot;
+	}
+
+	public Reader getReader() {
+		return reader;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
 	public Button mainButton = null;
 	public Button button = null;
 
