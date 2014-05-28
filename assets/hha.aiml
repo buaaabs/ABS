@@ -3,7 +3,6 @@
 	<category>
 		<pattern>* 健康 检查 *</pattern>
 		<template>
-			<set>10 -10 0 9 </set>
 			<random>
 				<li>好的，那我就给您做次检查吧！</li>
 				<li>恩，那我们现在就开始吧</li>
@@ -13,7 +12,7 @@
 	</category>
 
 	<category>
-		<pattern>健康 检查</pattern>
+		<pattern>健康检查</pattern>
 		<template>
 			<random>
 				<li>好像好久您都没做健康检查了，要我帮您做次吗？</li>
@@ -25,14 +24,13 @@
 
 	<category>
 		<pattern>好的</pattern>
-		<input>健康 检查</input>
-		<template><srai>健康 检查</srai></template>
-		
+		<input>健康检查</input>
+		<template></template>
 	</category>
 
 	<category>
 		<pattern>不用了</pattern>
-		<input>健康 检查</input>
+		<input>健康检查</input>
 		<template>
 			<random>
 				<li>恩，那好吧，不过还是建议您多留心您的身体啊^_^</li>
@@ -43,7 +41,7 @@
 
 	<category>
 		<pattern>算了</pattern>
-		<input>健康 检查</input>
+		<input>健康检查</input>
 		<template>
 			<random>
 				<li>恩，那好吧，不过还是建议您多留心您的身体啊^_^</li>
@@ -53,45 +51,45 @@
 	</category>
 
 	<category>
-		<pattern>* 今日 天气 *</pattern>
+		<pattern>* 今日天气 *</pattern>
 		<template></template>
 	</category>
 
 	<category>
-		<pattern>* 最近 饮食 *</pattern>
+		<pattern>* 最近饮食 *</pattern>
 		<template></template>
 	</category>
 
 	<category>
-		<pattern>* 近期 节目 *</pattern>
+		<pattern>* 近期节目 *</pattern>
 		<template></template>
 	</category>
 	<category>
-		<pattern>* 听听 戏曲 *</pattern>
+		<pattern>* 听听戏曲 *</pattern>
 		<template></template>
 	</category>
 	<category>
-		<pattern>* 最近 新闻 *</pattern>
+		<pattern>* 最近新闻 *</pattern>
 		<template></template>
 	</category>
 	<category>
-		<pattern>* 随便 来点 音乐 *</pattern>
+		<pattern>* 随便来点音乐 *</pattern>
 		<template></template>
 	</category>
 	<category>
-		<pattern>* 你 今天 心情 怎么样 *</pattern>
+		<pattern>* 你今天心情怎么样 *</pattern>
 		<template></template>
 	</category>
 	<category>
-		<pattern>* 随便 来点 音乐 *</pattern>
+		<pattern>* 随便来点音乐 *</pattern>
 		<template></template>
 	</category>
 	<category>
-		<pattern>* 随便 来首 歌 *</pattern>
+		<pattern>* 随便来首歌 *</pattern>
 		<template></template>
 	</category>
 	<category>
-		<pattern>* 有 啥 好 菜谱 *</pattern>
+		<pattern>* 有啥好菜谱 *</pattern>
 		<template></template>
 	</category>
 	

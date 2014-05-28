@@ -71,15 +71,15 @@ public class NetRobot {
 		@Override
 		public void onResult(final UnderstanderResult result)
 				throws RemoteException {
-			mainActivity.runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
+//			mainActivity.runOnUiThread(new Runnable() {
+//				@Override
+//				public void run() {
 					if (null != result) {
 						SaxParseService saxParseService = new SaxParseService();
 						Data data = null;
 						try {
 							String string = result.getResultString();
-							mainActivity.ShowText(string);
+							mainActivity.ShowTextOnUIThread(string);
 							data = saxParseService.getData(string);
 							
 						} catch (Exception e) {
@@ -89,8 +89,8 @@ public class NetRobot {
 						mainActivity.GetReturnData(data);
 					}
 				}
-			});
-		}
+//			});
+//		}
 	};
 
 	public void InitXF() {

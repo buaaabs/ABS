@@ -68,7 +68,8 @@ public class Robot implements Runnable {
 					am.open("context.xml", AssetManager.ACCESS_BUFFER),
 					am.open("splitters.xml", AssetManager.ACCESS_BUFFER),
 					am.open("substitutions.xml", AssetManager.ACCESS_BUFFER),
-					am.open("idiom.aiml", AssetManager.ACCESS_BUFFER));
+					am.open("idiom.aiml", AssetManager.ACCESS_BUFFER),
+					am.open("hha.aiml", AssetManager.ACCESS_BUFFER));
 
 			context = bot.getContext();
 			graphmaster = bot.getGraphmaster();

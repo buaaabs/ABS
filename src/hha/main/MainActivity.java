@@ -52,11 +52,12 @@ import com.iflytek.speech.SpeechUnderstanderListener;
 import com.iflytek.speech.SpeechUtility;
 import com.iflytek.speech.UnderstanderResult;
 
-public class MainActivity extends Activity implements Runnable{
+public class MainActivity extends Activity implements Runnable {
 
 	private Toast mToast;
 	private TextView text = null;
 	Caller call = null;
+
 	public Robot getBot() {
 		return bot;
 	}
@@ -85,13 +86,12 @@ public class MainActivity extends Activity implements Runnable{
 		return out.toString();
 	}
 
-	public void Welcome()
-	{
+	public void Welcome() {
 		String ansString = "欢迎您，我是智能助手小X";
 		text.setText(ansString + "\n");
 		reader.start(ansString);
 	}
-	
+
 	public void showTip(final String str) {
 		// TODO Auto-generated method stub
 		runOnUiThread(new Runnable() {
@@ -117,11 +117,20 @@ public class MainActivity extends Activity implements Runnable{
 
 		player.playUrl(music_url);
 	}
-	public void ShowText(String t)
-	{
+
+	public void ShowText(String t) {
 		text.setText(text.getText() + t + "\n");
 	}
-	
+
+	public void ShowTextOnUIThread(final String t) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				text.setText(text.getText() + t + "\n");
+			}
+		});
+	}
+
 	public void Show(final String userString, final String ansString) {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -135,54 +144,51 @@ public class MainActivity extends Activity implements Runnable{
 		});
 	}
 
-	public void GetReturnData(Data data)
-	{
+	public void GetReturnData(Data data) {
 		try {
-			if ((data.focus != null)
-					&& ("music".equals(data.focus))) {
+			if ((data.focus != null) && ("music".equals(data.focus))) {
 				playmusic(data);
 				String ansString = bot.Respond("OK");
 				Show(data.rawtext, ansString);
 				return;
 			}
-			if ((data.focus != null) && (data.operation!=null) && (data.name!=null)
-					&& ("telephone".equals(data.focus))
+			if ((data.focus != null) && (data.operation != null)
+					&& (data.name != null) && ("telephone".equals(data.focus))
 					&& ("call".equals(data.operation))) {
 				String ansString = bot.Respond("OK");
 				Show(data.rawtext, ansString);
-				if (call!=null)
+				if (call != null)
 					call.callName(data.name);
 				return;
 			}
-			if ((data.focus != null) && (data.operation!=null)
+			if ((data.focus != null) && (data.operation != null)
 					&& ("message".equals(data.focus))
 					&& ("send".equals(data.operation))) {
 				String ansString = bot.Respond("OK");
 				Show(data.rawtext, ansString);
-				
+
 				return;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			ShowText("Error: "+e.getMessage());
+			ShowTextOnUIThread("Error: " + e.getMessage());
 		}
 
 		String input = data.rawtext;
 		input = Jcseg.chineseTranslate(input);
-		text.setText(text.getText() + "分词:" + input);
-		
+
 		String ansString = null;
 		ansString = bot.Respond(input);
-		ShowText("bot answer:"+ansString);
-		if ((!bot.CanFindAnswer())&&(data.content!=null))
+		ShowTextOnUIThread("分词: " + input + "bot answer: " + ansString);
+		if ((!bot.CanFindAnswer()) && (data.content != null))
 			ansString = data.content;
-			
+
 		Show(data.rawtext, ansString);
 	}
 
-	Robot bot; //本地机器人
-	NetRobot netbot; //讯飞网络机器人
-	Reader reader; //讯飞语音合成器
+	Robot bot; // 本地机器人
+	NetRobot netbot; // 讯飞网络机器人
+	Reader reader; // 讯飞语音合成器
 
 	public String convertStreamToString(InputStream is) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -245,7 +251,7 @@ public class MainActivity extends Activity implements Runnable{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		BotEmotion.main = this;
-		
+
 		pm = getPackageManager();
 		homeInfo = pm.resolveActivity(new Intent(Intent.ACTION_MAIN)
 				.addCategory(Intent.CATEGORY_HOME), 0);
@@ -261,8 +267,6 @@ public class MainActivity extends Activity implements Runnable{
 				MainActivity.this.startActivity(intent);
 			}
 		});
-		
-		
 
 		audiom = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
@@ -279,7 +283,7 @@ public class MainActivity extends Activity implements Runnable{
 							.getStreamVolume(AudioManager.STREAM_MUSIC);
 					audiom.setStreamVolume(AudioManager.STREAM_MUSIC, 1,
 							AudioManager.FLAG_PLAY_SOUND);
-					
+
 					int code = netbot.BeginSpeechUnderstand();
 					if (code != 0) {
 						text.setText("Error Code: " + code);
@@ -298,25 +302,25 @@ public class MainActivity extends Activity implements Runnable{
 
 		this.mToast = Toast.makeText(this, "", Toast.LENGTH_LONG);
 		text.setText("欢迎\n");
-		
+
 		try {
-			//初始化本地机器人
-			bot = new Robot(getAssets(),this);
+			// 初始化本地机器人
+			bot = new Robot(getAssets(), this);
 			bot.BeginInit();
-			
+
 			new Thread(this).start();
-			
-			text.setText(text.getText()+"正在启动语音合成引擎\n");
-			//初始化语音合成引擎
+
+			text.setText(text.getText() + "正在启动语音合成引擎\n");
+			// 初始化语音合成引擎
 			Context context = getApplicationContext();
 			reader = new Reader(context);
-			
-			text.setText(text.getText()+"正在启动语音识别引擎\n");
-			//初始化语音识别引擎
+
+			text.setText(text.getText() + "正在启动语音识别引擎\n");
+			// 初始化语音识别引擎
 			netbot = new NetRobot(this);
 			netbot.InitXF();
-		
-			text.setText(text.getText()+"正在初始化音乐播放器\n");
+
+			text.setText(text.getText() + "正在初始化音乐播放器\n");
 			// 初始化音乐Player
 			player = new Player(new SeekBar(context));
 
@@ -335,11 +339,10 @@ public class MainActivity extends Activity implements Runnable{
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	@Override
-	public void run()
-	{
-		 call = new Caller(MainActivity.this);
+	public void run() {
+		call = new Caller(MainActivity.this);
 	}
 
 }
