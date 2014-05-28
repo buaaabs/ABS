@@ -54,11 +54,6 @@
 </category>
 
 <category>
-  <pattern></pattern>
-
-</category>
-
-<category>
   <pattern>你认识关导 *</pattern>
   <template>
     恩，当然，就是那个圆圆的家伙吗？

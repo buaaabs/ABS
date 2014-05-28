@@ -4,6 +4,7 @@ import hha.aiml.BotEmotion;
 import hha.aiml.Jcseg;
 import hha.aiml.Robot;
 import hha.robot.R;
+import hha.util.Caller;
 import hha.util.music.Player;
 import hha.xf.Data;
 import hha.xf.NetRobot;
@@ -51,11 +52,11 @@ import com.iflytek.speech.SpeechUnderstanderListener;
 import com.iflytek.speech.SpeechUtility;
 import com.iflytek.speech.UnderstanderResult;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements Runnable{
 
 	private Toast mToast;
 	private TextView text = null;
-
+	Caller call = null;
 	public Robot getBot() {
 		return bot;
 	}
@@ -144,9 +145,26 @@ public class MainActivity extends Activity {
 				Show(data.rawtext, ansString);
 				return;
 			}
-
+			if ((data.focus != null) && (data.operation!=null) && (data.name!=null)
+					&& ("telephone".equals(data.focus))
+					&& ("call".equals(data.operation))) {
+				String ansString = bot.Respond("OK");
+				Show(data.rawtext, ansString);
+				if (call!=null)
+					call.callName(data.name);
+				return;
+			}
+			if ((data.focus != null) && (data.operation!=null)
+					&& ("message".equals(data.focus))
+					&& ("send".equals(data.operation))) {
+				String ansString = bot.Respond("OK");
+				Show(data.rawtext, ansString);
+				
+				return;
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
+			ShowText("Error: "+e.getMessage());
 		}
 
 		String input = data.rawtext;
@@ -156,7 +174,7 @@ public class MainActivity extends Activity {
 		String ansString = null;
 		ansString = bot.Respond(input);
 		ShowText("bot answer:"+ansString);
-		if (!bot.CanFindAnswer())
+		if ((!bot.CanFindAnswer())&&(data.content!=null))
 			ansString = data.content;
 			
 		Show(data.rawtext, ansString);
@@ -286,6 +304,8 @@ public class MainActivity extends Activity {
 			bot = new Robot(getAssets(),this);
 			bot.BeginInit();
 			
+			new Thread(this).start();
+			
 			text.setText(text.getText()+"正在启动语音合成引擎\n");
 			//初始化语音合成引擎
 			Context context = getApplicationContext();
@@ -314,6 +334,12 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	@Override
+	public void run()
+	{
+		 call = new Caller(MainActivity.this);
 	}
 
 }

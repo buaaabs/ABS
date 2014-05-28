@@ -79,6 +79,7 @@ public class NetRobot {
 						Data data = null;
 						try {
 							String string = result.getResultString();
+							mainActivity.ShowText(string);
 							data = saxParseService.getData(string);
 							
 						} catch (Exception e) {
