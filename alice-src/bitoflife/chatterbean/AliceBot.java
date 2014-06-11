@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2004 Hélio Perroni Filho
+Copyleft (C) 2004 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -14,9 +14,8 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean;
 
-import java.util.List;
+import hha.aiml.NetAiml;
 import bitoflife.chatterbean.aiml.Category;
-import bitoflife.chatterbean.aiml.Input;
 import bitoflife.chatterbean.text.Request;
 import bitoflife.chatterbean.text.Response;
 import bitoflife.chatterbean.text.Sentence;
@@ -33,12 +32,22 @@ public class AliceBot
 
   /** The Graphmaster maps user requests to AIML categories. */
   private Graphmaster graphmaster;
+ 
+  private Match[] matchdata;
   
   /*
   Constructor Section
   */
   
-  /**
+  public Match[] getMatchdata() {
+	return matchdata;
+}
+
+public void setMatchdata(Match[] matchdata) {
+	this.matchdata = matchdata;
+}
+
+/**
   Default constructor.
   */
   public AliceBot()
@@ -72,14 +81,16 @@ public class AliceBot
   Method Section
   */
   
-  private void respond(Sentence sentence, Sentence that, Sentence input, Sentence topic, Response response)
+  private Match respond(Sentence sentence, Sentence that, Sentence input, Sentence topic, Response response)
   {
     if (sentence.length() > 0)
     {
       Match match = new Match(this, sentence, that, input, topic);
       Category category = graphmaster.match(match);
       response.append(category.process(match));
+      return match;
     }
+    return null;
   }
 
   /**
@@ -102,8 +113,14 @@ public class AliceBot
     context.appendRequest(request);
 
     Response response = new Response();
+    matchdata = new Match[request.getSentences().length];
+    int i =0;
     for(Sentence sentence : request.getSentences())
-      respond(sentence, that,input, topic, response);
+    {
+    	Match match = respond(sentence, that,input, topic, response);
+    	matchdata[i] = match;
+    	i++;
+    }
     context.appendResponse(response);
 
     return response;

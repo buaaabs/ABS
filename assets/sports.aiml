@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+<category>
+  <pattern>哪 种 运动 最 好 *</pattern>
+  <that>我能为你推荐几种适合你的运动吗</that>
+  <template>
+  运动项目最好是以提高心肺功能的有氧的全身运动为主，散步、跑步、游泳是最适合老年人的三大全身运动。这些运动有助于增强您身体的耐力和肢体伸展性。要多做运动，才能活得健康，活得快乐。另外，太极拳、五禽戏、门球、老年健身操、高尔夫球、登楼梯也是很好的运动方式。
+  </template>
+</category>
+<category>
+	<pattern>运动 * 注 意 *</pattern>
+	<template>
+		<random>
+			<li>运动过程中，要注意五戒：即一戒负重练习，二戒憋气动作、三戒急于求成，四戒争强好胜，五戒过分激动。
+			</li>
+			<li>在选择运动项目时，要结合自身的生理特点，健康状况，锻炼目的以及个人兴趣加以综合考虑。
+			</li>
+		</random>
+	</template>
+</category>
+<category>
+	<pattern> * 能 打 *篮球 吗*</pattern>
+	<template>
+		打篮球要求身体的敏捷性很强，身体碰撞很多，容易受伤，最好不要勉强进行。
+	</template>
+</category>
+</aiml>
+

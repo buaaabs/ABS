@@ -1,13 +1,17 @@
 package hha.aiml;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class NetAiml {
 
@@ -17,36 +21,50 @@ public class NetAiml {
 
 	PrintStream ps;
 	BufferedReader br;
+	InputStream input;
+	OutputStream output;
+	Set learned = new HashSet();
+	
 
 	public NetAiml(String _ip) {
 		ip = _ip;
+		learned.add(0);
 	}
 
 	public NetAiml(String _ip, int _port) {
 		ip = _ip;
 		port = _port;
+		learned.add(0);
 	}
-
-	public void Connect() {
+	public void Close()
+	{
 		try {
-			socket = new Socket(ip, port);
-			InputStream input = socket.getInputStream();
-			OutputStream output = socket.getOutputStream();
-			br = new BufferedReader(new InputStreamReader(input));
-			ps = new PrintStream(output);
-			ps.println("BEGIN");
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ps.println("END");
+			socket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
-	public void Close() {
-		ps.println("END");
+	public boolean Connect() {
+		try {
+			socket = new Socket(ip, port);
+			input = socket.getInputStream();
+			output = socket.getOutputStream();
+			br = new BufferedReader(new InputStreamReader(input,"gbk"));
+			ps = new PrintStream(output);
+			ps.println("BEGIN");
+			return true;
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 
 	}
 
@@ -60,27 +78,52 @@ public class NetAiml {
 		ps.println("}END");
 	}
 
-	public String GetNetAiml(String match) {
-
-		char[] buf = new char[1024 * 8];
-		StringBuilder sb = new StringBuilder();
-		int k;
+	public static InputStream StringTOInputStream(String in) {  
+        
+        ByteArrayInputStream is = null;
 		try {
-			Connect();
+			is = new ByteArrayInputStream(in.getBytes("utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+        return is;  
+    }  
+	
+	
+	public InputStream GetNetAiml(String match) {
+
+		StringBuilder sb = new StringBuilder();
+		InputStream is = null;
+		String k;
+		try {
 			SendCommand("FindByString");
 			SendArg(match);
-			Close();
 			
-			while ((k = br.read(buf)) != -1) {
-				sb.append(buf,0,k);
+			
+			while (!(k = br.readLine()).equals("END")) {
+				sb.append(k);
 			}
 			
-			socket.close();
+			int i = Integer.parseInt(sb.toString());
+			if (!learned.contains(i))
+			{
+				SendCommand("Find");
+				SendArg(String.valueOf(i));
+				
+				sb.deleteCharAt(0);
+				while (!(k = br.readLine()).equals("END")) {
+					sb.append(k);
+				}
+				
+				is = StringTOInputStream(sb.toString());
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return sb.toString();
+		return is;
 	}
 
 }

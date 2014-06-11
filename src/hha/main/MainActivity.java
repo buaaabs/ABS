@@ -9,7 +9,6 @@ import hha.util.music.Player;
 import hha.xf.Data;
 import hha.xf.NetRobot;
 import hha.xf.Reader;
-import hha.xf.SaxParseService;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -30,7 +29,6 @@ import android.content.pm.ResolveInfo;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -40,20 +38,12 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import bitoflife.chatterbean.AliceBot;
-import bitoflife.chatterbean.parser.AliceBotParser;
 
-import com.iflytek.speech.ErrorCode;
-import com.iflytek.speech.ISpeechModule;
-import com.iflytek.speech.InitListener;
-import com.iflytek.speech.SpeechConstant;
-import com.iflytek.speech.SpeechUnderstander;
-import com.iflytek.speech.SpeechUnderstanderListener;
-import com.iflytek.speech.SpeechUtility;
-import com.iflytek.speech.UnderstanderResult;
+import com.lilele.automatic.AuTomatic;
 
 public class MainActivity extends Activity implements Runnable {
 
+	private AuTomatic mAuTomatic;
 	private Toast mToast;
 	private TextView text = null;
 	Caller call = null;
@@ -135,8 +125,12 @@ public class MainActivity extends Activity implements Runnable {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				ShowText("\n用户:" + userString);
-				ShowText(ansString);
+				if (userString==null) {
+					ShowText(ansString);
+				}else {
+					ShowText("\n用户:" + userString);
+					ShowText(ansString);
+				}
 				audiom.setStreamVolume(AudioManager.STREAM_MUSIC, oldAudio,
 						AudioManager.FLAG_PLAY_SOUND);
 				reader.start(ansString);
@@ -166,7 +160,6 @@ public class MainActivity extends Activity implements Runnable {
 					&& ("send".equals(data.operation))) {
 				String ansString = bot.Respond("OK");
 				Show(data.rawtext, ansString);
-
 				return;
 			}
 		} catch (Exception e) {
@@ -184,6 +177,7 @@ public class MainActivity extends Activity implements Runnable {
 			ansString = data.content;
 
 		Show(data.rawtext, ansString);
+		mAuTomatic.setCountTime(0);
 	}
 
 	Robot bot; // 本地机器人
@@ -270,6 +264,8 @@ public class MainActivity extends Activity implements Runnable {
 
 		audiom = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
+		oldAudio = audiom
+				.getStreamVolume(AudioManager.STREAM_MUSIC);
 		text = (TextView) findViewById(R.id.main_text);
 		button = (Button) findViewById(R.id.button_speak);
 		button.setOnTouchListener(new OnTouchListener() {
@@ -310,17 +306,17 @@ public class MainActivity extends Activity implements Runnable {
 
 			new Thread(this).start();
 
-			text.setText(text.getText() + "正在启动语音合成引擎\n");
+			// text.setText(text.getText() + "正在启动语音合成引擎\n");
 			// 初始化语音合成引擎
 			Context context = getApplicationContext();
 			reader = new Reader(context);
 
-			text.setText(text.getText() + "正在启动语音识别引擎\n");
+			// text.setText(text.getText() + "正在启动语音识别引擎\n");
 			// 初始化语音识别引擎
 			netbot = new NetRobot(this);
 			netbot.InitXF();
 
-			text.setText(text.getText() + "正在初始化音乐播放器\n");
+			// text.setText(text.getText() + "正在初始化音乐播放器\n");
 			// 初始化音乐Player
 			player = new Player(new SeekBar(context));
 
@@ -330,7 +326,8 @@ public class MainActivity extends Activity implements Runnable {
 			text.setText(e.toString());
 		}
 		// text.setText(bot.respond("welcome"));
-
+		// 自主对话初始化
+		mAuTomatic = new AuTomatic(this, getBot());
 	}
 
 	@Override

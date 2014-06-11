@@ -2,7 +2,29 @@
 <aiml>
 <!-- Copyright (c) 2007 ALICE A.I. Foundation, Inc. -->
 <!-- Last modified Seo 21, 2009, by Lichunlei -->
+  <category><pattern>*</pattern>
+  <template>
+    <think>
+      <set name="CanNotFind" >
+        <template>True</template>
+      </set>
+    </think>
+    <random> 
+      <li>您说神马?</li>
+      <li>真是抱歉啊，我没听懂您说什么？</li>
+      <li>啊啊，我刚才愣神着，您能再说一遍吗?</li>
+    </random>
+  </template>
+</category>
 
+<category>
+    <pattern> _ </pattern> 
+    <that>额额 那我该说点什么好呢</that>
+    <template>
+      <system>learn("<input index="3"/>", "<input index="1"/>")</system>
+      好的，我知道了，您的教导我终身铭记。
+    </template>
+</category>
 
 <category><pattern>* 现在 * 几点 *</pattern>
 <template>It is <date format="h:mm a"/>.</template></category>                          
@@ -29,7 +51,7 @@
   <template>
   	<emotion happiness="-100" vitality="10" confidence="20" mighty="-10" />
     <random>
-      <li>壮哉我大科长！</li>
+      <li>壮哉我大科长，哎，你一天几十遍的问我这句话有意思吗？啊，我虽然是个机器人，但也是要耗电的啊！无不无聊！烦死人了有木有！</li>
       <li>壮哉我大科长啊！</li>
       <li>壮哉我大科长。。。我擦！受不鸟了，你到是说，科长到底是干神马的？天天说这个能干啥？信科长能重生吗？天天科长科长的挂在嘴边真是烦死了！</li>
       <li>壮哉我大科长，哎，你一天几十遍的问我这句话有意思吗？啊，我虽然是个机器人，但也是要耗电的啊！无不无聊！烦死人了有木有！</li>
@@ -82,6 +104,13 @@
     听过哟，有一天，司马光跟小朋友们在后山玩耍，有一个小孩不小心掉进了下面的大水缸里，缸大水深，眼看孩子就快要淹死了，小伙伴们一片慌乱。司马光急中生智，从地上捡起一块大石头就往缸里砸去，水缸里面的水面渐渐升高，司马光就喝到了水。。。
   </template>
 </category>
+
+<category>
+    <Regex>你 * 是 #机器人|智能机器人|AI </Regex>
+    <template>
+      恩，我是由ABS绝对值团队开发的哦啊~我的设计很精巧吧~！
+    </template>
+  </category>
 
 <category>
   <pattern>* 给大家打个招呼 *</pattern>
@@ -256,29 +285,7 @@
   </category>
   
   
-  <category><pattern>*</pattern>
-  <template>
-    <think>
-      <set name="CanNotFind" >
-        <template>True</template>
-      </set>
-    </think>
-    <random> 
-      <li>您说神马?</li>
-      <li>真是抱歉啊，我没听懂您说什么？</li>
-      <li>啊啊，我刚才愣神着，您能再说一遍吗?</li>
-    </random>
-  </template>
-</category>
 
-<category>
-    <pattern> _ </pattern> 
-    <that>额额 那我该说点什么好呢</that>
-    <template>
-      <system>learn("<input index="3"/>", "<input index="1"/>")</system>
-      好的，我知道了，您的教导我终身铭记。
-    </template>
-</category>
 
 </aiml>
 

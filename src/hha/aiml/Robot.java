@@ -12,6 +12,7 @@ import android.content.res.AssetManager;
 import bitoflife.chatterbean.AliceBot;
 import bitoflife.chatterbean.Context;
 import bitoflife.chatterbean.Graphmaster;
+import bitoflife.chatterbean.Match;
 import bitoflife.chatterbean.aiml.AIMLParser;
 import bitoflife.chatterbean.aiml.AIMLParserConfigurationException;
 import bitoflife.chatterbean.aiml.AIMLParserException;
@@ -28,6 +29,7 @@ public class Robot implements Runnable {
 	boolean canfind = false;
 	String command = null;
 	MainActivity main = null;
+	NetAiml net;
 	private ByteArrayOutputStream gossip;
 
 	public Robot(AssetManager am, MainActivity main) {
@@ -69,11 +71,17 @@ public class Robot implements Runnable {
 					am.open("splitters.xml", AssetManager.ACCESS_BUFFER),
 					am.open("substitutions.xml", AssetManager.ACCESS_BUFFER),
 					am.open("idiom.aiml", AssetManager.ACCESS_BUFFER),
-					am.open("hha.aiml", AssetManager.ACCESS_BUFFER));
+					am.open("hha.aiml", AssetManager.ACCESS_BUFFER),
+					am.open("healthy.aiml", AssetManager.ACCESS_BUFFER),
+					am.open("sports.aiml", AssetManager.ACCESS_BUFFER),
+					am.open("hha.aiml", AssetManager.ACCESS_BUFFER),
+					am.open("automatic.aiml", AssetManager.ACCESS_BUFFER));
 
 			context = bot.getContext();
 			graphmaster = bot.getGraphmaster();
 			context.outputStream(gossip);
+			int _port = Integer.parseInt((String) context.property("bot.port"));
+			net = new NetAiml((String) context.property("bot.ip"), _port);
 			main.showTip("Bot Bootup");
 
 		} catch (IOException e) {
@@ -108,6 +116,7 @@ public class Robot implements Runnable {
 
 		String output = "";
 		String ansString = bot.respond(str);
+
 		bitoflife.chatterbean.Context context = bot.getContext();
 
 		output = (String) context.property("predicate.CanNotFind");
@@ -115,11 +124,27 @@ public class Robot implements Runnable {
 		command = (String) context.property("predicate.Command");
 		context.property("predicate.Command", "null");
 
-		if ("True".equals(output))
+		if ("True".equals(output)) {
 			canfind = false;
-		else
+
+		} else
 			canfind = true;
 
+		if (canfind == false) {
+			Match[] matchs = bot.getMatchdata();
+			for (Match match : matchs) {
+				String[] strings = match.getMatchPath();
+				StringBuilder sb = new StringBuilder();
+				for (String string : strings) {
+					sb.append(string + " ");
+				}
+				if (net.Connect()) {
+					LearnFromStream(net.GetNetAiml(sb.toString()));
+					net.Close();
+					return Respond(str);
+				}
+			}
+		}
 		return ansString;
 	}
 

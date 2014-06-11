@@ -11,6 +11,8 @@
 	<bot name="version" value="0.7.5 Alpha" />
 	<bot name="location" value="Atlanta" />
 	<bot name="name" value="Alice" />
+	<bot name="ip" value="192.168.137.1" />
+	<bot name="port" value="10010" />
 
 	<!-- Default values for predicates, can be changed later at runtime. -->
 	<set name="dateFormat" value="yyyy-MM-dd HH:mm:ss" />

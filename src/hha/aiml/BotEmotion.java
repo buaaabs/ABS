@@ -5,6 +5,7 @@ import hha.main.MainActivity;
 public class BotEmotion {
 	public static MainActivity main;
 	
+	static emotionLocator locator = new emotionLocator();
 	static int vitality; // 活跃度 困倦-兴奋
 	static int happiness; // 快乐度 忧伤-快乐
 	static int confidence;// 置信度 不确定-确定
@@ -42,10 +43,37 @@ public class BotEmotion {
 
 	}
 	
+	public static void Update()
+	{
+		double dv = (5000 - vitality) * N_rand(80.0, 5.0) * 0.01;
+		double dh = (5000 - happiness) * N_rand(80.0, 5.0) * 0.01;
+		double dm = (5000 - mighty) * N_rand(80.0, 5.0) * 0.01;
+		vitality += dv;
+		happiness += dh;
+		mighty += dm;
+	}
+	
 	public static void UpdateEmotion()
 	{
+		vitality_d = (int) (N_rand(80.0, 5.0) + 0.5);
+		happiness_d = (int) (N_rand(80.0, 5.0) + 0.5);
+		confidence_d = (int) (N_rand(80.0, 5.0) + 0.5);
+		mighty_d = (int) (N_rand(80.0, 5.0) + 0.5);
+
+		vitality_u = (int) (N_rand(15.0, 9.0) + 0.5);
+		happiness_u = (int) (N_rand(15.0, 9.0) + 0.5);
+		confidence_u = (int) (N_rand(15.0, 9.0) + 0.5);
+		mighty_u = (int) (N_rand(15.0, 9.0) + 0.5);
+		
 		Robot bot = main.getBot();
-		bot.setProperty("Emotion", "");
+		String ans = locator.getLocation(vitality, happiness, mighty);
+		bot.setProperty("Emotion", ans);
+	}
+	
+	public static double sigmoid_d(double x)
+	{
+		double e_x = Math.exp(x-4);
+		return Math.log(1+e_x)*e_x;
 	}
 
 	public static int normalization(int value) {
