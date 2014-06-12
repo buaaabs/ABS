@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 H�lio Perroni Filho
+Copyleft (C) 2005 H锟絣io Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -16,12 +16,9 @@ package bitoflife.chatterbean.aiml;
 
 import java.util.HashMap;
 
-import hha.aiml.BotEmotion;
-
 import org.xml.sax.Attributes;
 
 import bitoflife.chatterbean.AliceBot;
-import bitoflife.chatterbean.Context;
 import bitoflife.chatterbean.Match;
 
 public class Emotion extends TemplateElement
@@ -31,11 +28,10 @@ public class Emotion extends TemplateElement
   */
 	HashMap<String,Integer> map = new HashMap<String,Integer>();
 	
-	int vitality = 0; //活跃度         困倦-兴奋
-	int happiness = 0; //快乐度	忧伤-快乐
-	int confidence = 0;//置信度	不确定-确定
-	int mighty =0; //强势度	恐惧-愤怒
-//	范围均是-10000~10000
+	int vitality = 0; 
+	int happiness = 0;
+	int confidence = 0;
+	int mighty =0;
   
   /*
   Constructors
@@ -80,15 +76,16 @@ public class Emotion extends TemplateElement
       output = "<emotion>" + output + "</emotion>";
     else
     {
+    	AliceBot bot = match.getCallback();
 //    	BotEmotion.main.ShowText(String.valueOf(map.get("happiness")));
     	if (map.containsKey("happiness"))
-    		BotEmotion.changeHappiness(map.get("happiness"));
+    		bot.getEmotion().changeHappiness(map.get("happiness"));
     	if (map.containsKey("confidence"))
-    		BotEmotion.changeConfidence(map.get("confidence"));
+    		bot.getEmotion().changeConfidence(map.get("confidence"));
     	if (map.containsKey("mighty"))
-    		BotEmotion.changeMighty(map.get("mighty"));
+    		bot.getEmotion().changeMighty(map.get("mighty"));
     	if (map.containsKey("vitality"))
-    		BotEmotion.changeVitality(map.get("vitality"));
+    		bot.getEmotion().changeVitality(map.get("vitality"));
     }
     //java.lang.System.out.println("Set:"+output);
     return output;

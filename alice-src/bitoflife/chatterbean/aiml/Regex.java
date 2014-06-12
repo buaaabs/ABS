@@ -8,8 +8,11 @@ import java.util.List;
 
 import org.xml.sax.Attributes;
 
+///自己新添加的正则表达式标签
+
+
 public class Regex extends Pattern implements AIMLElement {
-	
+
 	public Regex() {
 		// TODO Auto-generated constructor stub
 	}
@@ -24,8 +27,7 @@ public class Regex extends Pattern implements AIMLElement {
 		 this.pattern = p.split(" ");
 	    
 		 hashCode = Arrays.hashCode(this.pattern);
-	}
-	
+	}	
 	private String[] pattern;
 
 	private int hashCode;
@@ -52,19 +54,22 @@ public class Regex extends Pattern implements AIMLElement {
 		    }
 	}
 	
-	private boolean isSharp(String name) {
+	private boolean isSharpOrDollar(String name) {
 //		System.out.println(name);
-		return ("#".equals(name.substring(0, 1)));
-	}
+		String s = name.substring(0, 1);
+		return ("#".equals(s) || "$".equals(s));
+	  }
 	
 	private boolean isToUseChineseTranslate = true;
-	List<String> patternList;
+	 List<String> patternList;
 	  
-	public void appendChild(String str)
-	{
+	 
+	 
+	  public void appendChild(String str)
+	  {
 	    String text = str;
 	   // System.out.println(text);
-	    if (!isSharp(text))
+	    if (!isSharpOrDollar(text))
 	    {
 	    	if(isToUseChineseTranslate) {    
 				 text = Jcseg.chineseTranslate(text);
@@ -81,17 +86,18 @@ public class Regex extends Pattern implements AIMLElement {
 	    for (int i = 0; i < pp.length; i++) {
 	    	patternList.add(pp[i]);
 	    }
-	}
+	  }
 
 	@Override
 	public void appendChildren(List<AIMLElement> children) {
-		// TODO Auto-generaed method stub
+		// TODO Auto-generated method stub
 		StringBuilder builder = new StringBuilder();
 	    for (AIMLElement child : children)
 	      builder.append(child);
 	    
 	    String text = builder.toString().trim();
-
+//	    System.out.println(text);
+	    
 	    String[] p = text.split(" ");
 	    patternList = null;
 	    for (String string : p) {
@@ -99,7 +105,10 @@ public class Regex extends Pattern implements AIMLElement {
 		}
 	    pattern = new String[patternList.size()];
 	    patternList.toArray(pattern);
-
+	    
+//	    java.lang.System.out.println("Regex:"+pattern[0]);
+	    
+//	    pattern = text.split(" ");
 	    hashCode = Arrays.hashCode(pattern);
 	}
 
@@ -121,13 +130,14 @@ public class Regex extends Pattern implements AIMLElement {
 	public String toString() {
 		// TODO Auto-generated method stub
 		StringBuilder buffer = new StringBuilder();
+		buffer.append("<regex>");
 	    for (int i = 0, n = pattern.length;;)
 	    {
 	      buffer.append(pattern[i]);
 	      if (++i >= n) break;
 	      buffer.append(" ");
 	    }
-	    
+	    buffer.append("</regex>");
 	    return buffer.toString();
 	}
 

@@ -10,7 +10,7 @@ ChatterBean is free software; you can redistribute it and/or modify it under the
 ChatterBean is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with ChatterBean (look at the Documents/ directory); if not, either write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA, or visit (http://www.gnu.org/licenses/gpl.txt).
-*/
+ */
 
 package bitoflife.chatterbean;
 
@@ -26,177 +26,188 @@ import bitoflife.chatterbean.text.Sentence;
 import static bitoflife.chatterbean.text.Sentence.ASTERISK;
 
 /**
-Contains information about a match operation, which is needed by the classes of the <code>bitoflife.chatterbean.aiml</code> to produce a proper response.
-*/
-public class Match implements Serializable
-{
-  /*
-  Inner Classes
-  */
-  
-  public enum Section {PATTERN, THAT, TOPIC,INPUT;}
-  
-  /*
-  Attributes
-  */
+ * Contains information about a match operation, which is needed by the classes
+ * of the <code>bitoflife.chatterbean.aiml</code> to produce a proper response.
+ */
+public class Match implements Serializable {
+	/*
+	 * Inner Classes
+	 */
 
-  /** Version class identifier for the serialization engine. Matches the number of the last revision where the class was created / modified. */
-  private static final long serialVersionUID = 8L;
+	public enum Section {
+		PATTERN, THAT, TOPIC, INPUT, REGEX;
+	}
 
-  private final Map<Section, List<String>> sections = new HashMap<Section, List<String>>();
-  
-  private AliceBot callback;
+	/*
+	 * Attributes
+	 */
 
-  private Sentence uinput;
-  
-  private Sentence input;
+	/**
+	 * Version class identifier for the serialization engine. Matches the number
+	 * of the last revision where the class was created / modified.
+	 */
+	private static final long serialVersionUID = 8L;
 
-  private Sentence that;
+	private final Map<Section, List<String>> sections = new HashMap<Section, List<String>>();
 
-  private Sentence topic;
+	private AliceBot callback;
 
-  private String[] matchPath;
-  
-  {
-    sections.put(Section.PATTERN, new ArrayList<String>(2)); // Pattern wildcards
-    sections.put(Section.THAT, new ArrayList<String>(2)); // That wildcards
-    sections.put(Section.TOPIC, new ArrayList<String>(2)); // Topic wildcards
-    sections.put(Section.INPUT, new ArrayList<String>(2));
-  }
-  
-  /*
-  Constructor
-  */
+	private Sentence uinput;
 
-  public Match()
-  {
-  }
+	private Sentence input;
 
-  public Match(AliceBot callback, Sentence User_input, Sentence that,Sentence input, Sentence topic)
-  {
-    this.callback = callback;
-    this.uinput = User_input;
-    this.input = input;
-    this.that = that;
-    this.topic = topic;
-    setUpMatchPath(User_input.normalized(), that.normalized(),input.normalized(), topic.normalized());
-  }
+	private Sentence that;
 
-  public Match(Sentence input)
-  {
-    this(null, input, ASTERISK,ASTERISK, ASTERISK);
-  }
+	private Sentence topic;
 
-  /*
-  Methods
-  */
-  
-  private void appendWildcard(List<String> section, Sentence source, int beginIndex, int endIndex) 
-  {
-    if (beginIndex == endIndex)
-      section.add(0, "");
-    else try
-    {
-      section.add(0, source.original(beginIndex, endIndex));
-    }
-    catch (Exception e)
-    {
-//      throw new RuntimeException("Source: {\"" + source.getOriginal() + "\", \"" + source.getNormalized() + "\"}\n" +
-//                                 "Begin Index: " + beginIndex + "\n" +
-//                                 "End Index: " + endIndex, e);
-    }
-  }
+	private String[] matchPath;
 
-  private void setUpMatchPath(String[] pattern, String[] that, String[] input, String[] topic)
-  {
-    int m = pattern.length, n = that.length, o = topic.length, p = input.length;
-    matchPath = new String[m + 1 + n + 1 + o + 1 + p];
-    matchPath[m] = "<THAT>";
-    matchPath[m + 1 + n] = "<TOPIC>";
-    matchPath[m + 1 + n + 1 + o] = "<INPUT>";
+	{
+		sections.put(Section.PATTERN, new ArrayList<String>(2)); // Pattern
+																	// wildcards
+		sections.put(Section.THAT, new ArrayList<String>(2)); // That wildcards
+		sections.put(Section.TOPIC, new ArrayList<String>(2)); // Topic
+																// wildcards
+		sections.put(Section.INPUT, new ArrayList<String>(2));
+		sections.put(Section.REGEX, new ArrayList<String>(2));
+	}
 
-    System.arraycopy(pattern, 0, matchPath, 0, m);
-    System.arraycopy(that, 0, matchPath, m + 1, n);
-    System.arraycopy(topic, 0, matchPath, m + 1 + n + 1, o);
-    System.arraycopy(input, 0, matchPath, m + 1 + n + 1 + o + 1, p);
-  }
-  
-  public void appendWildcard(int beginIndex, int endIndex)
-  {
-    int uinputLength = uinput.length();
-    if (beginIndex <= uinputLength)
-    {
-      appendWildcard(sections.get(Section.PATTERN), uinput, beginIndex, endIndex);
-      return;
-    }
-    
-    beginIndex = beginIndex - (uinputLength + 1);
-    endIndex   = endIndex   - (uinputLength + 1);
+	/*
+	 * Constructor
+	 */
 
-    int thatLength = that.length();    
-    if (beginIndex <= thatLength)
-    {
-      appendWildcard(sections.get(Section.THAT), that, beginIndex, endIndex);
-      return;
-    }
-    
-    beginIndex = beginIndex - (thatLength + 1);
-    endIndex   = endIndex   - (thatLength + 1);
+	public Match() {
+	}
 
-    int topicLength = topic.length();    
-    if (beginIndex <= topicLength)
-      appendWildcard(sections.get(Section.TOPIC), topic, beginIndex, endIndex);
-    
-    beginIndex = beginIndex - (topicLength + 1);
-    endIndex = endIndex - (topicLength + 1);
-    
-    int inputLength = input.length();
-    if (beginIndex < inputLength)
-      appendWildcard(sections.get(Section.INPUT), input, beginIndex, endIndex);
-  }
-  
-  /**
-  Gets the contents for the (index)th wildcard in the matched section.
-  */
-  public String wildcard(Section section, int index)
-  {
-    List<String> wildcards = sections.get(section);
-    //fixed by lcl
-    if(wildcards.size() == 0)
-    	return "";
-    int i = index - 1;
-    if(i < wildcards.size() && i > -1)
-    	return wildcards.get(i);
-    else 
-    	return "";
-  }
-  
-  /*
-  Properties
-  */
-  
-  public AliceBot getCallback()
-  {
-    return callback;
-  }
-  
-  public void setCallback(AliceBot callback)
-  {
-    this.callback = callback;
-  }
-  
-  public String[] getMatchPath()
-  {
-    return matchPath;
-  }
+	public Match(AliceBot callback, String[] str) {
+		this.callback = callback;
+		matchPath = str;
+	}
 
-  public String getMatchPath(int index)
-  {
-    return matchPath[index];
-  }
-  
-  public int getMatchPathLength()
-  {
-    return matchPath.length;
-  }
+	public Match(AliceBot callback, Sentence User_input, Sentence that,
+			Sentence input, Sentence topic) {
+		this.callback = callback;
+		this.uinput = User_input;
+		this.input = input;
+		this.that = that;
+		this.topic = topic;
+		setUpMatchPath(User_input.normalized(), that.normalized(),
+				input.normalized(), topic.normalized());
+	}
+
+	public Match(Sentence input) {
+		this(null, input, ASTERISK, ASTERISK, ASTERISK);
+	}
+
+	/*
+	 * Methods
+	 */
+
+	private void appendWildcard(List<String> section, Sentence source,
+			int beginIndex, int endIndex) {
+		if (beginIndex == endIndex)
+			section.add(0, "");
+		else
+			try {
+				section.add(0, source.original(beginIndex, endIndex));
+			} catch (Exception e) {
+				// throw new RuntimeException("Source: {\"" +
+				// source.getOriginal() + "\", \"" + source.getNormalized() +
+				// "\"}\n" +
+				// "Begin Index: " + beginIndex + "\n" +
+				// "End Index: " + endIndex, e);
+			}
+	}
+
+	private void setUpMatchPath(String[] pattern, String[] that,
+			String[] input, String[] topic) {
+		int m = pattern.length, n = that.length, o = topic.length, p = input.length;
+		matchPath = new String[m + 1 + n + 1 + o + 1 + p];
+		matchPath[m] = "<THAT>";
+		matchPath[m + 1 + n] = "<TOPIC>";
+		matchPath[m + 1 + n + 1 + o] = "<INPUT>";
+
+		System.arraycopy(pattern, 0, matchPath, 0, m);
+		System.arraycopy(that, 0, matchPath, m + 1, n);
+		System.arraycopy(topic, 0, matchPath, m + 1 + n + 1, o);
+		System.arraycopy(input, 0, matchPath, m + 1 + n + 1 + o + 1, p);
+	}
+
+	public void appendRegex(int begin, int end) {
+		appendWildcard(sections.get(Section.REGEX), uinput, begin, end);
+	}
+
+	public void appendWildcard(int beginIndex, int endIndex) {
+		int uinputLength = uinput.length();
+		if (beginIndex <= uinputLength) {
+			appendWildcard(sections.get(Section.PATTERN), uinput, beginIndex,
+					endIndex);
+			return;
+		}
+
+		beginIndex = beginIndex - (uinputLength + 1);
+		endIndex = endIndex - (uinputLength + 1);
+
+		int thatLength = that.length();
+		if (beginIndex <= thatLength) {
+			appendWildcard(sections.get(Section.THAT), that, beginIndex,
+					endIndex);
+			return;
+		}
+
+		beginIndex = beginIndex - (thatLength + 1);
+		endIndex = endIndex - (thatLength + 1);
+
+		int topicLength = topic.length();
+		if (beginIndex <= topicLength)
+			appendWildcard(sections.get(Section.TOPIC), topic, beginIndex,
+					endIndex);
+
+		beginIndex = beginIndex - (topicLength + 1);
+		endIndex = endIndex - (topicLength + 1);
+
+		int inputLength = input.length();
+		if (beginIndex < inputLength)
+			appendWildcard(sections.get(Section.INPUT), input, beginIndex,
+					endIndex);
+	}
+
+	/**
+	 * Gets the contents for the (index)th wildcard in the matched section.
+	 */
+	public String wildcard(Section section, int index) {
+		List<String> wildcards = sections.get(section);
+		// fixed by lcl
+		if (wildcards.size() == 0)
+			return "";
+		int i = index - 1;
+		if (i < wildcards.size() && i > -1)
+			return wildcards.get(i);
+		else
+			return "";
+	}
+
+	/*
+	 * Properties
+	 */
+
+	public AliceBot getCallback() {
+		return callback;
+	}
+
+	public void setCallback(AliceBot callback) {
+		this.callback = callback;
+	}
+
+	public String[] getMatchPath() {
+		return matchPath;
+	}
+
+	public String getMatchPath(int index) {
+		return matchPath[index];
+	}
+
+	public int getMatchPathLength() {
+		return matchPath.length;
+	}
 }

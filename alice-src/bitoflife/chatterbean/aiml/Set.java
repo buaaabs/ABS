@@ -27,7 +27,7 @@ public class Set extends TemplateElement
   */
   
   private String name;
-  
+  private String name_att;
   /*
   Constructors
   */
@@ -35,11 +35,13 @@ public class Set extends TemplateElement
   public Set(Attributes attributes)
   {
     name = attributes.getValue(0);
+    name_att = attributes.getQName(0);
   }
   
   public Set(String name, Object... children)
   {
     super(children);
+    
     this.name = name;
   }
   
@@ -63,11 +65,28 @@ public class Set extends TemplateElement
       output = "<set name=\"" + name + "\">" + output + "</set>";
     else
     {
-      AliceBot bot = match.getCallback();
-      Context context = (bot != null ? bot.getContext() : null);
-      if (context != null) context.property("predicate." + name, output);
+    	AliceBot bot = match.getCallback();
+		Context context = (bot != null ? bot.getContext() : null);
+    	if ("name".equals(name_att)) {
+				if (context != null)
+					context.property("var." + name, output);
+		} else {
+			if (context != null)
+				context.property("var." + name_att, output);
+		}
     }
     //java.lang.System.out.println("Set:"+output);
     return output;
   }
+  
+	@Override
+	public String toString() {
+		StringBuilder value = new StringBuilder();
+		value.append("<set name=\"" + name + "\">");
+		for (TemplateElement i : children())
+			value.append(i.toString());
+		value.append("</set>");
+
+		return value.toString();
+	}
 }

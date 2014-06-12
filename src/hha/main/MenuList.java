@@ -1,6 +1,7 @@
 package hha.main;
 
 import hha.robot.R;
+import hha.util.ExitApplication;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -60,6 +61,7 @@ public class MenuList extends ListActivity {
 					
 					break;
 				case 5:
+					ExitApplication.getInstance().exit();
 					System.exit(0);
 					break;
 				default:

@@ -7,6 +7,7 @@ import hha.robot.R;
 import hha.util.Caller;
 import hha.util.ChatMsgEntity;
 import hha.util.ChatMsgViewAdapter;
+import hha.util.ExitApplication;
 import hha.util.music.Player;
 import hha.xf.Data;
 import hha.xf.NetRobot;
@@ -52,7 +53,7 @@ public class MainActivity extends Activity implements Runnable {
 	private Toast mToast;
 	private TextView text = null;
 	Caller call = null;
-
+	
 	public Robot getBot() {
 		return bot;
 	}
@@ -392,7 +393,7 @@ public class MainActivity extends Activity implements Runnable {
 		mAuTomatic = new AuTomatic(this, getBot());
 		mAuTomatic.setS_emotionStatus("高兴");
 		
-		
+		ExitApplication.getInstance().addActivity(this);
 	}
 
 	@Override

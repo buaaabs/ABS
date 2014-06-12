@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hï¿½lio Perroni Filho
+Copyleft (C) 2005 Hélio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -16,15 +16,10 @@ package bitoflife.chatterbean.aiml;
 
 import hha.aiml.Jcseg;
 
-import java.lang.System;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.xml.sax.Attributes;
-
-
-import bitoflife.chatterbean.AliceBot;
-import bitoflife.chatterbean.text.Sentence;
 
 public class Pattern implements AIMLElement
 {
@@ -51,7 +46,7 @@ public class Pattern implements AIMLElement
 	 if(isToUseChineseTranslate) {    
 		 p = Jcseg.chineseTranslate(p);
 		 p.toUpperCase();
-//		 System.out.println(p);
+		 java.lang.System.out.println(p);
 	 }
 	 this.pattern = p.split(" ");
     
@@ -81,7 +76,7 @@ public class Pattern implements AIMLElement
     {
       int length = pattern.length;
       String[] larger = new String[length + 1];
-      System.arraycopy(pattern, 0, larger, 0, length);
+      java.lang.System.arraycopy(pattern, 0, larger, 0, length);
       larger[length] = text;
       pattern = larger;
     }
@@ -128,7 +123,7 @@ public class Pattern implements AIMLElement
       buffer.append(" ");
     }
     
-    return buffer.toString();
+    return "<pattern>"+buffer.toString()+"</pattern>";
   }
   
   /*
