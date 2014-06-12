@@ -8,6 +8,9 @@
 				<li>恩，那我们现在就开始吧</li>
 				<li>那好</li>
 			</random>
+			<think>
+				<set mode="healthy"></set>
+			</think>
 		</template>
 	</category>
 

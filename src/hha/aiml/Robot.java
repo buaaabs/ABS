@@ -66,18 +66,19 @@ public class Robot implements Runnable {
 			// 初始化机器人
 			gossip = new ByteArrayOutputStream();
 
+			String[] aimls = am.list("aiml");
+			InputStream[] aimlstreams = new InputStream[aimls.length];
+			for (int i = 0; i < aimls.length; i++) {
+				aimlstreams[i] = am.open("aiml/" + aimls[i],
+						AssetManager.ACCESS_BUFFER);
+			}
 			AliceBotParser parser = new AliceBotParser();
 
 			bot = parser.parse(
 					am.open("context.xml", AssetManager.ACCESS_BUFFER),
 					am.open("splitters.xml", AssetManager.ACCESS_BUFFER),
 					am.open("substitutions.xml", AssetManager.ACCESS_BUFFER),
-					am.open("idiom.aiml", AssetManager.ACCESS_BUFFER),
-					am.open("hha.aiml", AssetManager.ACCESS_BUFFER),
-					am.open("healthy.aiml", AssetManager.ACCESS_BUFFER),
-					am.open("sports.aiml", AssetManager.ACCESS_BUFFER),
-					am.open("hha.aiml", AssetManager.ACCESS_BUFFER),
-					am.open("automatic.aiml", AssetManager.ACCESS_BUFFER));
+					aimlstreams);
 
 			context = bot.getContext();
 			graphmaster = bot.getGraphmaster();

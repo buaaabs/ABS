@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
-encoding//assets/idiom.aiml=UTF-8
+encoding//assets/aiml/idiom.aiml=UTF-8
 encoding//jcseg-src/org/lionsoul/jcseg=UTF-8
 encoding//jcseg-src/org/lionsoul/jcseg/ASegment.java=UTF-8
 encoding//jcseg-src/org/lionsoul/jcseg/core/JcsegTaskConfig.java=UTF-8

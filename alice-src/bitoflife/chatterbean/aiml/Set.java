@@ -1,5 +1,5 @@
 /*
-Copyleft (C) 2005 Hélio Perroni Filho
+Copyleft (C) 2005 Hï¿½lio Perroni Filho
 xperroni@yahoo.com
 ICQ: 2490863
 
@@ -69,10 +69,10 @@ public class Set extends TemplateElement
 		Context context = (bot != null ? bot.getContext() : null);
     	if ("name".equals(name_att)) {
 				if (context != null)
-					context.property("var." + name, output);
+					context.property("predicate." + name, output);
 		} else {
 			if (context != null)
-				context.property("var." + name_att, output);
+				context.property("predicate." + name_att, output);
 		}
     }
     //java.lang.System.out.println("Set:"+output);

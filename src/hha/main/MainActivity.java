@@ -321,7 +321,6 @@ public class MainActivity extends Activity implements Runnable {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(MainActivity.this, MenuList.class);
-				showTip("OK!!!!");
 				MainActivity.this.startActivity(intent);
 			}
 		});
