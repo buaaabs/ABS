@@ -5,6 +5,8 @@ import hha.aiml.Jcseg;
 import hha.aiml.Robot;
 import hha.robot.R;
 import hha.util.Caller;
+import hha.util.ChatMsgEntity;
+import hha.util.ChatMsgViewAdapter;
 import hha.util.music.Player;
 import hha.xf.Data;
 import hha.xf.NetRobot;
@@ -16,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -35,6 +39,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -121,13 +126,51 @@ public class MainActivity extends Activity implements Runnable {
 		});
 	}
 
+	private String getDate() {
+		Calendar c = Calendar.getInstance();
+		String date = String.valueOf(c.get(Calendar.YEAR)) + "-"
+				+ String.valueOf(c.get(Calendar.MONTH)) + "-"
+				+ c.get(c.get(Calendar.DAY_OF_MONTH));
+		return date;
+	}
+
+	private ListView talkView;
+
+	private String BotName = "小X";
+	private String UserName = "用户";
+
+	public void AddNewTalk(String user, String ans) {
+		int MeId = R.layout.list_say_he_item;
+		int HeId = R.layout.list_say_me_item;
+		String date = getDate();
+		if (UserName != null || UserName.equals("")) {
+			ChatMsgEntity newMessage = new ChatMsgEntity(UserName, date, user,
+					MeId);
+			list.add(newMessage);
+//			talkView.setAdapter(new hha.util.ChatMsgViewAdapter(this, list));
+		}
+		ChatMsgEntity newMessage2 = new ChatMsgEntity(BotName, date, ans, HeId);
+		list.add(newMessage2);
+
+		ChatMsgViewAdapter adapter = (ChatMsgViewAdapter) talkView.getAdapter();
+//		if (adapter == null)
+			talkView.setAdapter(new hha.util.ChatMsgViewAdapter(this, list));
+//		else
+//		{
+//			adapter.setColl(list);
+//			adapter.notifyDataSetChanged();
+//		}
+		talkView.setSelection(list.size()-1);
+	}
+
 	public void Show(final String userString, final String ansString) {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if (userString==null) {
+				AddNewTalk(userString,ansString);
+				if (userString == null) {
 					ShowText(ansString);
-				}else {
+				} else {
 					ShowText("\n用户:" + userString);
 					ShowText(ansString);
 				}
@@ -177,7 +220,17 @@ public class MainActivity extends Activity implements Runnable {
 			ansString = data.content;
 
 		Show(data.rawtext, ansString);
+
+		String com = null;
+		if ((com = bot.getCommand()) != null) {
+			if ("Stop".equals(com)) {
+				player.stop();
+			}
+		}
+
 		mAuTomatic.setCountTime(0);
+		mAuTomatic.setS_emotionStatus("高兴");
+		mAuTomatic.setB_exit(false);
 	}
 
 	Robot bot; // 本地机器人
@@ -205,6 +258,8 @@ public class MainActivity extends Activity implements Runnable {
 
 	}
 
+	private ArrayList<ChatMsgEntity> list = new ArrayList<ChatMsgEntity>();
+
 	private ByteArrayOutputStream gossip;
 	AssetManager am;
 	Player player;
@@ -214,14 +269,17 @@ public class MainActivity extends Activity implements Runnable {
 	PackageManager pm;
 	ResolveInfo homeInfo;
 
+	public void Exit() {
+		ActivityInfo ai = homeInfo.activityInfo;
+		Intent startIntent = new Intent(Intent.ACTION_MAIN);
+		startIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+		startIntent.setComponent(new ComponentName(ai.packageName, ai.name));
+		startActivitySafely(startIntent);
+	}
+
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			ActivityInfo ai = homeInfo.activityInfo;
-			Intent startIntent = new Intent(Intent.ACTION_MAIN);
-			startIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-			startIntent
-					.setComponent(new ComponentName(ai.packageName, ai.name));
-			startActivitySafely(startIntent);
+			Exit();
 			return true;
 		} else
 			return super.onKeyDown(keyCode, event);
@@ -245,12 +303,16 @@ public class MainActivity extends Activity implements Runnable {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		BotEmotion.main = this;
+		
+		
 
 		pm = getPackageManager();
 		homeInfo = pm.resolveActivity(new Intent(Intent.ACTION_MAIN)
 				.addCategory(Intent.CATEGORY_HOME), 0);
 
 		setContentView(R.layout.maininterface);
+		talkView = (ListView) findViewById(R.id.talkList);
+		
 		mainButton = (Button) findViewById(R.id.button_main);
 		mainButton.setOnClickListener(new View.OnClickListener() {
 
@@ -258,14 +320,14 @@ public class MainActivity extends Activity implements Runnable {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(MainActivity.this, MenuList.class);
+				showTip("OK!!!!");
 				MainActivity.this.startActivity(intent);
 			}
 		});
 
 		audiom = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-		oldAudio = audiom
-				.getStreamVolume(AudioManager.STREAM_MUSIC);
+		oldAudio = audiom.getStreamVolume(AudioManager.STREAM_MUSIC);
 		text = (TextView) findViewById(R.id.main_text);
 		button = (Button) findViewById(R.id.button_speak);
 		button.setOnTouchListener(new OnTouchListener() {
@@ -319,7 +381,7 @@ public class MainActivity extends Activity implements Runnable {
 			// text.setText(text.getText() + "正在初始化音乐播放器\n");
 			// 初始化音乐Player
 			player = new Player(new SeekBar(context));
-
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -328,6 +390,9 @@ public class MainActivity extends Activity implements Runnable {
 		// text.setText(bot.respond("welcome"));
 		// 自主对话初始化
 		mAuTomatic = new AuTomatic(this, getBot());
+		mAuTomatic.setS_emotionStatus("高兴");
+		
+		
 	}
 
 	@Override

@@ -2,9 +2,11 @@ package hha.aiml;
 
 import hha.main.MainActivity;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -108,6 +110,18 @@ public class Robot implements Runnable {
 		new Thread(this).start();
 	}
 
+	public static InputStream StringTOInputStream(String in) {
+
+		ByteArrayInputStream is = null;
+		try {
+			is = new ByteArrayInputStream(in.getBytes("utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return is;
+	}
+
 	public String Respond(String str) {
 
 		if (!isInitDone()) {
@@ -139,9 +153,12 @@ public class Robot implements Runnable {
 					sb.append(string + " ");
 				}
 				if (net.Connect()) {
-					LearnFromStream(net.GetNetAiml(sb.toString()));
+					String st = net.GetNetAiml(sb.toString());
 					net.Close();
-					return Respond(str);
+					if (st != null) {
+						LearnFromStream(StringTOInputStream(st));
+						return Respond(str);
+					}
 				}
 			}
 		}
@@ -153,6 +170,8 @@ public class Robot implements Runnable {
 	}
 
 	public String getCommand() {
+		if (command.equals("null"))
+			return null;
 		return command;
 	}
 

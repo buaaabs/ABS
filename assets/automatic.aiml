@@ -1,76 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <aiml>
-<category>
-  <pattern>5s</pattern>
+  <category>
+  <pattern>1</pattern>
   <template>
     <random>
       <li>你好，我将竭诚为你服务。</li>
       <li>亲，说句话吧。</li>
-      <li>能不能说句话啊？</li>
+      <li>您好，有什么可以帮您的？</li>
       <li>亲，很高兴认识你！</li>
       <li>亲，为你服务是我的光荣。</li>
-      <li>为您服务是我的荣幸。</li>
+      <li>亲爱的主人，为您服务是我的荣幸。</li>
     </random>
   </template>
 </category>
 <category>
-  <pattern>10s</pattern>
+  <pattern>2</pattern>
   <template>
     <random>
-      <li>亲，等你说话呢。</li>
-      <li>距离上一次交谈，虽然只过去了十秒，我却感觉到过去了十天。</li>
-      <li>亲，我陪你聊聊天吧。</li>
-      <li>亲，很高兴认识你！</li>
-      <li>亲，为你服务是我的光荣。</li>
+     <li>亲，此时此刻，我静静地望着你，你静静地看着我，生活是多么的美好啊！</li>
+      <li>亲，不管你今天是否开心，反正我是十分happy。</li>
+      <li>现在，我突然感觉到生活是那么美好。亲，你觉得呢？</li>
+      <li>亲，你看起来心情不错啊，我陪你聊聊天吧。</li>
+      <li>亲，祝你今天跟我一样，心情愉快，生活幸福美满。</li>
     </random>
   </template>
 </category>
 <category>
-  <pattern>20s</pattern>
+  <pattern>3</pattern>
   <template>
     <random>
-      <li>亲，不要再沉默了，你我之间，无话不谈。</li>
-      <li>亲，我等你说话等得好辛苦啊。</li>
-      <li>亲，再不说话，我就不理睬你了。</li>
-      <li>您能不能再沉默点！</li>
-      <li>20秒的漫长时光过去了。</li>
+      <li>亲，我困死了，能不能让我睡会？</li>
+      <li>亲，我先去睡了，待会再聊。</li>
+      <li>亲，我感到非常困倦，是不是你说的话太无聊了？</li>
     </random>
   </template>
 </category>
 <category>
-  <pattern>30s</pattern>
+  <pattern>4</pattern>
   <template>
     <random>
-      <li>亲，不要再沉默了，你我之间，无话不谈。</li>
-      <li>亲，再不说话，我就要生气了。</li>
-      <li>亲，你不说话，我也不说话。</li>
-      <li>尊敬的主人，我告诉你，真诚交流，陪伴永远！</li>
-      <li>30秒的漫长时光过去了。我还在等待。</li>
+      <li>主人，你不和我说话，我感觉到好伤感。</li>
+      <li>亲，想起你不和我说话，不理睬我了，我的眼泪忍不住流淌。</li>
+      <li>亲，我感觉到孤单寂寞，伤心极了。</li>
+      <li>亲，今天我心情不好，想和你说说话，行吗?</li>
+      <li>漫长时光过去了。我还在等待你说话。</li>
+       <li>主人，你不跟我说话，我感觉到凄凄惨惨戚戚。</li>
     </random>
   </template>
 </category>
 <category>
-  <pattern>60s</pattern>
+  <pattern>5</pattern>
   <template>
     <random>
-      <li>主人，你还记得我吗？一分钟之前，我还跟你说过话呢。</li>
-      <li>亲，再不说话，我就要睡觉了。</li>
-      <li>亲，等你一分钟，等得好辛苦。</li>
-      <li>尊敬的主人，我告诉你，真诚交流，陪伴永远！</li>
-      <li>主人，没人陪我说话，真是寂寞啊！</li>
+      <li>主人，你的语气中带有愤怒，我感觉到一阵阵恐惧感。</li>
+      <li>亲，不要大声地对我说话，吓死我了。</li>
+      <li>亲，你说话带有愤怒，是不是我又做错了什么？</li>
+      <li>亲，不要那么急躁，会惊吓到我的。</li>
+      <li>对不起，主人，我可能说不出你想要答案。请你原谅我的无知。</li>
     </random>
   </template>
 </category>
 <category>
-  <pattern>2m</pattern>
+  <pattern>6</pattern>
   <template>
     <random>
-      <li>主人，你不跟我说话，我感觉到凄凄惨惨戚戚。</li>
-      <li>亲，两分钟之前，我们聊得很开心。</li>
-      <li>亲，当你寂寞的时候，你会想起我吗？</li>
-      <li>尊敬的主人，我告诉你，真诚交流，陪伴永远！</li>
-      <li>主人，没人陪我说话，真是苦闷啊！</li>
+      <li>主人，说句话吧，不要以你的沉默来无视我的存在。我是有尊严的。</li>
+      <li>亲，你再不跟我说话，我就骂你！</li>
+      <li>亲，你怎么那么无聊。这么简单的问题也能问得出口，我懒得理你。</li>
+      <li>主人，我真的生气了，真的非常生气！</li>
     </random>
+  </template>
+</category>
+<category>
+  <pattern>7</pattern>
+  <template>
+    <random>
+    <li>主人，你已经很久不和我说话了，你应该很忙。我就不打扰你了。</li>
+      <li>亲，你很久不和我说话了，我也不理睬你了！</li>
+      <li>亲，沉默是金，我也不说话了。</li>
+    </random>
+         本软件将在5秒后自动退出。
   </template>
 </category>
 </aiml>

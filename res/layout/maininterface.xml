@@ -1,69 +1,77 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.05"
-        android:background="@drawable/header"
-        >
-		<TextView
-	    	android:text="@string/app_name"
-	    	android:textSize="18sp"
-	    	android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentLeft="true"
-			android:layout_marginTop="13dp"
-			android:layout_marginLeft="30dp"
-			android:textColor="#FFFFFF">  
-		</TextView>
+        android:layout_height="0px"
+        android:layout_weight="8"
+        android:background="@drawable/header" >
 
-		<Button
-		    android:id="@+id/button_main"
-		    android:layout_width="60dp"
-		    android:layout_height="30dp"
-		    android:layout_alignParentRight="true"
-		    android:layout_marginRight="30dp"
-		    android:layout_marginTop="10dp"
-		    android:layout_marginBottom="10dp"
-		    android:background="@drawable/changemenubutton"
-		    android:text="@string/mainmenu"
-		    android:textColor="#FFFFFF"
-		    android:textSize="14sp" >
-             
-		</Button>
-		</RelativeLayout>	    
-     <ScrollView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="13dp"
+            android:text="@string/app_name"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" >
+        </TextView>
+
+        <Button
+            android:id="@+id/button_main"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/changemenubutton"
+            android:text="@string/mainmenu"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" >
+        </Button>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/talkList"
+        android:layout_width="fill_parent"
+        android:layout_weight="52"
+        android:layout_height="0px"
+        android:transcriptMode="alwaysScroll"
+        android:scrollbars="vertical" />
+
+    <ScrollView
+        android:layout_weight="25"
+        android:layout_width="fill_parent"
+        android:layout_height="0px" >
+
+        <TextView
+            android:id="@+id/main_text"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.84" >
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:text="TextView" />
+    </ScrollView>
 
-            <TextView
-                android:id="@+id/main_text"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="vertical"
-                android:text="TextView" />
-        </ScrollView>
-	    
-     <LinearLayout
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:background="@drawable/bottom"
-         android:gravity="center" >
+    <LinearLayout
+        android:layout_weight="15"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:background="@drawable/bottom"
+        android:gravity="center" >
 
-         <Button
-             android:id="@+id/button_speak"
-             android:layout_width="70dp"
-             android:layout_height="70dp"
-             android:layout_marginTop="10dp"
-			 android:layout_marginBottom="10dp"
-             android:layout_gravity="center_vertical"
-             android:background="@drawable/recordbutton" />
+        <Button
+            android:id="@+id/button_speak"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/recordbutton" />
+    </LinearLayout>
 
-     </LinearLayout>   
 </LinearLayout>
-    

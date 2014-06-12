@@ -3,7 +3,11 @@ package com.lilele.automatic;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import bitoflife.chatterbean.aiml.Random;
 import android.R.integer;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
@@ -15,20 +19,44 @@ public class AuTomatic {
 	private MainActivity mainActivity;
     private String[] waitTime={"5s","10s","20s","30s","60s","2m"};
 	private Timer mtimer;
-    public boolean m_bISaid;
+  
     private int countTime;
     private Robot mbot;
     private int memotionInt;
+    private int i_waitTime;//等待时间，由正态分布产生
+    private String s_emotionStatus; //情感状态
+    private boolean b_exit;
     
-    public int emotionValue(){
+    public boolean isB_exit() {
+		return b_exit;
+	}
+
+
+
+	public void setB_exit(boolean b_exit) {
+		this.b_exit = b_exit;
+	}
+
+
+
+	public String getS_emotionStatus() {
+		return s_emotionStatus;
+	}
+
+
+
+	public void setS_emotionStatus(String s_emotionStatus) {
+		this.s_emotionStatus = s_emotionStatus;
+	}
+
+
+
+	public int emotionValue(){
     	return memotionInt;
     }
     
     
-    
-  
-    
-	
+   
 	public Robot getMbot() {
 		return mbot;
 	}
@@ -44,14 +72,17 @@ public class AuTomatic {
 
 	public void setCountTime(int countTime) {
 		this.countTime = countTime;
+		i_waitTime=productGussianTime();
 	}
 
 	public AuTomatic(MainActivity mainAct,Robot bot) {
 		mainActivity = mainAct;
 		mtimer =new Timer(true);
-		m_bISaid=false;
+		b_exit=false;
 		countTime=0;
 		this.memotionInt=0;
+		i_waitTime=40;
+		s_emotionStatus="普通";
 		this.setMbot(bot);
 		setTimeTask();
 	}
@@ -65,46 +96,56 @@ public class AuTomatic {
 			int what = msg.what;
 			String ansString="";
 			switch (what) {
-			case 5:
-				Toast.makeText(mainActivity, "timer+5", 1).show();
+			case 1:  //普通
+				Toast.makeText(mainActivity, "普通", 1).show();
 				if (mbot!=null) {
-					ansString=mbot.Respond("5s");
+					ansString=mbot.Respond("1");
 					mainActivity.Show(null, ansString);
 				}
 				break;
-			case 10:
-				Toast.makeText(mainActivity, "timer+10", 1).show();
+			case 2://高兴
+				Toast.makeText(mainActivity, "高兴", 1).show();
 				if (mbot!=null) {
 					
-					ansString=mbot.Respond("10s");
+					ansString=mbot.Respond("2");
 					mainActivity.Show(null, ansString);
 				}
 				break;
-			case 20:
-				Toast.makeText(mainActivity, "timer+20", 1).show();
+			case 3://困倦
+				Toast.makeText(mainActivity, "困倦", 1).show();
 				if (mbot!=null) {
-					ansString=mbot.Respond("20s");
+					ansString=mbot.Respond("3");
 					mainActivity.Show(null, ansString);
 				}
 				break;
-			case 30:
-				Toast.makeText(mainActivity, "timer+30", 1).show();
+			case 4://忧伤
+				Toast.makeText(mainActivity, "忧伤", 1).show();
 				if (mbot!=null) {
-					ansString=mbot.Respond("30s");
+					ansString=mbot.Respond("4");
 					mainActivity.Show(null, ansString);
 				}
 				break;
-			case 60:
-				Toast.makeText(mainActivity, "timer+60", 1).show();
+			case 5://恐惧
+				Toast.makeText(mainActivity, "恐惧", 1).show();
 				if (mbot!=null) {
-					ansString=mbot.Respond("60s");
+					ansString=mbot.Respond("5");
 					mainActivity.Show(null, ansString);
 				}
 				break;
-			case 120:
-				Toast.makeText(mainActivity, "timer+120", 1).show();
+			case 6://愤怒
+				Toast.makeText(mainActivity, "愤怒", 1).show();
 				if (mbot!=null) {
-					mbot.Respond("2m");
+					ansString=mbot.Respond("6");
+					mainActivity.Show(null, ansString);
+				}
+				break;
+			case 7://软件自动退出
+				Toast.makeText(mainActivity, "软件免打扰模式", 1).show();
+				if (mbot!=null) {
+					ansString=mbot.Respond("7");
+					mainActivity.Show(null, ansString);
+					countTime=0;
+					b_exit=true;
 				}
 				break;
 
@@ -124,61 +165,60 @@ public class AuTomatic {
 		public void run() {
            
 			countTime++;
-			switch (countTime) {
-			case 5:
-			{
-				Message msg = Message.obtain();
-				msg.what = 5;
-				memotionInt=1;
+			if (countTime==8 && b_exit==true) {
+				programExit();
+			}
+			
+			if (countTime==i_waitTime) {
+				Message msg=Message.obtain();
+				if (s_emotionStatus.equals("普通")) {
+					msg.what=1;
+				}else if (s_emotionStatus.equals("高兴")) {
+					msg.what=2;
+				}else if (s_emotionStatus.equals("困倦")) {
+					msg.what=3;
+				}else if (s_emotionStatus.equals("忧伤")) {
+					msg.what=4;
+				}else if (s_emotionStatus.equals("恐惧")) {
+					msg.what=5;
+				}else if (s_emotionStatus.equals("愤怒")) {
+					msg.what=6;
+				}
+			
 				myHandler.sendMessage(msg);
-				break;
 			}
-			case 10:
-			{
-				Message msg = Message.obtain();
-				msg.what = 10;
-				memotionInt=2;
+			
+			if (countTime==65) {
+				Message msg=Message.obtain();
+				msg.what=6;
 				myHandler.sendMessage(msg);
-				break;
 			}
-			case 20:
-			{
-				Message msg = Message.obtain();
-				msg.what = 20;
-				memotionInt=3;
+			if (countTime==100) {
+				Message msg=Message.obtain();
+				msg.what=7;
 				myHandler.sendMessage(msg);
-				break;
 			}
-			case 30:
-			{
-				Message msg = Message.obtain();
-				msg.what = 30;
-				memotionInt=4;
-				myHandler.sendMessage(msg);
-				break;
-			}
-			case 60:
-			{
-				Message msg = Message.obtain();
-				msg.what = 60;
-				memotionInt=5;
-				myHandler.sendMessage(msg);
-				break;
-			}
-			case 120:
-			{
-				Message msg = Message.obtain();
-				msg.what = 120;
-				memotionInt=6;
-				myHandler.sendMessage(msg);
-				break;
-			}
-			default:
-				break;
-			}
-		
+
+		   
+			
 		}
 
 	}
-
+   
+	
+	//正态分布产生随机数，期望45，方差5，范围【30，60】
+	private int productGussianTime(){
+		java.util.Random random=new java.util.Random();
+		double double_res = Math.sqrt(25) * random.nextGaussian() + 45;
+		int int_res = (int) double_res;
+        if (int_res>=30 && int_res<=60) {
+			return int_res;
+		}else {
+			return 40;
+		}
+	}
+	
+	private void programExit(){
+		mainActivity.Exit();
+	}
 }

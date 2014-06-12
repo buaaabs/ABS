@@ -78,23 +78,12 @@ public class NetAiml {
 		ps.println("}END");
 	}
 
-	public static InputStream StringTOInputStream(String in) {  
-        
-        ByteArrayInputStream is = null;
-		try {
-			is = new ByteArrayInputStream(in.getBytes("utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
-        return is;  
-    }  
 	
 	
-	public InputStream GetNetAiml(String match) {
+	public String GetNetAiml(String match) {
 
 		StringBuilder sb = new StringBuilder();
-		InputStream is = null;
+		String is = null;
 		String k;
 		try {
 			SendCommand("FindByString");
@@ -116,7 +105,7 @@ public class NetAiml {
 					sb.append(k);
 				}
 				
-				is = StringTOInputStream(sb.toString());
+				is = sb.toString();
 			}
 			
 		} catch (IOException e) {

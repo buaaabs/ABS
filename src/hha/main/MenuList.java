@@ -1,57 +1,104 @@
 package hha.main;
 
 import hha.robot.R;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
-
 import android.app.ListActivity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.SimpleAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MenuList extends ListActivity{
+public class MenuList extends ListActivity {
+	// public static final ColorStateList white = null;
+	String[] map = new String[6];
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mainmenulist);
-		ArrayList<HashMap<String, String>>list=new ArrayList<HashMap<String,String>>();
-		HashMap<String, String>map1=new HashMap<String, String>();
-		HashMap<String, String>map2=new HashMap<String, String>();
-		HashMap<String, String>map3=new HashMap<String, String>();
-		HashMap<String, String>map4=new HashMap<String, String>();
-		HashMap<String, String>map5=new HashMap<String, String>();
-		map1.put("options", "��һ��");
-		map2.put("options", "�ڶ���");
-		map3.put("options", "������");
-		map4.put("options", "������");
-		map5.put("options", "������");
-		list.add(map1);
-		list.add(map2);
-		list.add(map3);
-		list.add(map4);
-		list.add(map5);
-		
-		SimpleAdapter listAdapter=new SimpleAdapter(this, list, R.layout.mainmenulisttext, new String[]{"options"}, 
-				new int[]{R.id.options});
-		setListAdapter(listAdapter);
-		MenuList.this.getListView().setCacheColorHint(Color.TRANSPARENT);
+		map[0] = "健康数据统计";
+		map[1] = "备忘事件";
+		map[2] = "查看健康建议";
+		map[3] = "软件设置";
+		map[4] = "关于我们";
+		map[5] = "退出";
+		Button returnbutton = (Button) this.findViewById(R.id.returnbutton);
+		returnbutton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.setClass(MenuList.this, MainActivity.class);
+				MenuList.this.startActivity(intent);
+			}
+		});
+
+		this.getListView().setAdapter(new MyAdapter());
+		// MenuList.this.getListView().setCacheColorHint(Color.TRANSPARENT);
 		this.getListView().setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent();
-				intent.setClass(MenuList.this, MainActivity.class);
-				MenuList.this.startActivity(intent);
+				switch (arg2) {
+				case 0:
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					
+					break;
+				case 5:
+					System.exit(0);
+					break;
+				default:
+					return;
+				}
 			}
+
 		});
-	}	
+	}
+
+	public class MyAdapter extends BaseAdapter {
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return map.length;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			TextView text = new TextView(MenuList.this);
+			text.setText(map[position]);
+			text.setTextSize(40);
+			return text;
+		}
+
+	}
 
 }
