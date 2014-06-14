@@ -1,6 +1,5 @@
 package hha.main;
 
-import hha.aiml.BotEmotion;
 import hha.aiml.Jcseg;
 import hha.aiml.Robot;
 import hha.robot.R;
@@ -33,6 +32,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
+import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -44,6 +44,7 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import bitoflife.chatterbean.BotEmotion;
 
 import com.lilele.automatic.AuTomatic;
 
@@ -53,7 +54,7 @@ public class MainActivity extends Activity implements Runnable {
 	private Toast mToast;
 	private TextView text = null;
 	Caller call = null;
-	
+
 	public Robot getBot() {
 		return bot;
 	}
@@ -72,6 +73,22 @@ public class MainActivity extends Activity implements Runnable {
 
 	public Button mainButton = null;
 	public Button button = null;
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		mAuTomatic.destroy();
+
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		mAuTomatic.start();
+
+		super.onResume();
+	}
 
 	public static String inputStream2String(InputStream in) throws IOException {
 		StringBuffer out = new StringBuffer();
@@ -144,31 +161,31 @@ public class MainActivity extends Activity implements Runnable {
 		int MeId = R.layout.list_say_he_item;
 		int HeId = R.layout.list_say_me_item;
 		String date = getDate();
-		if (UserName != null || UserName.equals("")) {
-			ChatMsgEntity newMessage = new ChatMsgEntity(UserName, date, user,
+		if ((user != null) || ("".equals(user))) {
+			ChatMsgEntity newMessage = new ChatMsgEntity(UserName, null, user,
 					MeId);
 			list.add(newMessage);
-//			talkView.setAdapter(new hha.util.ChatMsgViewAdapter(this, list));
+			// talkView.setAdapter(new hha.util.ChatMsgViewAdapter(this, list));
 		}
-		ChatMsgEntity newMessage2 = new ChatMsgEntity(BotName, date, ans, HeId);
+		ChatMsgEntity newMessage2 = new ChatMsgEntity(BotName, null, ans, HeId);
 		list.add(newMessage2);
 
 		ChatMsgViewAdapter adapter = (ChatMsgViewAdapter) talkView.getAdapter();
-//		if (adapter == null)
-			talkView.setAdapter(new hha.util.ChatMsgViewAdapter(this, list));
-//		else
-//		{
-//			adapter.setColl(list);
-//			adapter.notifyDataSetChanged();
-//		}
-		talkView.setSelection(list.size()-1);
+		// if (adapter == null)
+		talkView.setAdapter(new hha.util.ChatMsgViewAdapter(this, list));
+		// else
+		// {
+		// adapter.setColl(list);
+		// adapter.notifyDataSetChanged();
+		// }
+		talkView.setSelection(list.size() - 1);
 	}
 
 	public void Show(final String userString, final String ansString) {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				AddNewTalk(userString,ansString);
+				AddNewTalk(userString, ansString);
 				if (userString == null) {
 					ShowText(ansString);
 				} else {
@@ -266,6 +283,7 @@ public class MainActivity extends Activity implements Runnable {
 	Player player;
 	AudioManager audiom;
 	int oldAudio;
+	boolean isButtonPress;
 
 	PackageManager pm;
 	ResolveInfo homeInfo;
@@ -303,9 +321,6 @@ public class MainActivity extends Activity implements Runnable {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		BotEmotion.main = this;
-		
-		
 
 		pm = getPackageManager();
 		homeInfo = pm.resolveActivity(new Intent(Intent.ACTION_MAIN)
@@ -313,7 +328,7 @@ public class MainActivity extends Activity implements Runnable {
 
 		setContentView(R.layout.maininterface);
 		talkView = (ListView) findViewById(R.id.talkList);
-		
+
 		mainButton = (Button) findViewById(R.id.button_main);
 		mainButton.setOnClickListener(new View.OnClickListener() {
 
@@ -326,7 +341,6 @@ public class MainActivity extends Activity implements Runnable {
 		});
 
 		audiom = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
 		oldAudio = audiom.getStreamVolume(AudioManager.STREAM_MUSIC);
 		text = (TextView) findViewById(R.id.main_text);
 		button = (Button) findViewById(R.id.button_speak);
@@ -337,11 +351,12 @@ public class MainActivity extends Activity implements Runnable {
 				// TODO Auto-generated method stub
 				if (event.getAction() == MotionEvent.ACTION_DOWN)// 判断按钮释放被释�?
 				{
+					isButtonPress = true;
 					oldAudio = audiom
 							.getStreamVolume(AudioManager.STREAM_MUSIC);
 					audiom.setStreamVolume(AudioManager.STREAM_MUSIC, 1,
 							AudioManager.FLAG_PLAY_SOUND);
-
+					
 					int code = netbot.BeginSpeechUnderstand();
 					if (code != 0) {
 						text.setText("Error Code: " + code);
@@ -349,10 +364,13 @@ public class MainActivity extends Activity implements Runnable {
 				}
 				if (event.getAction() == MotionEvent.ACTION_UP)// 判断按钮释放被释�?
 				{
+					audiom.setStreamVolume(AudioManager.STREAM_MUSIC, oldAudio,
+							AudioManager.FLAG_PLAY_SOUND);
 					int code = netbot.EndSpeechUnderstand();
 					if (code != 0) {
 						text.setText("Error Code: " + code);
 					}
+					isButtonPress = false;
 				}
 				return false;
 			}
@@ -381,7 +399,7 @@ public class MainActivity extends Activity implements Runnable {
 			// text.setText(text.getText() + "正在初始化音乐播放器\n");
 			// 初始化音乐Player
 			player = new Player(new SeekBar(context));
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -391,7 +409,7 @@ public class MainActivity extends Activity implements Runnable {
 		// 自主对话初始化
 		mAuTomatic = new AuTomatic(this, getBot());
 		mAuTomatic.setS_emotionStatus("高兴");
-		
+
 		ExitApplication.getInstance().addActivity(this);
 	}
 

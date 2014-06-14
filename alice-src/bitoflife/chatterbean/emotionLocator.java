@@ -1,4 +1,4 @@
-﻿package hha.aiml;
+﻿package bitoflife.chatterbean;
 
 public class emotionLocator {
 	

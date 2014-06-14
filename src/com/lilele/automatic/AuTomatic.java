@@ -17,51 +17,41 @@ import hha.main.MainActivity;
 public class AuTomatic {
 
 	private MainActivity mainActivity;
-    private String[] waitTime={"5s","10s","20s","30s","60s","2m"};
+	private String[] waitTime = { "5s", "10s", "20s", "30s", "60s", "2m" };
 	private Timer mtimer;
-  
-    private int countTime;
-    private Robot mbot;
-    private int memotionInt;
-    private int i_waitTime;//等待时间，由正态分布产生
-    private String s_emotionStatus; //情感状态
-    private boolean b_exit;
-    
-    public boolean isB_exit() {
+	private boolean isTimerRun = false;
+
+	private int countTime;
+	private Robot mbot;
+	private int memotionInt;
+	private int i_waitTime;// 等待时间，由正态分布产生
+	private String s_emotionStatus; // 情感状态
+	private boolean b_exit;
+
+	public boolean isB_exit() {
 		return b_exit;
 	}
-
-
 
 	public void setB_exit(boolean b_exit) {
 		this.b_exit = b_exit;
 	}
 
-
-
 	public String getS_emotionStatus() {
 		return s_emotionStatus;
 	}
-
-
 
 	public void setS_emotionStatus(String s_emotionStatus) {
 		this.s_emotionStatus = s_emotionStatus;
 	}
 
+	public int emotionValue() {
+		return memotionInt;
+	}
 
-
-	public int emotionValue(){
-    	return memotionInt;
-    }
-    
-    
-   
 	public Robot getMbot() {
 		return mbot;
 	}
 
-    
 	public void setMbot(Robot mbot) {
 		this.mbot = mbot;
 	}
@@ -72,80 +62,82 @@ public class AuTomatic {
 
 	public void setCountTime(int countTime) {
 		this.countTime = countTime;
-		i_waitTime=productGussianTime();
+		i_waitTime = productGussianTime();
 	}
 
-	public AuTomatic(MainActivity mainAct,Robot bot) {
+	public AuTomatic(MainActivity mainAct, Robot bot) {
 		mainActivity = mainAct;
-		mtimer =new Timer(true);
-		b_exit=false;
-		countTime=0;
-		this.memotionInt=0;
-		i_waitTime=40;
-		s_emotionStatus="普通";
+		b_exit = false;
+		countTime = 0;
+		this.memotionInt = 0;
+		i_waitTime = 40;
+		s_emotionStatus = "普通";
 		this.setMbot(bot);
-		setTimeTask();
+		start();
 	}
-	
-	public void destroy(){
-		mtimer.cancel();
+
+	public void destroy() {
+		if (isTimerRun == true) {
+			isTimerRun = false;
+			mtimer.cancel();
+		}
 	}
 
 	private Handler myHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			int what = msg.what;
-			String ansString="";
+			String ansString = "";
 			switch (what) {
-			case 1:  //普通
+			case 1: // 普通
 				Toast.makeText(mainActivity, "普通", 1).show();
-				if (mbot!=null) {
-					ansString=mbot.Respond("1");
+				if (mbot != null) {
+					ansString = mbot.Respond("1");
 					mainActivity.Show(null, ansString);
 				}
 				break;
-			case 2://高兴
+			case 2:// 高兴
 				Toast.makeText(mainActivity, "高兴", 1).show();
-				if (mbot!=null) {
-					
-					ansString=mbot.Respond("2");
+				if (mbot != null) {
+
+					ansString = mbot.Respond("2");
 					mainActivity.Show(null, ansString);
 				}
 				break;
-			case 3://困倦
+			case 3:// 困倦
 				Toast.makeText(mainActivity, "困倦", 1).show();
-				if (mbot!=null) {
-					ansString=mbot.Respond("3");
+				if (mbot != null) {
+					ansString = mbot.Respond("3");
 					mainActivity.Show(null, ansString);
 				}
 				break;
-			case 4://忧伤
+			case 4:// 忧伤
 				Toast.makeText(mainActivity, "忧伤", 1).show();
-				if (mbot!=null) {
-					ansString=mbot.Respond("4");
+				if (mbot != null) {
+					ansString = mbot.Respond("4");
 					mainActivity.Show(null, ansString);
 				}
 				break;
-			case 5://恐惧
+			case 5:// 恐惧
 				Toast.makeText(mainActivity, "恐惧", 1).show();
-				if (mbot!=null) {
-					ansString=mbot.Respond("5");
+				if (mbot != null) {
+					ansString = mbot.Respond("5");
 					mainActivity.Show(null, ansString);
 				}
 				break;
-			case 6://愤怒
+			case 6:// 愤怒
 				Toast.makeText(mainActivity, "愤怒", 1).show();
-				if (mbot!=null) {
-					ansString=mbot.Respond("6");
+				if (mbot != null) {
+					ansString = mbot.Respond("6");
 					mainActivity.Show(null, ansString);
 				}
 				break;
-			case 7://软件自动退出
+			case 7:// 软件自动退出
 				Toast.makeText(mainActivity, "软件免打扰模式", 1).show();
-				if (mbot!=null) {
-					ansString=mbot.Respond("7");
+				if (mbot != null) {
+					ansString = mbot.Respond("7");
 					mainActivity.Show(null, ansString);
-					countTime=0;
-					b_exit=true;
+					countTime = 0;
+					b_exit = true;
 				}
 				break;
 
@@ -155,70 +147,72 @@ public class AuTomatic {
 		};
 	};
 
-	private void setTimeTask() {
-		mtimer.schedule(new MyTimerTask(), 10000,1000);
+	public void start() {
+		if (isTimerRun == false) {
+			isTimerRun = true;
+			mtimer = new Timer(true);
+			mtimer.schedule(new MyTimerTask(), 10000, 1000);
+		}
 	}
 
 	private class MyTimerTask extends TimerTask {
 
 		@Override
 		public void run() {
-           
+
 			countTime++;
-			if (countTime==8 && b_exit==true) {
+			if (countTime == 8 && b_exit == true) {
 				programExit();
 			}
-			
-			if (countTime==i_waitTime) {
-				Message msg=Message.obtain();
+
+			if (countTime == i_waitTime) {
+				Message msg = Message.obtain();
 				if (s_emotionStatus.equals("普通")) {
-					msg.what=1;
-				}else if (s_emotionStatus.equals("高兴")) {
-					msg.what=2;
-				}else if (s_emotionStatus.equals("困倦")) {
-					msg.what=3;
-				}else if (s_emotionStatus.equals("忧伤")) {
-					msg.what=4;
-				}else if (s_emotionStatus.equals("恐惧")) {
-					msg.what=5;
-				}else if (s_emotionStatus.equals("愤怒")) {
-					msg.what=6;
+					msg.what = 1;
+				} else if (s_emotionStatus.equals("高兴")) {
+					msg.what = 2;
+				} else if (s_emotionStatus.equals("困倦")) {
+					msg.what = 3;
+				} else if (s_emotionStatus.equals("忧伤")) {
+					msg.what = 4;
+				} else if (s_emotionStatus.equals("恐惧")) {
+					msg.what = 5;
+				} else if (s_emotionStatus.equals("愤怒")) {
+					msg.what = 6;
 				}
-			
-				myHandler.sendMessage(msg);
-			}
-			
-			if (countTime==65) {
-				Message msg=Message.obtain();
-				msg.what=6;
-				myHandler.sendMessage(msg);
-			}
-			if (countTime==100) {
-				Message msg=Message.obtain();
-				msg.what=7;
+
 				myHandler.sendMessage(msg);
 			}
 
-		   
-			
+			if (countTime == 65) {
+				Message msg = Message.obtain();
+				msg.what = 6;
+				myHandler.sendMessage(msg);
+			}
+			if (countTime == 100) {
+				Message msg = Message.obtain();
+				msg.what = 7;
+				myHandler.sendMessage(msg);
+			}
+
 		}
 
 	}
-   
-	
-	//正态分布产生随机数，期望45，方差5，范围【30，60】
-	private int productGussianTime(){
-		java.util.Random random=new java.util.Random();
+
+	// 正态分布产生随机数，期望45，方差5，范围【30，60】
+	private int productGussianTime() {
+		java.util.Random random = new java.util.Random();
 		double double_res = Math.sqrt(25) * random.nextGaussian() + 45;
 		int int_res = (int) double_res;
-        if (int_res>=30 && int_res<=60) {
+		if (int_res >= 30 && int_res <= 60) {
 			return int_res;
-		}else {
+		} else {
 			return 40;
 		}
 	}
-	
-	private void programExit(){
+
+	private void programExit() {
 		mainActivity.Exit();
 	}
+
 }

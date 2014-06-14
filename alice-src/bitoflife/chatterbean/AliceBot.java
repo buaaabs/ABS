@@ -14,7 +14,6 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean;
 
-import hha.aiml.BotEmotion;
 import bitoflife.chatterbean.aiml.Category;
 import bitoflife.chatterbean.text.Request;
 import bitoflife.chatterbean.text.Response;
@@ -29,7 +28,7 @@ public class AliceBot {
 	/** Context information for this bot current conversation. */
 	private Context context;
 
-	private BotEmotion emotion;
+	private BotEmotion emotion = new BotEmotion();
 	
 	/** The Graphmaster maps user requests to AIML categories. */
 	private Graphmaster graphmaster;

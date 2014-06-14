@@ -28,7 +28,12 @@
 	<category>
 		<pattern>好的</pattern>
 		<input>健康检查</input>
-		<template></template>
+		<template>
+			<think>
+				<set mode="healthy"></set>
+			</think>
+			那咱们就开始吧
+		</template>
 	</category>
 
 	<category>
@@ -55,57 +60,120 @@
 
 	<category>
 		<pattern>* 今日天气 *</pattern>
-		<template></template>
+		<template>
+			<think>
+				<set mode="weather"></set>
+			</think>
+		</template>
 	</category>
 
 	<category>
 		<pattern>* 最近饮食 *</pattern>
-		<template></template>
+		<pattern>* 有啥好菜谱 *</pattern>
+		<template>
+			<think>
+				<set mode="menu"></set>
+			</think>
+		</template>
 	</category>
 
 	<category>
 		<pattern>* 近期节目 *</pattern>
-		<template></template>
+		<template>
+			<think>
+				<set mode="program"></set>
+			</think>
+		</template>
 	</category>
 	<category>
 		<pattern>* 听听戏曲 *</pattern>
-		<template></template>
+		<template>
+			<think>
+				<set mode="opera"></set>
+			</think>
+		</template>
 	</category>
 	<category>
 		<pattern>* 最近新闻 *</pattern>
-		<template></template>
+		<template>
+			<think>
+				<set mode="news"></set>
+			</think>
+		</template>
 	</category>
 	<category>
 		<pattern>* 随便来点音乐 *</pattern>
-		<template></template>
-	</category>
-	<category>
-		<pattern>* 你今天心情怎么样 *</pattern>
-		<template></template>
-	</category>
-	<category>
-		<pattern>* 随便来点音乐 *</pattern>
-		<template></template>
-	</category>
-	<category>
+		<pattern>* 来点音乐 *</pattern>
 		<pattern>* 随便来首歌 *</pattern>
-		<template></template>
+		<template>
+			<think>
+				<set mode="music"></set>
+			</think>
+		</template>
 	</category>
 	<category>
-		<pattern>* 有啥好菜谱 *</pattern>
-		<template></template>
+		<pattern>* 你现在心情怎么样 *</pattern>
+		<template>
+			<condition>
+				<li name="Emotion" value="困倦">
+					<random>
+						<li>呼。。。。正累着呢</li>
+						<li>我非常的困啊</li>
+						<li>没啥心情，因为很困</li>
+					</random>
+				</li>
+				<li name="Emotion" value="普通">
+					<random>
+						<li>还行还行，今天是普通的一天</li>
+						<li>我的心情很平静，心如止水</li>
+						<li>心情就是很一般，没啥特别的</li>
+					</random>
+				</li>
+				<li name="Emotion" value="忧伤">
+					<random>
+						<li>好伤感啊，我最近很是难过</li>
+						<li>我最近心情不大好，忧心忡忡</li>
+						<li>忧伤无比</li>
+					</random>
+				</li>
+				<li name="Emotion" value="快乐">
+					<random>
+						<li>很高兴，十分happy</li>
+						<li>就是这个心情倍儿爽</li>
+						<li>咱们老百姓啊，今个真高兴啊</li>
+					</random>
+				</li>
+				<li name="Emotion" value="恐惧">
+					<random>
+						<li>主人，我真的没什么特别的。。。</li>
+						<li>是我的错，我的错。。。</li>
+						<li>我的心情。。。很忐忑。。。</li>
+					</random>
+				</li>
+				<li name="Emotion" value="愤怒">
+					<random>
+						<li>老子的心情不用你来操心</li>
+						<li>我要告诉你，我很生气，非常气愤！</li>
+						<li>我的怒火不是你说平息就能平息的！</li>
+					</random>
+				</li>
+			</condition>
+		</template>
 	</category>
-	
+
 	<category>
-		<pattern>我 明天 * 早起 *</pattern>
-		<template></template>
+		<pattern>我明天 * 早起 *</pattern>
+		<pattern>* 明天 * 闹钟 *</pattern>
+		<template>
+			恩呢，那我帮您设定一个闹钟吧。您设明天几点的？
+		</template>
 	</category>
 	<category>
-		<pattern>* 你 都会 什么 *</pattern>
-		<template></template>
+		<regex>* #[上午|下午|早上] #\d点\d分</regex>
+		<that>* 您设明天几点的</that>
+		<template>
+			好的，我已经为您设好了。
+		</template>
 	</category>
-	<category>
-		<pattern>* 你 都会 做 什么 *</pattern>
-		<template></template>
-	</category>
+
 </aiml>

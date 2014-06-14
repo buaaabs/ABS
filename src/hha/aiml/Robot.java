@@ -12,6 +12,7 @@ import java.net.URL;
 
 import android.content.res.AssetManager;
 import bitoflife.chatterbean.AliceBot;
+import bitoflife.chatterbean.BotEmotion;
 import bitoflife.chatterbean.Context;
 import bitoflife.chatterbean.Graphmaster;
 import bitoflife.chatterbean.Match;
@@ -27,6 +28,7 @@ public class Robot implements Runnable {
 	AliceBot bot = null;
 	Context context = null;
 	Graphmaster graphmaster = null;
+	BotEmotion emotion = null;
 	AssetManager am = null;
 	boolean canfind = false;
 	String command = null;
@@ -43,7 +45,7 @@ public class Robot implements Runnable {
 	public void InitRobot() {
 		// /初始化分词系统
 		try {
-			BotEmotion.init();
+			
 
 			InputStream prop = am.open("jcseg.properties",
 					AssetManager.ACCESS_BUFFER);
@@ -82,6 +84,9 @@ public class Robot implements Runnable {
 
 			context = bot.getContext();
 			graphmaster = bot.getGraphmaster();
+			emotion = bot.getEmotion();
+			emotion.main = main;
+			emotion.init();
 			context.outputStream(gossip);
 			int _port = Integer.parseInt((String) context.property("bot.port"));
 			net = new NetAiml((String) context.property("bot.ip"), _port);

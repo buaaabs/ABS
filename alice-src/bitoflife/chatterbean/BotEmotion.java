@@ -1,30 +1,31 @@
-package hha.aiml;
+package bitoflife.chatterbean;
 
+import hha.aiml.Robot;
 import hha.main.MainActivity;
 
 public class BotEmotion {
-	public static MainActivity main;
+	public MainActivity main;
 	
-	static emotionLocator locator = new emotionLocator();
-	static int vitality; // 活跃度 困倦-兴奋
-	static int happiness; // 快乐度 忧伤-快乐
-	static int confidence;// 置信度 不确定-确定
-	static int mighty; // 强势度 恐惧-愤怒
+	private emotionLocator locator = new emotionLocator();
+	private int vitality; // 活跃度 困倦-兴奋
+	private int happiness; // 快乐度 忧伤-快乐
+	private int confidence;// 置信度 不确定-确定
+	private int mighty; // 强势度 恐惧-愤怒
 	// 范围均是0~10000
 
 	// 性格 情感变化率？ 0-1000%
-	static int vitality_d;
-	static int happiness_d;
-	static int confidence_d;
-	static int mighty_d;
+	private int vitality_d;
+	private int happiness_d;
+	private int confidence_d;
+	private int mighty_d;
 
 	// 不确定性 百分比 0-1000%
-	static int vitality_u;
-	static int happiness_u;
-	static int confidence_u;
-	static int mighty_u;
+	private int vitality_u;
+	private int happiness_u;
+	private int confidence_u;
+	private int mighty_u;
 
-	public static void init() {
+	public void init() {
 
 		vitality = (int) (N_rand(5000.0, 50.0) + 0.5);
 		happiness = (int) (N_rand(5000.0, 50.0) + 0.5);
@@ -43,7 +44,7 @@ public class BotEmotion {
 
 	}
 	
-	public static void Update()
+	public void Update()
 	{
 		double dv = (5000 - vitality) * N_rand(80.0, 5.0) * 0.01;
 		double dh = (5000 - happiness) * N_rand(80.0, 5.0) * 0.01;
@@ -53,7 +54,7 @@ public class BotEmotion {
 		mighty += dm;
 	}
 	
-	public static void UpdateEmotion()
+	public void UpdateEmotion()
 	{
 		vitality_d = (int) (N_rand(80.0, 5.0) + 0.5);
 		happiness_d = (int) (N_rand(80.0, 5.0) + 0.5);
@@ -84,65 +85,65 @@ public class BotEmotion {
 		return value;
 	}
 
-	public static int getVitality() {
+	public int getVitality() {
 		return vitality;
 	}
 
-	public static void setVitality(int vitality) {
-		BotEmotion.vitality = normalization(vitality);
+	public void setVitality(int vitality) {
+		vitality = normalization(vitality);
 	}
 
-	public static void changeVitality(int vitality) {
-		BotEmotion.vitality += normalization(vitality) * vitality_d * 0.01;
-		BotEmotion.vitality += normalization(vitality) * vitality_u
+	public void changeVitality(int vitality) {
+		vitality += normalization(vitality) * vitality_d * 0.01;
+		vitality += normalization(vitality) * vitality_u
 				* N_rand(0, 1) * 0.01;
-		BotEmotion.vitality = normalization(BotEmotion.vitality);
+		vitality = normalization(vitality);
 	}
 
-	public static int getHappiness() {
+	public int getHappiness() {
 		return happiness;
 	}
 
-	public static void setHappiness(int happiness) {
-		BotEmotion.happiness = normalization(happiness);
+	public void setHappiness(int happiness) {
+		happiness = normalization(happiness);
 	}
 
-	public static void changeHappiness(int happiness) {
-		BotEmotion.happiness += normalization(happiness) * happiness_d * 0.01;
-		BotEmotion.happiness += normalization(happiness) * happiness_u
+	public void changeHappiness(int happiness) {
+		happiness += normalization(happiness) * happiness_d * 0.01;
+		happiness += normalization(happiness) * happiness_u
 				* N_rand(0, 1) * 0.01;
-		BotEmotion.happiness = normalization(BotEmotion.happiness);
+		happiness = normalization(happiness);
 	}
 
-	public static int getConfidence() {
+	public int getConfidence() {
 		return confidence;
 	}
 
-	public static void setConfidence(int confidence) {
-		BotEmotion.confidence = normalization(confidence);
+	public void setConfidence(int confidence) {
+		confidence = normalization(confidence);
 	}
 
-	public static void changeConfidence(int confidence) {
-		BotEmotion.confidence += normalization(confidence) * confidence_d
+	public void changeConfidence(int confidence) {
+		confidence += normalization(confidence) * confidence_d
 				* 0.01;
-		BotEmotion.confidence += normalization(confidence) * confidence_u
+		confidence += normalization(confidence) * confidence_u
 				* N_rand(0, 1) * 0.01;
-		BotEmotion.confidence = normalization(BotEmotion.confidence);
+		confidence = normalization(confidence);
 	}
 
-	public static int getMighty() {
+	public int getMighty() {
 		return mighty;
 	}
 
-	public static void setMighty(int mighty) {
-		BotEmotion.mighty = normalization(mighty);
+	public void setMighty(int mighty) {
+		mighty = normalization(mighty);
 	}
 
-	public static void changeMighty(int mighty) {
-		BotEmotion.mighty += normalization(mighty) * mighty_d * 0.01;
-		BotEmotion.mighty += normalization(mighty) * mighty_u * N_rand(0, 1)
+	public void changeMighty(int mighty) {
+		mighty += normalization(mighty) * mighty_d * 0.01;
+		mighty += normalization(mighty) * mighty_u * N_rand(0, 1)
 				* 0.01;
-		BotEmotion.mighty = normalization(BotEmotion.mighty);
+		mighty = normalization(mighty);
 	}
 
 	static java.util.Random r = new java.util.Random();
