@@ -32,16 +32,7 @@ public class BotEmotion {
 		confidence = (int) (N_rand(5000.0, 50.0) + 0.5);
 		mighty = (int) (N_rand(5000.0, 50.0) + 0.5);
 
-		vitality_d = (int) (N_rand(80.0, 5.0) + 0.5);
-		happiness_d = (int) (N_rand(80.0, 5.0) + 0.5);
-		confidence_d = (int) (N_rand(80.0, 5.0) + 0.5);
-		mighty_d = (int) (N_rand(80.0, 5.0) + 0.5);
-
-		vitality_u = (int) (N_rand(15.0, 9.0) + 0.5);
-		happiness_u = (int) (N_rand(15.0, 9.0) + 0.5);
-		confidence_u = (int) (N_rand(15.0, 9.0) + 0.5);
-		mighty_u = (int) (N_rand(15.0, 9.0) + 0.5);
-
+		UpdateEmotion();
 	}
 	
 	public void Update()

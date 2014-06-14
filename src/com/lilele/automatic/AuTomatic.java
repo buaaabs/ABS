@@ -159,7 +159,9 @@ public class AuTomatic {
 
 		@Override
 		public void run() {
-
+			if (mbot.isInitDone())
+				mbot.getBot().getEmotion().Update();
+			
 			countTime++;
 			if (countTime == 8 && b_exit == true) {
 				programExit();
@@ -184,12 +186,12 @@ public class AuTomatic {
 				myHandler.sendMessage(msg);
 			}
 
-			if (countTime == 65) {
-				Message msg = Message.obtain();
-				msg.what = 6;
-				myHandler.sendMessage(msg);
-			}
-			if (countTime == 100) {
+//			if (countTime == 65) {
+//				Message msg = Message.obtain();
+//				msg.what = 6;
+//				myHandler.sendMessage(msg);
+//			}
+			if (countTime == 180) {
 				Message msg = Message.obtain();
 				msg.what = 7;
 				myHandler.sendMessage(msg);

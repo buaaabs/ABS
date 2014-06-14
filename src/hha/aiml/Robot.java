@@ -230,6 +230,18 @@ public class Robot implements Runnable {
 		}
 	}
 
+	public AliceBot getBot() {
+		return bot;
+	}
+
+	public AssetManager getAm() {
+		return am;
+	}
+
+	public NetAiml getNet() {
+		return net;
+	}
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

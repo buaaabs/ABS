@@ -86,6 +86,7 @@ public class Emotion extends TemplateElement
     		bot.getEmotion().changeMighty(map.get("mighty"));
     	if (map.containsKey("vitality"))
     		bot.getEmotion().changeVitality(map.get("vitality"));
+    	bot.getEmotion().UpdateEmotion();
     }
     //java.lang.System.out.println("Set:"+output);
     return output;

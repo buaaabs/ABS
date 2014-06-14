@@ -1,13 +1,12 @@
 package hha.aiml;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashSet;
@@ -49,7 +48,8 @@ public class NetAiml {
 
 	public boolean Connect() {
 		try {
-			socket = new Socket(ip, port);
+			socket = new Socket();
+			socket.connect(new InetSocketAddress(ip,port), 500);
 			input = socket.getInputStream();
 			output = socket.getOutputStream();
 			br = new BufferedReader(new InputStreamReader(input,"gbk"));

@@ -2,29 +2,6 @@
 <aiml>
 <!-- Copyright (c) 2007 ALICE A.I. Foundation, Inc. -->
 <!-- Last modified Seo 21, 2009, by Lichunlei -->
-  <category><pattern>*</pattern>
-  <template>
-    <think>
-      <set name="CanNotFind" >
-        <template>True</template>
-      </set>
-    </think>
-    <random> 
-      <li>您说神马?</li>
-      <li>真是抱歉啊，我没听懂您说什么？</li>
-      <li>啊啊，我刚才愣神着，您能再说一遍吗?</li>
-    </random>
-  </template>
-</category>
-
-<category>
-    <pattern> _ </pattern> 
-    <that>额额 那我该说点什么好呢</that>
-    <template>
-      <system>learn("<input index="3"/>", "<input index="1"/>")</system>
-      好的，我知道了，您的教导我终身铭记。
-    </template>
-</category>
 
 <category><pattern>* 现在 * 几点 *</pattern>
 <template>It is <date format="h:mm a"/>.</template></category>                          
@@ -32,20 +9,7 @@
 <template><date format="E"/>.</template></category>
 <category><pattern>* 今天 * 几号 *</pattern>
 <template><date format="MM月dd号"/>.</template></category>
-<category><pattern>MY PHONE NUMBER IS *</pattern>
-<template>Okay, your phone number is <set name="phone"><star/></set>.</template>
-</category>
-<category><pattern>我的名字是 *</pattern>
-  <template>
-    <think>
-      <set name="name"><star index="1"/></set>
-    </think>
-    欢迎您, <get name="name"/>,给您服务是我的荣幸.
-  </template>
-</category>
-<category><pattern>* 记得我 * 吗</pattern><template>您是 <get name="name"/>, 我还记得哦！</template></category>
-<category><pattern>I CAN NOT *</pattern><template>Why can't you do <set name="it"><person/></set>?</template></category>
-<category><pattern>MY INPUT</pattern> <template> 1:<input index="1"/>    2:<input index="2"/>    3:<input index="3"/>    4:<input index="4"/></template></category>
+
 <category>
   <pattern>* 伟哉我大科长 *</pattern>
   <template>
@@ -130,6 +94,9 @@
 
 <category>
   <pattern>* 你 * 有什么功能 * </pattern>
+  <pattern>* 你 * 会什么 * </pattern>
+  <pattern>* 你 * 会做什么 * </pattern>
+  <pattern>* 你 * 会干什么 * </pattern>
   <template>
     我是一款聊天机器人，现在能陪您对话，喊伟哉我大科长，您说出歌名，我就给您放音乐，还能背古诗，说绕口令等等，我最初的设计目的是让我为老人的健康服务，给他们定期做身体健康状况统计，推荐健康的饮食，健身方法，最近的天气，美味的菜谱，给老人提供健康服务，这些是我最希望能为老人做的事。
   </template>
@@ -199,7 +166,8 @@
   </template>
 </category>
 
-<category><regex>* #停|停下|停下来 *</regex>
+<category>
+  <regex>#停|停下|停下来</regex>
   <template>
     <think>
       <set name = "Command">
@@ -209,9 +177,10 @@
     好的
   </template>
 </category>
+
 <category>
-    <pattern>* 今天 * 状态怎么样 *</pattern>
-    <pattern>* 今天 * 状态可好 *</pattern>
+    <regex>* #今天|近来|最近 * 状态怎么样 *</regex>
+    <regex>* #今天|近来|最近 * 状态可好 *</regex>
     <template>
 	      <random>
 	        <li>恩啊，主板没短路，还行还行。</li>
@@ -265,26 +234,42 @@
   </category>
   
   <!-- A category set to learn simple user-fed categories. -->
+
+  <category>
+  <pattern>*</pattern>
+  <template>
+    <think>
+      <set name="CanNotFind" >
+        <template>True</template>
+      </set>
+    </think>
+    <random> 
+      <li>您说神马?</li>
+      <li>真是抱歉啊，我没听懂您说什么？</li>
+      <li>啊啊，我刚才愣神着，您能再说一遍吗?</li>
+    </random>
+  </template>
+</category>
+
+<category>
+    <pattern> _ </pattern> 
+    <that>额额 那我该说点什么好呢</that>
+    <template>
+      <system>learn("<input index="3"/>", "<input index="1"/>")</system>
+      好的，我知道了，您的教导我终身铭记。
+    </template>
+</category>
+
+
   <category>
     <pattern>* 不是  * 好答案 *</pattern>
-    <template>
-      额额， 那我该说点什么好呢？
-    </template>
-  </category>
-  <category>
+    <pattern>* 答得 * 不 * 好 *</pattern>
     <pattern>* 回答 * 不好 *</pattern>
     <template>
       额额， 那我该说点什么好呢？
     </template>
   </category>
-  <category>
-    <pattern>* 答得 * 不 * 好 *</pattern>
-    <template>
-      额额， 那我该说点什么好呢？
-    </template>
-  </category>
-  
-  
+
 
 
 </aiml>
