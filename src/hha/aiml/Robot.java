@@ -45,7 +45,6 @@ public class Robot implements Runnable {
 	public void InitRobot() {
 		// /初始化分词系统
 		try {
-			
 
 			InputStream prop = am.open("jcseg.properties",
 					AssetManager.ACCESS_BUFFER);
@@ -87,6 +86,7 @@ public class Robot implements Runnable {
 			emotion = bot.getEmotion();
 			emotion.main = main;
 			emotion.init();
+			setProperty("mode", "test");
 			context.outputStream(gossip);
 			int _port = Integer.parseInt((String) context.property("bot.port"));
 			net = new NetAiml((String) context.property("bot.ip"), _port);
@@ -183,7 +183,7 @@ public class Robot implements Runnable {
 
 	public String getProperty(String str) {
 		if (!isInitDone()) {
-			return "";
+			return null;
 		}
 		return (String) context.property("predicate." + str);
 	}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<!-- 
+aiml所有元素属性都是大小写敏感的！
+aiml的pattern元素里面的英文必须大写！
+<learen filename=”xxx.aiml”>元素表示让机器人学习某个aiml文件
+<pattern>表示匹配模式，里面的内容必须大写，可以有星号* 
+或下划线_，但必须空格隔开，星号表示匹配所有，任意情况；下划线的意义跟星号一样，除了不能匹配字典里面Z后面的字母
+-->
+<!-- 
+1.少吃动物脂肪和胆固醇含量高的食物，如猪油、牛油、奶油、蛋黄、动物内脏等。 √
+对胆固醇具有降低作用的如：豆类及其制品，木耳、香菇、海带、紫菜、洋葱、大蒜等，具有抗动脉粥样硬化作用，可以常吃 √
+ 2.多吃新鲜蔬菜和水果，它们含有丰富的维生素、钾、钙、纤维素等。  √
+3.节制饭量，适当吃些粗粮，少吃甜食，控制体量。√
+4.限制食盐的摄及量。每人每天摄入食盐不超过 5 克 。呃呃呃呃这个我可不知道怎么搞
+5. 老年人不超过350克。如出现多食多饮应考虑糖尿病、甲亢等病的存在。√
+每日食量不足250克，食欲丧失达半个月以上，应检查是否有潜在的炎症、癌症。 √
+-->
+
+<aiml>
+<category> 
+		<pattern>HHA_DIET_TIPS</pattern>
+		<template>
+			<random>
+				<li>我们要少吃动物脂肪和胆固醇含量高的东西，比如猪油、牛油、奶油、蛋黄、动物内脏什么的，这些东西吃多了容易得高血压</li>
+				<li>预防高血压，我们可以常吃木耳、香菇、海带、紫菜、洋葱、大蒜和豆类制品</li>
+				<li>新鲜蔬菜和水果要多吃哦，他们含有丰富的维生素，钙等微量元素，对身体很有好处</li>
+				<li>饮食要适量，适当吃些粗粮，少吃甜食，身体才健康</li>
+			</random>
+		</template> 
+</category> 
+
+<category>
+	<pattern>HHA_DIET_ASK_STATE</pattern>
+	<template>
+		<random>
+			<li>您最近吃饭还行吧？</li>
+			<li>这几天吃饭有味道么？</li>
+		</random>
+	</template>
+</category>
+<category>
+	<pattern>*不想*吃饭</pattern>
+	<that>您最近吃饭还行吧？</that>
+	<template>不想吃饭可不是好现象，要是出现这种情况已经有差不多半个月了，您该考虑去检查检查身体里边是不是有炎症</template>
+</category>
+<category>
+	<pattern>*还行*</pattern>
+	<that>您最近吃饭还行吧？</that>
+	<template>嗯，注意吃好喝好，饮食适量就好，太多太少都对身体不好哦~</template>
+</category>
+
+<category>
+	<pattern>*不想*吃饭</pattern>
+	<that>这几天吃饭有味道么？</that>
+	<template>不想吃饭可不是好现象，要是出现这种情况已经有差不多半个月了，您该考虑去检查检查身体里边是不是有炎症</template>
+</category>
+
+<category>
+	<pattern>*总是饿</pattern>
+	<that>您最近吃饭还行吧？</that>
+	<template>正常吃饭还总是感觉饿，可能是身体有点不正常，您该考虑去检查检查血糖啦</template>
+</category>
+<category>
+	<pattern>*吃不饱*</pattern>
+	<that>您最近吃饭还行吧？</that>
+	<template>正常吃饭还总是感觉饿，可能是身体有点不正常，您该考虑去检查检查血糖啦</template>
+</category>
+</aiml>

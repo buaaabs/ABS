@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<aiml>
+	<category>
+	    <pattern>temperature</pattern>
+	    <template>
+	        <random>
+	            <li>请问您现在的体温是多少？</li>
+	            <li>您能告诉我您的体温吗？</li>
+	        </random>
+	    </template>
+	</category>
+	
+	<category>
+	    <pattern>我 的 体温 是 * 度</pattern>
+	    <that>请问您现在的体温是多少</that>
+	    <template>
+	        <think>
+	            <set name="mytemperature"><star /></set>
+	        </think>
+	        <random>
+            	<li>好的，我知道了，您的体温是<get name="mytemperature" />度</li>
+            	<li>好的，我会为您检测体温是否正常</li>
+	        </random>
+	    </template>
+	</category>
+	
+	<category>
+	    <pattern>我 的 体温 是 * 度</pattern>
+	    <that>您能告诉我您的体温吗？</that>
+	    <template>
+	        <think>
+	            <set name="mytemperature"><star /></set>
+	        </think>
+	        <random>
+	            	<li>好的，我知道了，您的体温是<get name="mytemperature" />度</li>
+	            	<li>好的，我会为您检测体温是否正常</li>
+	        </random>
+	    </template>
+	</category>
+	
+	<category>
+	    <pattern>breathe</pattern>
+	    <template>
+	        <random>
+	            <li>请问您的呼吸平稳吗？</li>
+	            <li>请问您的呼吸频率是每分钟多少？</li>
+	            <li>请问您有没有胸闷，呼吸费力的感觉？</li>
+	        </random>
+	    </template>
+	</category>
+	
+	<category>
+	    <pattern>*</pattern>
+	    <that>请问您的呼吸平稳吗？</that>
+	    <template>
+	    	好的，您说的是:“<input index="1" />”。  
+	    </template>
+	</category>
+	
+	<category>
+	    <pattern>* 次</pattern>
+	    <that>请问您的呼吸频率是每分钟多少次？</that>
+	    <template>
+	    	好的，您的呼吸频率是<star index="1" />次    
+	    </template>
+	</category>
+	
+	<category>
+	    <pattern>*</pattern>
+	    <that>请问您有没有胸闷，呼吸费力的感觉？</that>
+	    <template>
+	    	好的，您说的是：“<input index="1" />”。    
+	    </template>
+	</category>
+	
+	<category>
+	    <pattern>sphygmus</pattern>
+	    <template>请问您的脉搏频率是每分钟多少次？</template>
+	</category>
+	
+	<category>
+	    <pattern>* 次</pattern>
+	    <that>请问您的脉搏频率是每分钟多少次？</that>
+	    <template>
+	    	好的，我知道了，您的脉搏频率是每分钟<input index="1" />次。
+	    </template>
+	</category> 
+	
+	<category>
+	    <pattern>heavy</pattern>
+	    <template>
+	        <random>
+	            <li>请问您的体重是多少？</li>
+	            <li>请问您最近有没有出现体重短时间变轻的情况？</li>
+	            <li>请问您最近有没有出现体重短时间增重的情况？</li>
+	        </random>
+	    </template>
+	</category>
+	
+	<category>
+	    <pattern>*</pattern>
+	    <that>请问您的体重是多少？</that>
+	    <template>
+	    	好的，我知道了，您的体重是<input index="1" />
+	    </template>
+	</category>
+	
+	 <category>
+	    <pattern>有</pattern>
+	    <that>请问您最近有没有出现体重短时间变轻的情况？</that>
+	    <template>
+	    	短时间内的消瘦见于糖尿病、甲亢、癌症、胃、肠、肝疾患，请您注意。
+	    </template>
+	</category>
+	
+	 <category>
+	    <pattern>没有</pattern>
+	    <that>请问您最近有没有出现体重短时间变轻的情况？</that>
+	    <template>
+	    	好的。
+	    </template>
+	</category>
+	
+	<category>
+	    <pattern>有</pattern>
+	    <that>请问您最近有没有出现体重短时间增加的情况？</that>
+	    <template>
+	    	体重短期内增加很多可能与高血脂、糖尿病、甲状腺机能减退症等疾患有关，请您注意。
+	    </template>
+	</category>
+	
+	<category>
+	    <pattern>没有</pattern>
+	    <that>请问您最近有没有出现体重短时间增加的情况？</that>
+	    <template>
+	    	好的，我知道了。
+	    </template>
+	</category>
+</aiml>

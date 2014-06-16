@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<aiml>
+	<category>
+		<pattern>frequent_low</pattern>
+		<template>
+			<random>
+				<li>好久都没调查了，</li>
+				<li>有好长一段时间都没调查了，</li>
+				<li>挺长时间都没调查了，</li>
+			</random>
+		</template>
+	</category>
+	<category>
+		<pattern>inv_weight</pattern>
+		<template>
+			<srai>frequent_low</srai>
+			您的体重是多少？
+		</template>
+	</category>
+	<category>
+		<pattern>inv_weight</pattern>
+		<template>
+			<srai>frequent_low</srai>
+			您的体重是多少？
+		</template>
+	</category>
+</aiml>

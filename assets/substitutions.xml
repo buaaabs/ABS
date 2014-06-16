@@ -7,9 +7,9 @@
       <substitute find="=reply" replace=""/>
       <substitute find="name=reset" replace=""/>
       <substitute find=":-)" replace=" smile "/>
-      <substitute find="关岛" replace=" 关导 "/>
+      <substitute find="关岛" replace="关 导 "/>
       <substitute find="宋瑞" replace=" 宋睿 "/>
-      <substitute find="孙岛" replace=" 孙导 "/>
+      <substitute find="孙岛" replace=" 孙 导 "/>
       <substitute find=":)" replace=" smile "/>
       <substitute find=",)" replace=" smile "/>
       <substitute find=";)" replace=" smile "/>

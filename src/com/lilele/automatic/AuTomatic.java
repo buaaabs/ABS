@@ -13,6 +13,7 @@ import android.os.Message;
 import android.widget.Toast;
 import hha.aiml.Robot;
 import hha.main.MainActivity;
+import hha.mode.Mode;
 
 public class AuTomatic {
 
@@ -66,6 +67,7 @@ public class AuTomatic {
 	}
 
 	public AuTomatic(MainActivity mainAct, Robot bot) {
+
 		mainActivity = mainAct;
 		b_exit = false;
 		countTime = 0;
@@ -73,6 +75,7 @@ public class AuTomatic {
 		i_waitTime = 40;
 		s_emotionStatus = "普通";
 		this.setMbot(bot);
+		Mode.ModeInit(mainAct, this);
 		start();
 	}
 
@@ -159,44 +162,34 @@ public class AuTomatic {
 
 		@Override
 		public void run() {
-			if (mbot.isInitDone())
-				mbot.getBot().getEmotion().Update();
-			
+			if (!mbot.isInitDone())
+				return;
+
+			mbot.getBot().getEmotion().Update();
+
 			countTime++;
 			if (countTime == 8 && b_exit == true) {
 				programExit();
 			}
 
-			if (countTime == i_waitTime) {
-				Message msg = Message.obtain();
-				if (s_emotionStatus.equals("普通")) {
-					msg.what = 1;
-				} else if (s_emotionStatus.equals("高兴")) {
-					msg.what = 2;
-				} else if (s_emotionStatus.equals("困倦")) {
-					msg.what = 3;
-				} else if (s_emotionStatus.equals("忧伤")) {
-					msg.what = 4;
-				} else if (s_emotionStatus.equals("恐惧")) {
-					msg.what = 5;
-				} else if (s_emotionStatus.equals("愤怒")) {
-					msg.what = 6;
-				}
-
-				myHandler.sendMessage(msg);
-			}
-
-//			if (countTime == 65) {
-//				Message msg = Message.obtain();
-//				msg.what = 6;
-//				myHandler.sendMessage(msg);
-//			}
-			if (countTime == 180) {
-				Message msg = Message.obtain();
-				msg.what = 7;
-				myHandler.sendMessage(msg);
-			}
-
+			String mode = mbot.getProperty("mode");
+			Mode.Switch(mode, countTime);
+			/*
+			 * if (countTime == i_waitTime) { Message msg = Message.obtain(); if
+			 * (s_emotionStatus.equals("普通")) { msg.what = 1; } else if
+			 * (s_emotionStatus.equals("高兴")) { msg.what = 2; } else if
+			 * (s_emotionStatus.equals("困倦")) { msg.what = 3; } else if
+			 * (s_emotionStatus.equals("忧伤")) { msg.what = 4; } else if
+			 * (s_emotionStatus.equals("恐惧")) { msg.what = 5; } else if
+			 * (s_emotionStatus.equals("愤怒")) { msg.what = 6; }
+			 * 
+			 * myHandler.sendMessage(msg); }
+			 * 
+			 * // if (countTime == 65) { // Message msg = Message.obtain(); //
+			 * msg.what = 6; // myHandler.sendMessage(msg); // } if (countTime
+			 * == 180) { Message msg = Message.obtain(); msg.what = 7;
+			 * myHandler.sendMessage(msg); }
+			 */
 		}
 
 	}

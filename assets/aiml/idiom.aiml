@@ -4,11 +4,11 @@
 <!-- Last modified Seo 21, 2009, by Lichunlei -->
 
 <category><pattern>* 现在 * 几点 *</pattern>
-<template>It is <date format="h:mm a"/>.</template></category>                          
+<template>现在是<date format="a h:mm"/>。</template></category>                          
 <category><pattern>* 今天 * 周几 *</pattern>
-<template><date format="E"/>.</template></category>
+<template>今天是<date format="E"/>。</template></category>
 <category><pattern>* 今天 * 几号 *</pattern>
-<template><date format="MM月dd号"/>.</template></category>
+<template>今天是<date format="MM月dd号"/>.</template></category>
 
 <category>
   <pattern>* 伟哉我大科长 *</pattern>
@@ -70,7 +70,7 @@
 </category>
 
 <category>
-    <Regex>你 * 是 #机器人|智能机器人|AI </Regex>
+    <Regex>你 * 是 * #机器人|智能机器人|AI </Regex>
     <template>
       恩，我是由ABS绝对值团队开发的哦啊~我的设计很精巧吧~！
     </template>
@@ -152,14 +152,9 @@
     哦哦，我大科长啊！科长伟了！科长壮了！哦哦哦！噢！
   </template>
 </category>
-<category>
-  <pattern>* 你刚刚说什么 *</pattern>
-  <template>
-    我刚才说:“<that index="1,1" />”
-  </template>
-</category>
 
 <category>
+  <pattern>* 你刚刚说什么 *</pattern>
   <pattern>* 你刚才说什么 *</pattern>
   <template>
     我刚才说:“<that index="1,1" />”

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+	<category>
+		<pattern>weatherinfo</pattern>
+		<template>您好，欢迎为你播报今天天气情况。今天是<date format="MM月dd号"/>.<date format="E"/>.<get name="city"/>,今天天气<get name="weather"/>,最低温度<get name="temp1"/>,最高温度<get name="temp2"/>。祝你心情愉快！</template>
+	</category>
+
+	<category>
+		<pattern>* 今天 * 天气 怎样 * </pattern>
+		<pattern>* 天气 * 如何 *</pattern>
+		<pattern>* 天气 * 好不好 * </pattern>
+		<template>您好，欢迎为你播报今天天气情况。<get name="city"/>,今天天气<get name="weather"/>,最低温度<get name="temp1"/>,最高温度<get name="temp2"/>。</template>
+	</category>
+
+	<category>
+		<pattern>* 今天 * 温度 * 多少 * </pattern>
+		<pattern>* 今天 * 温度 * 多高*</pattern>
+		<pattern>* 现在* 温度 * 多少 * </pattern>
+		<template>今天最低温度<get name="temp1"/>,最高温度<get name="temp2"/>。
+        <condition name="temptip" value="lowtemp">今天天气温度偏低，建议多穿衣服保暖。</condition>
+        <condition name="temptip" value="midtemp">今天天气暖和，建议多出外运动，锻炼身体，舒缓身心。</condition>
+        <condition name="temptip" value="hightemp">今天天气温度较高，建议不要出外劳动太长时间。留在家中，多喝水，看看电视也挺好的！</condition>
+	</template>
+	</category>
+
+	<category>
+		<pattern>* 今天 * 吹风 吗 * </pattern>
+		<pattern>* 今天 * 风 大 吗 *</pattern>
+		<pattern>* 今天 * 吹 什么 * 风 * </pattern>
+		<template>
+			今天有<get name="wind"/>,风力<get name="windlevel"/>
+	   </template>
+	</category>
+
+	<category>
+		<pattern>* 今天 * 湿度 * </pattern>
+		<pattern>* 今天 * 潮湿 吗 *</pattern>
+		<template>
+			亲，今天湿度<get name="humidity"/>。
+			<condition name="humidtylevel" value="lowhumidty">湿度低，天气比较干燥。</condition>
+			<condition name="humidtylevel" value="midhumidty">湿度一般，天气凉爽。</condition>
+			<condition name="humidtylevel" value="lowhumidty">湿度较高，天气比较潮湿。小心地滑，建议不要做剧烈运动，出外注意安全。</condition>
+	   </template>
+	</category>
+
+	<category>
+		<pattern>* 今天 * 下雨 * 吗 </pattern>
+		<pattern>* 今天 * 有雨 吗 *</pattern>
+		<template>今天天气<get name="weather"/>。</template>
+	</category>
+</aiml>

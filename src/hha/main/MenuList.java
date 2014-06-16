@@ -16,7 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class MenuList extends ListActivity {
 	// public static final ColorStateList white = null;
-	String[] map = new String[6];
+	String[] map = new String[7];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class MenuList extends ListActivity {
 		map[3] = "软件设置";
 		map[4] = "关于我们";
 		map[5] = "退出";
+		map[6] = "测试";
 		Button returnbutton = (Button) this.findViewById(R.id.returnbutton);
 		returnbutton.setOnClickListener(new OnClickListener() {
 
@@ -64,12 +65,20 @@ public class MenuList extends ListActivity {
 					ExitApplication.getInstance().exit();
 					System.exit(0);
 					break;
+				case 6:
+					Test();
+					break;
 				default:
 					return;
 				}
 			}
 
 		});
+	}
+	
+	public void Test()
+	{
+		
 	}
 
 	public class MyAdapter extends BaseAdapter {

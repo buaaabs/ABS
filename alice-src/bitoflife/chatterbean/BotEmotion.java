@@ -43,6 +43,10 @@ public class BotEmotion {
 		vitality += dv;
 		happiness += dh;
 		mighty += dm;
+		
+		Robot bot = main.getBot();
+		String ans = locator.getLocation(vitality, happiness, mighty);
+		bot.setProperty("Emotion", ans);
 	}
 	
 	public void UpdateEmotion()

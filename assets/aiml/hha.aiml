@@ -59,7 +59,7 @@
 	</category>
 
 	<category>
-		<pattern>* 今日天气 *</pattern>
+		<regex>* #今日|今天 天气 *</regex>
 		<template>
 			<think>
 				<set mode="weather"></set>
@@ -94,7 +94,7 @@
 		</template>
 	</category>
 	<category>
-		<pattern>* 最近新闻 *</pattern>
+		<pattern>* 最近 * 新闻 *</pattern>
 		<template>
 			<think>
 				<set mode="news"></set>

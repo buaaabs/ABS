@@ -1,0 +1,33 @@
+{
+	"user" : [
+		"name",
+		"sex",
+		"age",
+		"birthday"
+	],
+	"relationship" : [
+		"son",
+		"dau",
+		"parent",
+		"half",
+		"friend"
+	],
+	"element" : [
+		"weight",
+		"height"
+	],
+	"senior" : [
+		"血脂",
+		"血糖"
+	],
+	"history" : [
+		"高血压",
+		"糖尿病",
+		"神经衰弱",
+		"脑血栓",
+		"冠心病",
+		"心肌梗",
+		"关节炎",
+		"风湿病"
+	]
+}

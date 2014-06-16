@@ -44,8 +44,10 @@ public class Jcseg {
 	}
 
 	public static String chineseTranslate(String str) {
-		if (!isInitDone)
+		if ((!isInitDone) || (str ==null))
 			return str;
+//		if ((str.length()!=0) && (str.charAt(0)<128))
+//			return str;
 		try {
 			seg.reset(new StringReader(str));
 		} catch (IOException e) {

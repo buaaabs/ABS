@@ -119,10 +119,10 @@
 	</category>
 	<category>
 		<regex>* #\d年\d月\d日 *</regex>
-		<input>ask_age</input>
+		<input>ask_birthday</input>
 		<template>
 			<think>
-				<set name="userbirthday"><sharp index="1" /></set>
+				<set name="birthday"><sharp index="1" /></set>
 			</think>
 			<random>
 				<li>您是<sharp index="1" />的生日啊。</li>
@@ -134,7 +134,7 @@
 		<regex>我的生日是 #\d年\d月\d日 *</regex>
 		<template>
 			<think>
-				<set name="userbirthday"><sharp index="1" /></set>
+				<set name="birthday"><sharp index="1" /></set>
 			</think>
 			<random>
 				<li>您是<sharp index="1" />的生日啊。</li>
@@ -256,7 +256,6 @@
 			<srai>answer</srai>
 		</template>
 	</category>
-
 	<category>
 		<pattern>ask_parent</pattern>
 		<template>
@@ -307,6 +306,7 @@
 		<input>ask_half</input>
 		<template>
 			<srai>answer</srai>
+			<srai>ask_half_name</srai>
 		</template>
 	</category>
 	<category>

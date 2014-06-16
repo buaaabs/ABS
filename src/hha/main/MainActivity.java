@@ -6,7 +6,9 @@ import hha.robot.R;
 import hha.util.Caller;
 import hha.util.ChatMsgEntity;
 import hha.util.ChatMsgViewAdapter;
+import hha.util.DataFileReader;
 import hha.util.ExitApplication;
+import hha.util.PackageUtil;
 import hha.util.music.Player;
 import hha.xf.Data;
 import hha.xf.NetRobot;
@@ -14,12 +16,15 @@ import hha.xf.Reader;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -32,8 +37,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
-import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -44,9 +49,11 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import bitoflife.chatterbean.BotEmotion;
 
 import com.lilele.automatic.AuTomatic;
+
+import dalvik.system.DexClassLoader;
+import dalvik.system.DexFile;
 
 public class MainActivity extends Activity implements Runnable {
 
@@ -100,9 +107,9 @@ public class MainActivity extends Activity implements Runnable {
 	}
 
 	public void Welcome() {
-		String ansString = "欢迎您，我是智能助手小X";
-		text.setText(ansString + "\n");
-		reader.start(ansString);
+//		String ansString = "欢迎您，我是智能助手小X";
+//		text.setText(ansString + "\n");
+//		reader.start(ansString);
 	}
 
 	public void showTip(final String str) {
@@ -317,14 +324,51 @@ public class MainActivity extends Activity implements Runnable {
 		}
 	}
 
+	 @SuppressLint("NewApi")
+	 private DexClassLoader MakeClassLoad(PackageManager pm)
+	 {
+	 /**使用DexClassLoader方式加载类*/
+	 //dex压缩文件的路径(可以是apk,jar,zip格式)
+	 String dexPath = Environment.getExternalStorageDirectory().toString() +
+	 File.separator + "Dynamic.apk";
+	 //dex解压释放后的目录
+	 //String dexOutputDir = getApplicationInfo().dataDir;
+	 String dexOutputDirs =
+	 Environment.getExternalStorageDirectory().toString();
+	 //定义DexClassLoader
+	 //第一个参数：是dex压缩文件的路径
+	 //第二个参数：是dex解压缩后存放的目录
+	 //第三个参数：是C/C++依赖的本地库文件目录,可以为null
+	 //第四个参数：是上一级的类加载器
+	 return new DexClassLoader(dexPath,dexOutputDirs,null,getClassLoader());
+	 }
+	
+	public List<String> ListPackage(String str) {
+		List<String> data = new ArrayList<String>();
+		try {
+			DexFile df = new DexFile(this.getPackageCodePath());
+			for (Enumeration<String> iter = df.entries(); iter
+					.hasMoreElements();) {
+				String s = iter.nextElement();
+				if (s.length()>str.length() && str.equals(s.substring(0, str.length())))
+					data.add(s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		DataFileReader.am = getAssets();
 
 		pm = getPackageManager();
 		homeInfo = pm.resolveActivity(new Intent(Intent.ACTION_MAIN)
 				.addCategory(Intent.CATEGORY_HOME), 0);
+		PackageUtil.loader = MakeClassLoad(pm);
 
 		setContentView(R.layout.maininterface);
 		talkView = (ListView) findViewById(R.id.talkList);
@@ -356,7 +400,7 @@ public class MainActivity extends Activity implements Runnable {
 							.getStreamVolume(AudioManager.STREAM_MUSIC);
 					audiom.setStreamVolume(AudioManager.STREAM_MUSIC, 1,
 							AudioManager.FLAG_PLAY_SOUND);
-					
+
 					int code = netbot.BeginSpeechUnderstand();
 					if (code != 0) {
 						text.setText("Error Code: " + code);
