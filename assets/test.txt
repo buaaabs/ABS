@@ -7,7 +7,7 @@ welcome
 学佛是谁？
 谁是学佛
 auto_普通
-auto_高兴
+auto_快乐
 auto_困倦
 auto_忧伤
 auto_恐惧

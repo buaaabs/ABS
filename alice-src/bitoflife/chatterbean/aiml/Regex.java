@@ -1,6 +1,7 @@
 package bitoflife.chatterbean.aiml;
 
 import hha.aiml.Jcseg;
+import hha.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +9,7 @@ import java.util.List;
 
 import org.xml.sax.Attributes;
 
-///×Ô¼ºÐÂÌí¼ÓµÄÕýÔò±í´ïÊ½±êÇ©
+///ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½Ç©
 
 
 public class Regex extends Pattern implements AIMLElement {
@@ -21,8 +22,9 @@ public class Regex extends Pattern implements AIMLElement {
 		 String p = pattern.trim();
 		 if(isToUseChineseTranslate) {    
 			 p = Jcseg.chineseTranslate(p);
-			 p.toUpperCase();
-			 java.lang.System.out.println(p);
+//			 p.toUpperCase();
+//			 java.lang.System.out.println(p);
+			 
 		 }
 		 this.pattern = p.split(" ");
 	    
@@ -39,7 +41,7 @@ public class Regex extends Pattern implements AIMLElement {
 		   // System.out.println(text);
 		    if(isToUseChineseTranslate) {    
 				 text = Jcseg.chineseTranslate(text);
-				 text = text.toUpperCase();
+//				 text = text.toUpperCase();
 			//	 System.out.println(text);
 			 }
 		    if (pattern == null)
@@ -73,8 +75,9 @@ public class Regex extends Pattern implements AIMLElement {
 	    {
 	    	if(isToUseChineseTranslate) {    
 				 text = Jcseg.chineseTranslate(text);
-				 text = text.toUpperCase();
+//				 text = text.toUpperCase();
 			//	 System.out.println(text);
+//				 MainActivity.main.ShowTextOnUIThread(text);
 			 }
 	    }
 

@@ -42,16 +42,19 @@ public final class R {
         public static final int user=0x7f020012;
     }
     public static final class id {
-        public static final int action_settings=0x7f090009;
+        public static final int action_settings=0x7f09000c;
         public static final int button_main=0x7f090002;
         public static final int button_speak=0x7f090005;
+        public static final int chartLinearLayout=0x7f090009;
         public static final int listLinearLayout=0x7f090007;
         public static final int main_text=0x7f090004;
         public static final int messagedetail_row_text=0x7f090000;
         public static final int messagegedetail_rov_icon=0x7f090001;
+        public static final int more=0x7f09000b;
         public static final int options=0x7f090008;
         public static final int returnbutton=0x7f090006;
         public static final int talkList=0x7f090003;
+        public static final int title=0x7f09000a;
     }
     public static final class layout {
         public static final int list_say_he_item=0x7f030000;
@@ -59,6 +62,7 @@ public final class R {
         public static final int maininterface=0x7f030002;
         public static final int mainmenulist=0x7f030003;
         public static final int mainmenulisttext=0x7f030004;
+        public static final int my_chart=0x7f030005;
     }
     public static final class menu {
         public static final int main=0x7f080000;

@@ -22,7 +22,8 @@ public class AuTomatic {
 	private Timer mtimer;
 	private boolean isTimerRun = false;
 
-	private int countTime;
+	private int UserCountTime;
+	private int RobotCountTime;
 	private Robot mbot;
 	private int memotionInt;
 	private int i_waitTime;// 等待时间，由正态分布产生
@@ -57,20 +58,30 @@ public class AuTomatic {
 		this.mbot = mbot;
 	}
 
-	public int getCountTime() {
-		return countTime;
+
+
+	public int getUserCountTime() {
+		return UserCountTime;
 	}
 
-	public void setCountTime(int countTime) {
-		this.countTime = countTime;
-		i_waitTime = productGussianTime();
+	public void setUserCountTime(int userCountTime) {
+		UserCountTime = userCountTime;
+	}
+
+	public int getRobotCountTime() {
+		return RobotCountTime;
+	}
+
+	public void setRobotCountTime(int robotCountTime) {
+		RobotCountTime = robotCountTime;
 	}
 
 	public AuTomatic(MainActivity mainAct, Robot bot) {
 
 		mainActivity = mainAct;
 		b_exit = false;
-		countTime = 0;
+		UserCountTime = 0;
+		RobotCountTime = 0;
 		this.memotionInt = 0;
 		i_waitTime = 40;
 		s_emotionStatus = "普通";
@@ -139,7 +150,7 @@ public class AuTomatic {
 				if (mbot != null) {
 					ansString = mbot.Respond("7");
 					mainActivity.Show(null, ansString);
-					countTime = 0;
+					RobotCountTime = 0;
 					b_exit = true;
 				}
 				break;
@@ -167,13 +178,14 @@ public class AuTomatic {
 
 			mbot.getBot().getEmotion().Update();
 
-			countTime++;
-			if (countTime == 8 && b_exit == true) {
+			UserCountTime++;
+			RobotCountTime++;
+			if (RobotCountTime == 8 && b_exit == true) {
 				programExit();
 			}
 
 			String mode = mbot.getProperty("mode");
-			Mode.Switch(mode, countTime);
+			Mode.Switch(mode, UserCountTime,RobotCountTime);
 			/*
 			 * if (countTime == i_waitTime) { Message msg = Message.obtain(); if
 			 * (s_emotionStatus.equals("普通")) { msg.what = 1; } else if

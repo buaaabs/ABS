@@ -17,6 +17,7 @@ public abstract class Mode {
 
 	protected static List<Mode> SubClassList;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void ModeInit(MainActivity main, AuTomatic auto) {
 		SubClassList = new ArrayList<Mode>();
 
@@ -30,6 +31,7 @@ public abstract class Mode {
 				Constructor constructor = tagClass.getConstructor(
 						MainActivity.class, AuTomatic.class);
 				Object tag = constructor.newInstance(main, auto);
+				main.ShowTextOnUIThread(className);
 				SubClassList.add((Mode) tag);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -55,6 +57,17 @@ public abstract class Mode {
 
 	}
 
+	public static Mode getMode(String str)
+	{
+		for (Mode item : SubClassList) {
+			if (item.isMode(str)) {
+//				item.mainActivity.showTip("Mode:"+item.getModeName());
+				return item;
+			}
+		}
+		return null;
+	}
+	
 	protected abstract String getModeName();
 
 	protected int i_waitTime;// 等待时间，由正态分布产生
@@ -64,16 +77,18 @@ public abstract class Mode {
 	protected Robot bot = null;
 	protected AuTomatic auto = null;
 
-	public static void Switch(String str, int count) {
+	public static void Switch(String str, int UserCount,int RobotCount) {
 		for (Mode item : SubClassList) {
 			if (item.isMode(str)) {
-				item.Run(count);
+//				item.mainActivity.showTip("Mode:"+item.getModeName());
+				item.Run(UserCount,RobotCount);
 				return;
 			}
 		}
 		for (Mode item : SubClassList) {
 			if (item.isMode("normal")) {
-				item.Run(count);
+//				item.mainActivity.showTip("Mode:"+str);
+				item.Run(UserCount,RobotCount);
 				return;
 			}
 		}
@@ -90,7 +105,7 @@ public abstract class Mode {
 		bot = mainActivity.getBot();
 	}
 
-	public abstract void Run(int count);
+	public abstract void Run(int UserCount,int RobotCount);
 
 	static java.util.Random r = new java.util.Random();
 

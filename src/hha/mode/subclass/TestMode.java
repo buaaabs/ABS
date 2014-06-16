@@ -40,7 +40,7 @@ public class TestMode extends Mode {
 	}
 
 	@Override
-	public void Run(int count) {
+	public void Run(int UserCount,int RobotCount) {
 		// TODO Auto-generated method stub
 		String input = null;
 		for(String s : testData)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <aiml>
 	<category>
-		<pattern>* 健康 检查 *</pattern>
+		<regex>* 健康 检查 *</regex>
 		<template>
 			<random>
 				<li>好的，那我就给您做次检查吧！</li>
@@ -15,7 +15,7 @@
 	</category>
 
 	<category>
-		<pattern>健康检查</pattern>
+		<regex>健康检查</regex>
 		<template>
 			<random>
 				<li>好像好久您都没做健康检查了，要我帮您做次吗？</li>
@@ -26,7 +26,7 @@
 	</category>
 
 	<category>
-		<pattern>好的</pattern>
+		<regex>好的</regex>
 		<input>健康检查</input>
 		<template>
 			<think>
@@ -37,7 +37,7 @@
 	</category>
 
 	<category>
-		<pattern>不用了</pattern>
+		<regex>不用了</regex>
 		<input>健康检查</input>
 		<template>
 			<random>
@@ -48,7 +48,7 @@
 	</category>
 
 	<category>
-		<pattern>算了</pattern>
+		<regex>算了</regex>
 		<input>健康检查</input>
 		<template>
 			<random>
@@ -68,8 +68,8 @@
 	</category>
 
 	<category>
-		<pattern>* 最近饮食 *</pattern>
-		<pattern>* 有啥好菜谱 *</pattern>
+		<regex>* 最近饮食 *</regex>
+		<regex>* 有啥好菜谱 *</regex>
 		<template>
 			<think>
 				<set mode="menu"></set>
@@ -78,7 +78,7 @@
 	</category>
 
 	<category>
-		<pattern>* 近期节目 *</pattern>
+		<regex>* 近期节目 *</regex>
 		<template>
 			<think>
 				<set mode="program"></set>
@@ -86,7 +86,7 @@
 		</template>
 	</category>
 	<category>
-		<pattern>* 听听戏曲 *</pattern>
+		<regex>* 听听戏曲 *</regex>
 		<template>
 			<think>
 				<set mode="opera"></set>
@@ -94,7 +94,7 @@
 		</template>
 	</category>
 	<category>
-		<pattern>* 最近 * 新闻 *</pattern>
+		<regex>* 最近 * 新闻 *</regex>
 		<template>
 			<think>
 				<set mode="news"></set>
@@ -102,9 +102,9 @@
 		</template>
 	</category>
 	<category>
-		<pattern>* 随便来点音乐 *</pattern>
-		<pattern>* 来点音乐 *</pattern>
-		<pattern>* 随便来首歌 *</pattern>
+		<regex>* 随便来点音乐 *</regex>
+		<regex>* 来点音乐 *</regex>
+		<regex>* 随便来首歌 *</regex>
 		<template>
 			<think>
 				<set mode="music"></set>
@@ -112,7 +112,7 @@
 		</template>
 	</category>
 	<category>
-		<pattern>* 你现在心情怎么样 *</pattern>
+		<regex>* 你现在心情怎么样 *</regex>
 		<template>
 			<condition>
 				<li name="Emotion" value="困倦">
@@ -162,8 +162,8 @@
 	</category>
 
 	<category>
-		<pattern>我明天 * 早起 *</pattern>
-		<pattern>* 明天 * 闹钟 *</pattern>
+		<regex>我明天 * 早起 *</regex>
+		<regex>* 明天 * 闹钟 *</regex>
 		<template>
 			恩呢，那我帮您设定一个闹钟吧。您设明天几点的？
 		</template>

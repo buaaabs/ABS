@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <aiml>
 	<category>
-		<pattern>frequent_low</pattern>
+		<regex>frequent_low</regex>
 		<template>
 			<random>
 				<li>好久都没调查了，</li>
@@ -11,14 +11,14 @@
 		</template>
 	</category>
 	<category>
-		<pattern>inv_weight</pattern>
+		<regex>inv_weight</regex>
 		<template>
 			<srai>frequent_low</srai>
 			您的体重是多少？
 		</template>
 	</category>
 	<category>
-		<pattern>inv_weight</pattern>
+		<regex>inv_weight</regex>
 		<template>
 			<srai>frequent_low</srai>
 			您的体重是多少？

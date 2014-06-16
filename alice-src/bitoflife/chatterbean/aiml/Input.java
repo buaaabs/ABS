@@ -14,6 +14,8 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean.aiml;
 
+import hha.aiml.Jcseg;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class Input extends TemplateElement
 
   private static final String[] STRING_ARRAY = {};
   private int requestIndex = 1, sentenceIndex = 1;
+  private boolean isToUseChineseTranslate = true;
 
   /*
   Constructors
@@ -67,6 +70,11 @@ public class Input extends TemplateElement
     for (int i = 0, n = children.length; i < n; i++)
     {
       String text = children[i].toString();
+      if (isToUseChineseTranslate ) {
+			text = Jcseg.chineseTranslate(text);
+			text = text.toUpperCase();
+			// System.out.println(text);
+		}
       text = text.trim();
       elements.addAll(Arrays.asList(text.split(" ")));
     }

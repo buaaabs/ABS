@@ -72,7 +72,7 @@ public class Set extends TemplateElement
 					context.property("predicate." + name, output);
 		} else {
 			if (context != null)
-				context.property("predicate." + name_att, output);
+				context.property("predicate." + name_att, name);
 		}
     }
     //java.lang.System.out.println("Set:"+output);

@@ -2,6 +2,7 @@ package hha.main;
 
 import hha.aiml.Jcseg;
 import hha.aiml.Robot;
+import hha.mode.Database;
 import hha.robot.R;
 import hha.util.Caller;
 import hha.util.ChatMsgEntity;
@@ -57,6 +58,7 @@ import dalvik.system.DexFile;
 
 public class MainActivity extends Activity implements Runnable {
 
+	public static MainActivity main;
 	private AuTomatic mAuTomatic;
 	private Toast mToast;
 	private TextView text = null;
@@ -195,13 +197,17 @@ public class MainActivity extends Activity implements Runnable {
 				AddNewTalk(userString, ansString);
 				if (userString == null) {
 					ShowText(ansString);
+					mAuTomatic.setRobotCountTime(0);
 				} else {
 					ShowText("\n用户:" + userString);
 					ShowText(ansString);
+					mAuTomatic.setUserCountTime(0);
+					mAuTomatic.setRobotCountTime(0);
 				}
 				audiom.setStreamVolume(AudioManager.STREAM_MUSIC, oldAudio,
 						AudioManager.FLAG_PLAY_SOUND);
 				reader.start(ansString);
+				
 			}
 		});
 	}
@@ -253,7 +259,6 @@ public class MainActivity extends Activity implements Runnable {
 			}
 		}
 
-		mAuTomatic.setCountTime(0);
 		mAuTomatic.setS_emotionStatus("高兴");
 		mAuTomatic.setB_exit(false);
 	}
@@ -364,7 +369,7 @@ public class MainActivity extends Activity implements Runnable {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		DataFileReader.am = getAssets();
-
+		main = MainActivity.this;
 		pm = getPackageManager();
 		homeInfo = pm.resolveActivity(new Intent(Intent.ACTION_MAIN)
 				.addCategory(Intent.CATEGORY_HOME), 0);
@@ -452,7 +457,7 @@ public class MainActivity extends Activity implements Runnable {
 		// text.setText(bot.respond("welcome"));
 		// 自主对话初始化
 		mAuTomatic = new AuTomatic(this, getBot());
-		mAuTomatic.setS_emotionStatus("高兴");
+		mAuTomatic.setS_emotionStatus("快乐");
 
 		ExitApplication.getInstance().addActivity(this);
 	}

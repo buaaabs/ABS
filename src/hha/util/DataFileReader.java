@@ -1,7 +1,8 @@
 package hha.util;
 
+import hha.main.MainActivity;
+
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,6 +11,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 
+import android.app.Activity;
 import android.content.res.AssetManager;
 
 public class DataFileReader {
@@ -28,12 +30,17 @@ public class DataFileReader {
 	}
 
 	public static String ReadFile(String path) {
-		File file = new File(path);
+//		File file = new File(path);
+//		MainActivity.main.ShowTextOnUIThread(file.getAbsolutePath());
+//		File f = Environment.getDataDirectory();
+//		
+//		
+//		MainActivity.main.ShowTextOnUIThread(f.getAbsolutePath());
 		StringBuffer sb = new StringBuffer();
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(file);
-
+			fis = MainActivity.main.openFileInput(path);
+			
 			byte[] buf = new byte[1024];
 
 			while ((fis.read(buf)) != -1) {
@@ -53,11 +60,10 @@ public class DataFileReader {
 	}
 
 	public static InputStream ReadFileAsStream(String path) {
-		File file = new File(path);
 		FileInputStream fis = null;
 
 		try {
-			fis = new FileInputStream(file);
+			fis = MainActivity.main.openFileInput(path);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,7 +73,7 @@ public class DataFileReader {
 
 	public static void WriteFile(String path, String str) {
 		try {
-			FileOutputStream out = new FileOutputStream(path);
+			FileOutputStream out = MainActivity.main.openFileOutput(path, Activity.MODE_PRIVATE);
 			PrintStream p = new PrintStream(out);
 			p.print(str);
 		} catch (FileNotFoundException e) {

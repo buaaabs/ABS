@@ -18,6 +18,7 @@ import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.UNICODE_CASE;
 
 import hha.aiml.Jcseg;
+import hha.main.MainActivity;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -131,7 +132,7 @@ public class Transformations
   private static final Integer[] INTEGER_ARRAY = new Integer[0];
 
   private final Tokenizer tokenizer;
-  private final Pattern fitting = Pattern.compile("[^A-Z0-9\u4E00-\u9FA5]+");
+  private final Pattern fitting = Pattern.compile("[^A-Z0-9_\u4E00-\u9FA5]+");
   private final Pattern wordBreakers = Pattern.compile("([,;:])([A-Za-z]|\\s{2,})");
 
   // The regular expression which will split entries by sentence splitters.
@@ -296,9 +297,11 @@ public class Transformations
   public void normalization(Request request)
   {
 	String original = request.getOriginal();
-	original = Jcseg.chineseTranslate(original);
+	original = original.toUpperCase();
+//	original = Jcseg.chineseTranslate(original);
     original = ' ' + original + ' ';
     original = original.replaceAll("\\s{2,}", " ");
+    MainActivity.main.ShowTextOnUIThread(original);
     String input[] = splitter.split(original);
     Sentence[] sentences = new Sentence[input.length];
     for (int i = 0, n = input.length; i < n; i++)

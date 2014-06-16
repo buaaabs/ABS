@@ -19,8 +19,8 @@ public class SQLHelper {
 		StringBuilder sBuilder = new StringBuilder();
 		int j = 0;
 
-		sBuilder.append("CREATE TABLE " + tableName + " ( ");
-
+		sBuilder.append("CREATE TABLE IF NOT EXISTS " + tableName + " ( ");
+		
 		// ��ӵ�һ������
 		if (!isWithTime) {
 			sBuilder.append(attrNames[0] + " " + typeNames[0]);
@@ -130,6 +130,18 @@ public class SQLHelper {
 			sBuilder.append("order by "+orderBy);
 		}
 		Cursor cursor = db.rawQuery(sBuilder.toString(), values);
+		db.close();
+		return cursor;
+	}
+	
+	public Cursor queryAll(String tableName, String orderBy) {
+		SQLiteDatabase db = helper.getReadableDatabase();
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append("select * from " + tableName );
+		if (orderBy!=null) {
+			sBuilder.append("order by "+orderBy);
+		}
+		Cursor cursor = db.rawQuery(sBuilder.toString(),null);
 		db.close();
 		return cursor;
 	}

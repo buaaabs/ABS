@@ -1,6 +1,7 @@
 package hha.aiml;
 
 import hha.main.MainActivity;
+import hha.mode.Database;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,6 +10,9 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import android.content.res.AssetManager;
 import bitoflife.chatterbean.AliceBot;
@@ -22,11 +26,13 @@ import bitoflife.chatterbean.aiml.AIMLParserException;
 import bitoflife.chatterbean.parser.AliceBotParser;
 import bitoflife.chatterbean.parser.AliceBotParserConfigurationException;
 import bitoflife.chatterbean.parser.AliceBotParserException;
+import bitoflife.chatterbean.util.UserData;
 
 public class Robot implements Runnable {
 
 	AliceBot bot = null;
 	Context context = null;
+	
 	Graphmaster graphmaster = null;
 	BotEmotion emotion = null;
 	AssetManager am = null;
@@ -86,7 +92,8 @@ public class Robot implements Runnable {
 			emotion = bot.getEmotion();
 			emotion.main = main;
 			emotion.init();
-			setProperty("mode", "test");
+			// setProperty("mode", "healthy");
+			context.InitDataBase(main);
 			context.outputStream(gossip);
 			int _port = Integer.parseInt((String) context.property("bot.port"));
 			net = new NetAiml((String) context.property("bot.ip"), _port);
@@ -146,7 +153,6 @@ public class Robot implements Runnable {
 
 		if ("True".equals(output)) {
 			canfind = false;
-
 		} else
 			canfind = true;
 
@@ -195,6 +201,30 @@ public class Robot implements Runnable {
 		context.property("predicate." + str, data);
 	}
 
+	public List<UserData> getUserData(String str) {
+		if (!isInitDone()) {
+			return null;
+		}
+		return (List<UserData>) context.property("userdata." + str);
+	}
+
+	public void addUserData(String name, String data, Date date) {
+		if (!isInitDone()) {
+			return;
+		}
+		List<UserData> UserDatalist = (List<UserData>) context
+				.property("userdata." + name);
+		if (UserDatalist == null) {
+			UserDatalist = new ArrayList<UserData>();
+			UserData ud = new UserData(data, date);
+			UserDatalist.add(ud);
+			context.property("userdata." + name, UserDatalist);
+		} else {
+			UserData ud = new UserData(data, date);
+			UserDatalist.add(ud);
+		}
+	}
+
 	public void LearnFromStream(InputStream stream) {
 		try {
 			AIMLParser parser = new AIMLParser();
@@ -241,7 +271,7 @@ public class Robot implements Runnable {
 	public NetAiml getNet() {
 		return net;
 	}
-	
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

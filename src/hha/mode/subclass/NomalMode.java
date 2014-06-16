@@ -18,18 +18,19 @@ public class NomalMode extends Mode {
 
 	protected String s_emotionStatus; // 情感状态
 	@Override
-	public void Run(int count) {
+	public void Run(int UserCount,int RobotCount) {
 		// TODO Auto-generated method stub
 		s_emotionStatus = bot.getProperty("Emotion");
 		
-		if (count == i_waitTime) {
-			String ansString = bot.Respond("auto_"+s_emotionStatus);
-			mainActivity.Show("auto_"+s_emotionStatus, ansString);
+		if (UserCount == i_waitTime) {
+			String ansString = bot.Respond("AUTO_"+s_emotionStatus);
+			mainActivity.Show("AUTO_"+s_emotionStatus, ansString);
 			i_waitTime = (int) N_rand(30,5,0,60);
 		}
 		
-		if (count == 180) {
-			String ansString = bot.Respond("auto_免打扰");
+		if (UserCount == 180) {
+			String ansString = bot.Respond("AUTO_免打扰");
+			auto.setB_exit(true);
 			mainActivity.Show(null, ansString);
 			i_waitTime = (int) N_rand(30,5,0,60);
 		}

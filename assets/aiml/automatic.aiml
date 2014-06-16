@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <aiml>
   <category>
-  <pattern>auto_普通</pattern>
+  <regex>auto_普通</regex>
   <template>
     <random>
       <li>你好，我将竭诚为你服务。</li>
@@ -14,7 +14,7 @@
   </template>
 </category>
 <category>
-  <pattern>auto_高兴</pattern>
+  <regex>auto_快乐</regex>
   <template>
     <random>
      <li>亲，此时此刻，我静静地望着你，你静静地看着我，生活是多么的美好啊！</li>
@@ -26,7 +26,7 @@
   </template>
 </category>
 <category>
-  <pattern>auto_困倦</pattern>
+  <regex>auto_困倦</regex>
   <template>
     <random>
       <li>亲，我困死了，能不能让我睡会？</li>
@@ -36,7 +36,7 @@
   </template>
 </category>
 <category>
-  <pattern>auto_忧伤</pattern>
+  <regex>auto_忧伤</regex>
   <template>
     <random>
       <li>主人，你不和我说话，我感觉到好伤感。</li>
@@ -49,7 +49,7 @@
   </template>
 </category>
 <category>
-  <pattern>auto_恐惧</pattern>
+  <regex>auto_恐惧</regex>
   <template>
     <random>
       <li>主人，你的语气中带有愤怒，我感觉到一阵阵恐惧感。</li>
@@ -61,7 +61,7 @@
   </template>
 </category>
 <category>
-  <pattern>auto_愤怒</pattern>
+  <regex>auto_愤怒</regex>
   <template>
     <random>
       <li>主人，说句话吧，不要以你的沉默来无视我的存在。我是有尊严的。</li>
@@ -72,7 +72,7 @@
   </template>
 </category>
 <category>
-  <pattern>auto_免打扰</pattern>
+  <regex>auto_免打扰</regex>
   <template>
     <random>
     <li>主人，你已经很久不和我说话了，你应该很忙。我就不打扰你了。</li>

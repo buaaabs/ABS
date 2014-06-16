@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <aiml>
 	<category>
-		<pattern>answer</pattern>
+		<regex>answer</regex>
 		<template>
 			<random>
 				<li>恩，了解</li>
@@ -17,7 +17,7 @@
 	</category>
 
 	<category>
-		<pattern>ask_name</pattern>
+		<regex>ask_name</regex>
 		<template>
 			<random>
 				<li>您的名字是？</li>
@@ -31,26 +31,26 @@
 		<input>ask_name</input>
 		<template>
 			<think>
-				<set name="username"><star index="2"/></set>
+				<set name="name"><star index="2"/></set>
 			</think>
-			好的，很高兴认识您，<get name="username"/>。
+			好的，很高兴认识您，<get name="name"/>。
 		</template>
 	</category>
 <category>
-  <pattern>我的名字是 *</pattern>
+  <regex>我的名字是 *</regex>
   <template>
     <think>
-      <set name="username"><star index="1"/></set>
+      <set name="name"><star index="1"/></set>
     </think>
-    欢迎您, <get name="username"/>,给您服务是我的荣幸.
+    欢迎您, <get name="name"/>,给您服务是我的荣幸.
   </template>
 </category>
 <category>
-  <pattern>* 记得我 * 吗</pattern>
-  <template>您是 <get name="username"/>, 我还记得哦！</template>
+  <regex>* 记得我 * 吗</regex>
+  <template>您是 <get name="name"/>, 我还记得哦！</template>
 </category>
 	<category>
-		<pattern>ask_sex</pattern>
+		<regex>ask_sex</regex>
 		<template>
 			<random>
 				<li>不好意思，我还没有很智能，所以我得问您下，该称呼您先生还是女士</li>
@@ -59,28 +59,28 @@
 		</template>
 	</category>
 	<category>
-		<regex>* #男|男士|先生|大爷 *</regex>
+		<regex>* #男|男士|先生|大爷|男的 *</regex>
 		<input>ask_sex</input>
 		<template>
 			<think>
-				<set usersex="男"></set>
+				<set sex="男"></set>
 			</think>
 			好的，<sharp index="1" />。
 		</template>
 	</category>
 	<category>
-		<regex>* #女|女士|小姐|大妈 *</regex>
+		<regex>* #女|女士|小姐|大妈|女的 *</regex>
 		<input>ask_sex</input>
 		<template>
 			<think>
-				<set usersex="女"></set>
+				<set sex="女"></set>
 			</think>
 			好的，<sharp index="1" />。
 		</template>
 	</category>
 
 	<category>
-		<pattern>ask_age</pattern>
+		<regex>ask_age</regex>
 		<template>
 			<random>
 				<li>您今年多大年纪啊？</li>
@@ -92,7 +92,7 @@
 		<regex>我今年 #\d+岁? *</regex>
 		<template>
 			<think>
-				<set name="userage"><sharp index="1" /></set>
+				<set name="age"><sharp index="1" /></set>
 			</think>
 			您今年<sharp index="1" />岁了啊。
 		</template>
@@ -102,14 +102,14 @@
 		<input>ask_age</input>
 		<template>
 			<think>
-				<set name="userage"><sharp index="1" /></set>
+				<set name="age"><sharp index="1" /></set>
 			</think>
 			您今年<sharp index="1" />岁了啊。
 		</template>
 	</category>
 
 	<category>
-		<pattern>ask_birthday</pattern>
+		<regex>ask_birthday</regex>
 		<template>
 			<random>
 				<li>能否问您下，您的生日是哪年哪月哪号呢？</li>
@@ -144,55 +144,55 @@
 	</category>
 
 	<category>
-		<pattern>ask_son</pattern>
+		<regex>ask_son</regex>
 		<template>
 			您有儿子吗？
 		</template>
 	</category>
 	<category>
-		<pattern>有</pattern>
+		<regex>有</regex>
 		<input>ask_son</input>
 		<template>
 			那您大儿子叫什么？
 		</template>
 	</category>
 	<category>
-		<pattern>没有</pattern>
+		<regex>没有</regex>
 		<input>ask_son</input>
 		<template>
 			<srai>answer</srai>
 		</template>
 	</category>
 	<category>
-		<pattern>#((我那)?(大儿子叫|他叫))? *</pattern>
+		<regex>#((我那)?(大儿子叫|他叫))? *</regex>
 		<input>那您大儿子叫什么</input>
 		<template>
 			那您二儿子叫什么？
 		</template>
 	</category>
 	<category>
-		<pattern>#((我那)?(二儿子叫|他叫))? *</pattern>
+		<regex>#((我那)?(二儿子叫|他叫))? *</regex>
 		<input>那您二儿子叫什么</input>
 		<template>
 			那您还有其他儿子吗？叫什么？
 		</template>
 	</category>
 	<category>
-		<pattern>* 没有 *</pattern>
+		<regex>* 没有 *</regex>
 		<input>那您二儿子叫什么</input>
 		<template>
 			<srai>answer</srai>
 		</template>
 	</category>
 	<category>
-		<pattern>* 叫 *</pattern>
+		<regex>* 叫 *</regex>
 		<input>那您还有其他儿子吗 叫什么</input>
 		<template>
 			那您还有其他儿子吗？叫什么？
 		</template>
 	</category>
 	<category>
-		<pattern>* 没有 *</pattern>
+		<regex>* 没有 *</regex>
 		<input>那您还有其他儿子吗 叫什么</input>
 		<template>
 			<srai>answer</srai>
@@ -202,92 +202,92 @@
 
 
 	<category>
-		<pattern>ask_dau</pattern>
+		<regex>ask_dau</regex>
 		<template>
 			您有女儿吗？
 		</template>
 	</category>
 	<category>
-		<pattern>有</pattern>
+		<regex>有</regex>
 		<input>ask_dau</input>
 		<template>
 			那您大女儿叫什么？
 		</template>
 	</category>
 	<category>
-		<pattern>没有</pattern>
+		<regex>没有</regex>
 		<input>ask_dau</input>
 		<template>
 			<srai>answer</srai>
 		</template>
 	</category>
 	<category>
-		<pattern>#((我那)?(大女儿叫|他叫))? *</pattern>
+		<regex>#((我那)?(大女儿叫|他叫))? *</regex>
 		<input>那您大女儿叫什么</input>
 		<template>
 			那您二女儿叫什么？
 		</template>
 	</category>
 	<category>
-		<pattern>#((我那)?(二女儿叫|他叫))? *</pattern>
+		<regex>#((我那)?(二女儿叫|他叫))? *</regex>
 		<input>那您二女儿叫什么</input>
 		<template>
 			那您还有其他女儿吗？叫什么？
 		</template>
 	</category>
 	<category>
-		<pattern>* 没有 *</pattern>
+		<regex>* 没有 *</regex>
 		<input>那您二女儿叫什么</input>
 		<template>
 			<srai>answer</srai>
 		</template>
 	</category>
 	<category>
-		<pattern>* 叫 *</pattern>
+		<regex>* 叫 *</regex>
 		<input>那您还有其他女儿吗 叫什么</input>
 		<template>
 			那您还有其他女儿吗？叫什么？
 		</template>
 	</category>
 	<category>
-		<pattern>* 没有 *</pattern>
+		<regex>* 没有 *</regex>
 		<input>那您还有其他女儿吗 叫什么</input>
 		<template>
 			<srai>answer</srai>
 		</template>
 	</category>
 	<category>
-		<pattern>ask_parent</pattern>
+		<regex>ask_parent</regex>
 		<template>
 			您父母健在吗？
 		</template>
 	</category>
 	<category>
-		<pattern>* 都不在了</pattern>
+		<regex>* 都不在了</regex>
 		<input>ask_parent</input>
 		<template>
 			<srai>answer</srai>
 		</template>
 	</category>
 	<category>
-		<pattern>父亲 * 不在了</pattern>
-		<pattern>母亲 * 还在</pattern>
+		<regex>父亲 * 不在了</regex>
+		<regex>母亲 * 还在</regex>
 		<input>ask_parent</input>
 		<template>
 			<srai>answer</srai>
 		</template>
 	</category>
 	<category>
-		<pattern>母亲 * 不在了</pattern>
-		<pattern>父亲 * 还在</pattern>
+		<regex>母亲 * 不在了</regex>
+		<regex>父亲 * 还在</regex>
 		<input>ask_parent</input>
 		<template>
 			<srai>answer</srai>
 		</template>
 	</category>
 	<category>
-		<pattern>都好</pattern>
-		<pattern>都健在</pattern>
+		<regex>都好</regex>
+		<regex>都健在</regex>
 		<input>ask_parent</input>
 		<template>
 			<srai>answer</srai>
@@ -296,13 +296,13 @@
 
 
 	<category>
-		<pattern>ask_half</pattern>
+		<regex>ask_half</regex>
 		<template>
 			您有老伴吗？
 		</template>
 	</category>
 	<category>
-		<pattern>* 有 *</pattern>
+		<regex>* 有 *</regex>
 		<input>ask_half</input>
 		<template>
 			<srai>answer</srai>
@@ -317,7 +317,7 @@
 		</template>
 	</category>
 	<category>
-		<pattern>ask_half_name</pattern>
+		<regex>ask_half_name</regex>
 		<template>
 			您老伴如何称呼？
 		</template>
@@ -330,7 +330,7 @@
 		</template>
 	</category>
 	<category>
-		<pattern>ask_friend</pattern>
+		<regex>ask_friend</regex>
 		<template>
 			您有什么比较好的朋友吗？他叫什么？
 		</template>
