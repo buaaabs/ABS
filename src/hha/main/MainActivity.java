@@ -153,13 +153,13 @@ public class MainActivity extends Activity implements Runnable {
 		});
 	}
 
-	private String getDate() {
-		Calendar c = Calendar.getInstance();
-		String date = String.valueOf(c.get(Calendar.YEAR)) + "-"
-				+ String.valueOf(c.get(Calendar.MONTH)) + "-"
-				+ c.get(c.get(Calendar.DAY_OF_MONTH));
-		return date;
-	}
+//	private String getDate() {
+//		Calendar c = Calendar.getInstance();
+//		String date = String.valueOf(c.get(Calendar.YEAR)) + "-"
+//				+ String.valueOf(c.get(Calendar.MONTH)) + "-"
+//				+ c.get(c.get(Calendar.DAY_OF_MONTH));
+//		return date;
+//	}
 
 	private ListView talkView;
 
@@ -169,7 +169,7 @@ public class MainActivity extends Activity implements Runnable {
 	public void AddNewTalk(String user, String ans) {
 		int MeId = R.layout.list_say_he_item;
 		int HeId = R.layout.list_say_me_item;
-		String date = getDate();
+//		String date = getDate();
 		if ((user != null) || ("".equals(user))) {
 			ChatMsgEntity newMessage = new ChatMsgEntity(UserName, null, user,
 					MeId);

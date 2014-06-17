@@ -42,12 +42,15 @@ public class TestMode extends Mode {
 	@Override
 	public void Run(int UserCount,int RobotCount) {
 		// TODO Auto-generated method stub
+		StringBuilder sb = new StringBuilder();
 		String input = null;
 		for(String s : testData)
 		{
 			input = Jcseg.chineseTranslate(s);
-			mainActivity.Show(input, bot.Respond(input));
+			sb.append("User: "+input + "\n" + bot.Respond(input));
 		}
+		mainActivity.ShowTextOnUIThread(sb.toString());
+		bot.setProperty("mode", "normal");
 	}
 
 }

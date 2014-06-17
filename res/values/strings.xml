@@ -6,4 +6,17 @@
 	<string name="mainmenu">主菜单</string>
 	<string name="back">返回</string>
 	<string name="unabletoopensoftware">无法打开相应的软件</string>
+	<string name="hanyu">汉语</string>
+	<string name="yueyu">粤语</string>
+	<string name="setlanguage">设置语言</string>
+	<string name="setvoice">设置声音</string>
+	<string name="woman">女人</string>
+	<string name="child">儿童</string>
+	<string name="systemsound">系统音量</string>
+	<string name="passwordHint">请输入密码</string>
+	<string name="loginButton">登录</string>
+	<string name="registerButton">注册</string>
+	<string name="userLogin">用户登录</string>
+	<string name="forgetPassword">忘记密码</string>
+	<string name="userNameHint">请输入用户名</string>
 </resources>

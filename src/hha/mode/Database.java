@@ -1,6 +1,5 @@
 package hha.mode;
 
-import hha.aiml.Robot;
 import hha.main.MainActivity;
 import hha.mode.subclass.HealthyMode;
 import hha.xhb.SQLHelper;
@@ -10,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import android.database.Cursor;
 import bitoflife.chatterbean.Context;
@@ -26,39 +26,74 @@ public class Database {
 		super();
 		this.main = main;
 		this.context = context;
-		helper = new SQLHelper(main);
+		
 	}
+	public static boolean equalpre(String str_s, String str_l) {
+		return ((str_l.length() > str_s.length()) && (str_s.equals(str_l
+				.substring(0,str_s.length()))));
+	}
+	public void SaveData()
+	{
+		Map<String,Object> map = context.getProperties();
+		for (String key : map.keySet()) {
+			
+		    Object value = map.get(key);
+		    if ((equalpre("predicate.",key)) && (value instanceof String))
+		    {
+		    	UpdateData(key,(String)value);
+		    }
 
-	private void Creating(PArray atts, String pclass) {
-		for (int i = 0; i < atts.list.length; i++) {
-
-			helper.createTable(atts.list[i], new String[] { "time", "value" },
-					new String[] { "varchar(30)", "double" });
-			helper.add("Main", new String[] { "name", "unit", "fre", "class" },
-					new Object[] { "dbt_" + atts.list[i], atts.unit[i],
-							atts.fre, pclass });
 		}
 	}
-
-	public void InitDatabase() {
+	
+	public void getData()
+	{
+		Cursor c = helper.queryAll("data", null);
+		int p_k = c.getColumnIndex("key");
+		int p_v = c.getColumnIndex("value");
+		while (c.moveToNext())
+		{
+			String key = c.getString(p_k);
+			String value = c.getString(p_v);
+			context.property(key, value);
+		}
+		c.close();
+		
 		HealthyMode hmode = (HealthyMode) Mode.getMode("healthy");
-		helper.createTable("data", new String[] { "key", "value" },
-				new String[] { "varchar(50)", "varchar(200)" });
-
-		helper.createTable("relationship", new String[] { "name1", "name2",
-				"relation" }, new String[] { "varchar(20)", "varchar(20)",
-				"varchar(20)" });
-
-		Creating(hmode.getElement(), "element");
-		Creating(hmode.getSenior(), "senior");
+		Update(hmode.getSenior().list);
+		Update(hmode.getElement().list);
+		Update(hmode.getRelationship().list);
 	}
-
-	public void UpdateData(String key, String value) {
+	
+	
+	private void Update(String[] str)
+	{
+		for (String s : str)
+		{
+			Object o = getUserData(s);
+			context.property("userdata."+s, o);
+		}
+	}
+	
+	public void InitDatabase() {
+		helper = new SQLHelper(main);
 		
 	}
 
+	public void UpdateData(String key, String value) {
+		helper.AddOrUpdate("data",new String[]{"key","value"},new String[]{key,value});
+	}
+
 	public String UpdateData(String key) {
-		return null;
+		Cursor c= helper.query("data", new String[]{"key"}, new String[]{key}, null);
+		String s = null;
+		while(c.moveToNext())
+		{
+			s = c.getString(c.getColumnIndex("key"));
+			break;
+		}
+		c.close();
+		return s;
 	}
 
 	public void AddUserData(String key, UserData data) {
@@ -83,8 +118,8 @@ public class Database {
 				e.printStackTrace();
 				return null;
 			}
-
 		}
+		c.close();
 		return list;
 	}
 }

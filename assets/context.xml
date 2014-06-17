@@ -19,6 +19,6 @@
 	<set name="me" value="Alice" />
 	<set name="engine" value="ChatterBean" />
 	<set name="topic" value="*" />
-	<set name="mode" value="healthy" />
+	<set name="mode" value="normal" />
 	<set name="unordered_mode_on" value="true" />
 </context>

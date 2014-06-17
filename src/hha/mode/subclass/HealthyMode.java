@@ -71,7 +71,7 @@ public class HealthyMode extends Mode {
 		super(mainActivity, auto);
 		// TODO Auto-generated constructor stub
 
-		i_waitTime = (int) N_rand(20, 5, 10, 30);
+		i_waitTime = (int) N_rand(15, 3, 10, 20);
 
 		String jsondata = DataFileReader.ReadFile("healthy.json");
 		if (jsondata == null) {
@@ -221,11 +221,21 @@ public class HealthyMode extends Mode {
 	@Override
 	public void Run(int UserCount, int RobotCount) {
 		// TODO Auto-generated method stub
-		if (i_waitTime == UserCount) {
+		if ((i_waitTime == RobotCount)||(10 == UserCount)) {
 			mainActivity.ShowTextOnUIThread("CheckItem");
 			CheckItem();
 
-			i_waitTime = (int) N_rand(20, 5, 10, 30);
+			i_waitTime = (int) N_rand(30, 6, 20, 40);
+		}
+		if (UserCount == 90) {
+			mainActivity.ShowTextOnUIThread("免打扰");
+			mainActivity.Show(null, bot.Respond("AUTO_确认听见"));
+		}
+		
+		if (UserCount == 180) {
+			mainActivity.ShowTextOnUIThread("免打扰");
+			mainActivity.Show(null, bot.Respond("AUTO_免打扰"));
+			auto.setB_exit(true);
 		}
 	}
 

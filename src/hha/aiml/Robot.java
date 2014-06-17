@@ -32,7 +32,7 @@ public class Robot implements Runnable {
 
 	AliceBot bot = null;
 	Context context = null;
-	
+	private Database db = null;
 	Graphmaster graphmaster = null;
 	BotEmotion emotion = null;
 	AssetManager am = null;
@@ -48,6 +48,10 @@ public class Robot implements Runnable {
 		this.main = main;
 	}
 
+	public void InitDataBase(MainActivity main) {
+		db = new Database(main, context);
+		db.InitDatabase();
+	}
 	public void InitRobot() {
 		// /初始化分词系统
 		try {
@@ -93,7 +97,7 @@ public class Robot implements Runnable {
 			emotion.main = main;
 			emotion.init();
 			// setProperty("mode", "healthy");
-			context.InitDataBase(main);
+			InitDataBase(main);
 			context.outputStream(gossip);
 			int _port = Integer.parseInt((String) context.property("bot.port"));
 			net = new NetAiml((String) context.property("bot.ip"), _port);
@@ -214,15 +218,16 @@ public class Robot implements Runnable {
 		}
 		List<UserData> UserDatalist = (List<UserData>) context
 				.property("userdata." + name);
+		UserData ud = new UserData(data, date);
 		if (UserDatalist == null) {
 			UserDatalist = new ArrayList<UserData>();
-			UserData ud = new UserData(data, date);
+			
 			UserDatalist.add(ud);
 			context.property("userdata." + name, UserDatalist);
 		} else {
-			UserData ud = new UserData(data, date);
 			UserDatalist.add(ud);
 		}
+		db.AddUserData(name, ud);
 	}
 
 	public void LearnFromStream(InputStream stream) {

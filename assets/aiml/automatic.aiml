@@ -82,4 +82,16 @@
          本软件将在5秒后自动退出。
   </template>
 </category>
+
+<category>
+  <regex>auto_确认听见</regex>
+  <template>
+    <random>
+    <li>主人，你在听我说话吗？</li>
+      <li>亲，你在听着吗！</li>
+      <li>亲，你在听我说什么吗？</li>
+    </random>
+  </template>
+</category>
+
 </aiml>

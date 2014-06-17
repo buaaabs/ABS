@@ -28,6 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import android.annotation.SuppressLint;
 import bitoflife.chatterbean.script.BeanshellInterpreter;
@@ -47,7 +48,7 @@ public class Context {
 	 * Attribute Section
 	 */
 
-	private Database db = null;
+	
 
 	/** Map of context properties. */
 	private final Map<String, Object> properties = new HashMap<String, Object>();
@@ -56,6 +57,10 @@ public class Context {
 
 	/** Map of property change listeners. */
 	private final Map<String, ContextPropertyChangeListener> listeners = new HashMap<String, ContextPropertyChangeListener>();
+
+	public Map<String, Object> getProperties() {
+		return properties;
+	}
 
 	private final List<Request> requests = new LinkedList<Request>();
 	private final List<Response> responses = new LinkedList<Response>();
@@ -100,10 +105,7 @@ public class Context {
 	/*
 	 * Event Section
 	 */
-	public void InitDataBase(MainActivity main) {
-		db = new Database(main, Context.this);
-		db.InitDatabase();
-	}
+
 
 	/**
 	 * Adds a property change listener to this context object.
@@ -167,10 +169,7 @@ public class Context {
 		return properties.get(name);
 	}
 
-	public static boolean equalpre(String str_s, String str_l) {
-		return ((str_l.length() > str_s.length()) && (str_s.equals(str_l
-				.substring(str_s.length()))));
-	}
+	
 
 	public void property(String name, Object value) {
 		// System.out.println(name+"  value = "+value.toString());
@@ -181,13 +180,23 @@ public class Context {
 					oldValue, value);
 			listener.propertyChange(event);
 		}
-		if (db != null) {
-			if (equalpre("predicate",name)) {
-				db.UpdateData(name,(String) value);
-			}
-			
-		}
-		properties.put(name, value);
+		
+		if (value instanceof String) {
+			String str = (String) value;
+			if (isSharp(str)) {
+				str = str.substring(1);
+				Pattern pattern = java.util.regex.Pattern.compile(str,
+						java.util.regex.Pattern.CASE_INSENSITIVE);
+				properties.put(name, pattern);
+			}else
+				properties.put(name, value);
+		} else
+			properties.put(name, value);
+	}
+
+	private boolean isSharp(String name) {
+		// System.out.println(name);
+		return ("#".equals(name.substring(0, 1)));
 	}
 
 	public OutputStream outputStream() throws IOException {

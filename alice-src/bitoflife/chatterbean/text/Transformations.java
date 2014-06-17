@@ -297,11 +297,11 @@ public class Transformations
   public void normalization(Request request)
   {
 	String original = request.getOriginal();
-	original = original.toUpperCase();
-//	original = Jcseg.chineseTranslate(original);
+//	original = original.toUpperCase();
+	original = Jcseg.chineseTranslate(original);
     original = ' ' + original + ' ';
     original = original.replaceAll("\\s{2,}", " ");
-    MainActivity.main.ShowTextOnUIThread(original);
+//    MainActivity.main.ShowTextOnUIThread(original);
     String input[] = splitter.split(original);
     Sentence[] sentences = new Sentence[input.length];
     for (int i = 0, n = input.length; i < n; i++)

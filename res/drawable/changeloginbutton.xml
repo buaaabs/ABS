@@ -1,0 +1,6 @@
+<!-- 点击登录按钮改变图片 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">   
+     <item android:state_pressed="false" android:drawable="@drawable/button_blue" />  
+     <item android:state_focused="true" android:drawable="@drawable/button_blue1" />  
+     <item android:state_pressed="true" android:drawable="@drawable/button_blue1" />   
+</selector>
