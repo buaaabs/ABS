@@ -14,6 +14,9 @@ You should have received a copy of the GNU General Public License along with Cha
 
 package bitoflife.chatterbean;
 
+import hha.main.MainActivity;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,13 +73,13 @@ public class Graphmaster {
 
 	private void appendChild(Graphmaster child) {
 		// System.out.println(child.name);
-		if (isSharp(child.name)) {
-			children.put("#", child);
-		} else if (isDollar(child.name)) {
-			children.put("$", child);
-		} else {
+//		if (isSharp(child.name)) {
+//			children.put("#", child);
+//		} else if (isDollar(child.name)) {
+//			children.put("$", child);
+//		} else {
 			children.put(child.name, child);
-		}
+//		}
 
 		child.parent = this;
 	}
@@ -96,9 +99,20 @@ public class Graphmaster {
 	 * </p>
 	 */
 	private Graphmaster[] children(String name) {
-		return new Graphmaster[] { children.get("_"), children.get(name),
-				children.get("#"), children.get("$"), children.get("%"),
-				children.get("*") };
+		
+		List<Graphmaster> graphs = new ArrayList<Graphmaster>();
+		graphs.add(children.get("_"));
+		graphs.add(children.get(name));
+		for (String s : children.keySet())
+		{
+			if (isSharp(s))
+			{
+				graphs.add(children.get(s));
+			}
+		}
+		graphs.add(children.get("%"));
+		graphs.add(children.get("*")); 
+		return graphs.toArray(new Graphmaster[graphs.size()]);
 	}
 
 	private boolean isWildcard() {
@@ -199,9 +213,12 @@ public class Graphmaster {
 		for (int i = index; i < n; ++i) {
 			str.append(match.getMatchPath(i));
 			m = pattern.matcher(str.toString());
+			System.out.println("Match:" + name + " <- " + str.toString());
 			// System.out.println("Match:" + str.toString());
 			if (m.matches()) {
 				// System.out.println("MatchSucceed");
+				MainActivity.main.ShowTextOnUIThread("MatchSucceed:"
+						+ str.toString());
 				EndMatch = i + 1;
 				canMatch = true;
 
@@ -275,10 +292,10 @@ public class Graphmaster {
 		// TODO Auto-generated method stub
 		Context context = match.getCallback().getContext();
 		Object o = context.property("var." + name.substring(1));
-//		System.out.println("var." + name.substring(1));
+		// System.out.println("var." + name.substring(1));
 		if (o instanceof java.util.regex.Pattern) {
 			pattern = (java.util.regex.Pattern) o;
-//			System.out.println("right");
+			// System.out.println("right");
 			return matchSharp(match, index);
 		}
 		if (o instanceof String) {

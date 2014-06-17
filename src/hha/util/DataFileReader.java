@@ -2,14 +2,17 @@ package hha.util;
 
 import hha.main.MainActivity;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.CharBuffer;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
@@ -30,23 +33,18 @@ public class DataFileReader {
 	}
 
 	public static String ReadFile(String path) {
-//		File file = new File(path);
-//		MainActivity.main.ShowTextOnUIThread(file.getAbsolutePath());
-//		File f = Environment.getDataDirectory();
-//		
-//		
-//		MainActivity.main.ShowTextOnUIThread(f.getAbsolutePath());
-		StringBuffer sb = new StringBuffer();
+		// File file = new File(path);
+		// MainActivity.main.ShowTextOnUIThread(file.getAbsolutePath());
+		// File f = Environment.getDataDirectory();
+		//
+		//
+		// MainActivity.main.ShowTextOnUIThread(f.getAbsolutePath());
+		CharBuffer cb = null;
 		FileInputStream fis;
 		try {
 			fis = MainActivity.main.openFileInput(path);
-			
-			byte[] buf = new byte[1024];
+			cb = CharBuffer.allocate(fis.available());
 
-			while ((fis.read(buf)) != -1) {
-				sb.append(new String(buf));
-				buf = new byte[1024];// 重新生成，避免和上次读取的数据重复
-			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,7 +54,24 @@ public class DataFileReader {
 			e.printStackTrace();
 			return null;
 		}
-		return sb.toString();
+		String filecontent = null;
+		InputStreamReader isr;
+		try {
+			isr = new InputStreamReader(fis, "utf-8");
+			try {
+				if (cb != null) {
+					isr.read(cb);
+				}
+				filecontent = new String(cb.array());
+				isr.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return filecontent;
 	}
 
 	public static InputStream ReadFileAsStream(String path) {
@@ -73,11 +88,23 @@ public class DataFileReader {
 
 	public static void WriteFile(String path, String str) {
 		try {
-			FileOutputStream out = MainActivity.main.openFileOutput(path, Activity.MODE_PRIVATE);
-			PrintStream p = new PrintStream(out);
-			p.print(str);
+			FileOutputStream out = MainActivity.main.openFileOutput(path,
+					Activity.MODE_PRIVATE);
+			OutputStreamWriter osw;
+			osw = new OutputStreamWriter(out, "utf-8");
+			try {
+				osw.write(str);
+				osw.flush();
+				osw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 
@@ -93,17 +120,19 @@ public class DataFileReader {
 	}
 
 	public static String InputStreamToString(InputStream in) {
-		StringBuffer out = new StringBuffer();
-		byte[] b = new byte[4096];
+		CharBuffer cb = null;
 		try {
-			for (int n; (n = in.read(b)) != -1;) {
-				out.append(new String(b, 0, n));
-			}
+			cb = CharBuffer.allocate(in.available());
+			BufferedReader br = new BufferedReader(new InputStreamReader(in,
+					"utf-8"));
+			br.read(cb);
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
 		}
-		return out.toString();
+		return cb.toString();
 	}
 }

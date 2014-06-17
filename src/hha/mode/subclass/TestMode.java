@@ -47,7 +47,7 @@ public class TestMode extends Mode {
 		for(String s : testData)
 		{
 			input = Jcseg.chineseTranslate(s);
-			sb.append("User: "+input + "\n" + bot.Respond(input));
+			sb.append("User: "+input + "\n" + bot.Respond(input)+ "\n");
 		}
 		mainActivity.ShowTextOnUIThread(sb.toString());
 		bot.setProperty("mode", "normal");
